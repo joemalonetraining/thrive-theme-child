@@ -935,3 +935,58 @@
     padding-right: 0;
   }
 }
+
+/* Thrive containment: enforce hero text visibility without changing layout. */
+.landing-test-page .hero-title,
+.landing-test-page .hero-title span,
+.landing-test-page h1,
+.landing-test-page h2 {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.landing-test-page .program-hero {
+  isolation: isolate;
+}
+
+.landing-test-page .program-hero::before,
+.landing-test-page .program-hero::after {
+  z-index: 0;
+  pointer-events: none;
+}
+
+.landing-test-page .program-hero-inner,
+.landing-test-page .program-hero .hero-title,
+.landing-test-page .program-hero .eyebrow,
+.landing-test-page .program-hero h1,
+.landing-test-page .program-hero .program-hero-copy,
+.landing-test-page .program-hero .hero-actions,
+.landing-test-page .program-hero .program-proof-list {
+  position: relative;
+  z-index: 5;
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+.landing-test-page .program-hero h1,
+.landing-test-page .program-hero h1 *,
+.landing-test-page .program-hero .hero-title,
+.landing-test-page .program-hero .hero-title * {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  text-shadow: none !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.landing-test-page .program-hero .program-hero-copy,
+.landing-test-page .program-hero .program-hero-copy * {
+  color: #ebe6da !important;
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  -webkit-text-fill-color: #ebe6da !important;
+}
