@@ -33,3 +33,28 @@ add_action('wp_enqueue_scripts', function () {
         true
     );
 }, 99);
+
+add_action('wp_enqueue_scripts', function () {
+    $support_page_templates = [
+        'page-calendar.php',
+        'page-memberships.php',
+        'page-pistol.php',
+        'page-rifle.php',
+        'page-rifle-pistol.php',
+        'page-blog.php',
+        'page-about-us.php',
+        'page-16-hour-illinois-ccl.php',
+        'page-3-hour-renewal.php',
+    ];
+
+    if (! is_page_template($support_page_templates)) {
+        return;
+    }
+
+    wp_enqueue_style(
+        'jm-support-pages',
+        get_stylesheet_directory_uri() . '/assets/css/support-pages.css',
+        ['child-style'],
+        filemtime(get_stylesheet_directory() . '/assets/css/support-pages.css')
+    );
+}, 100);

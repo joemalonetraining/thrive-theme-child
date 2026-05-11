@@ -243,6 +243,21 @@
   }
 }
 
+html:has(.jm-calendar-page),
+body:has(.jm-calendar-page) {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  background: #020403 !important;
+}
+
+body:has(.jm-calendar-page) .tcb-style-wrap,
+body:has(.jm-calendar-page) .main-content,
+body:has(.jm-calendar-page) .entry-content {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  background: #020403 !important;
+}
+
 .jm-calendar-page {
   --calendar-black: #020403;
   --calendar-panel: #090d09;
@@ -256,13 +271,15 @@
   --calendar-bourbonnais: #b6d765;
   --calendar-alsip: #d2a341;
   --calendar-frankfort: #6fb6ff;
+  display: block;
   width: 100%;
-  max-width: 100%;
+  max-width: 100% !important;
   min-height: 100svh;
+  overflow-x: hidden;
   background:
     radial-gradient(circle at 18% 6%, rgba(151, 201, 87, 0.16), transparent 27rem),
-    linear-gradient(180deg, rgba(14, 18, 12, 0.98), #020403 34rem);
-  color: var(--calendar-white);
+    linear-gradient(180deg, rgba(14, 18, 12, 0.98), #020403 34rem) !important;
+  color: var(--calendar-white) !important;
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
@@ -383,18 +400,26 @@
 .jm-calendar-page .calendar-main {
   position: relative;
   z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  background: transparent !important;
 }
 
 .jm-calendar-page .calendar-section {
   width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   padding: clamp(34px, 5vw, 72px) clamp(16px, 4vw, 56px) clamp(70px, 9vw, 118px);
+  background: transparent !important;
 }
 
 .jm-calendar-page .calendar-section-inner {
   width: min(1180px, 100%);
-  max-width: 100%;
+  max-width: 100% !important;
   min-width: 0;
   margin: 0 auto;
+  overflow-x: hidden;
 }
 
 .jm-calendar-page .calendar-section-heading {
@@ -419,7 +444,7 @@
 
 .jm-calendar-page h1 {
   margin-bottom: 18px;
-  color: var(--calendar-white);
+  color: var(--calendar-white) !important;
   font-size: clamp(3.1rem, 8vw, 7.2rem);
   font-weight: 950;
   line-height: 0.88;
@@ -429,7 +454,7 @@
 .jm-calendar-page .calendar-section-heading p:not(.calendar-eyebrow) {
   width: min(790px, 100%);
   margin-bottom: 0;
-  color: var(--calendar-muted);
+  color: var(--calendar-muted) !important;
   font-size: clamp(1rem, 1.9vw, 1.22rem);
   line-height: 1.62;
 }
@@ -479,7 +504,7 @@
   padding: 16px;
   border: 1px solid rgba(248, 246, 239, 0.1);
   border-radius: 8px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.025));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.025)) !important;
 }
 
 .jm-calendar-page .calendar-assumptions strong,
@@ -489,12 +514,12 @@
 
 .jm-calendar-page .calendar-assumptions strong {
   margin-bottom: 7px;
-  color: var(--calendar-white);
+  color: var(--calendar-white) !important;
   font-size: 0.92rem;
 }
 
 .jm-calendar-page .calendar-assumptions span {
-  color: var(--calendar-muted);
+  color: var(--calendar-muted) !important;
   font-size: 0.86rem;
   line-height: 1.48;
 }
@@ -503,20 +528,21 @@
   display: grid;
   gap: clamp(18px, 3vw, 28px);
   width: 100%;
-  max-width: 100%;
+  max-width: 100% !important;
   min-width: 0;
+  overflow-x: hidden;
 }
 
 .jm-calendar-page .calendar-month {
   width: 100%;
-  max-width: 100%;
+  max-width: 100% !important;
   min-width: 0;
   padding: clamp(14px, 2vw, 22px);
   border: 1px solid rgba(151, 201, 87, 0.22);
   border-radius: 8px;
   background:
     linear-gradient(180deg, rgba(151, 201, 87, 0.075), transparent 12rem),
-    rgba(5, 8, 5, 0.96);
+    rgba(5, 8, 5, 0.96) !important;
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
   overflow: hidden;
 }
@@ -531,7 +557,7 @@
 
 .jm-calendar-page .calendar-month-header h2 {
   margin: 0;
-  color: var(--calendar-white);
+  color: var(--calendar-white) !important;
   font-size: clamp(1.45rem, 3vw, 2.25rem);
   font-weight: 950;
   text-transform: uppercase;
@@ -550,8 +576,9 @@
   grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 6px;
   width: 100%;
-  max-width: 100%;
+  max-width: 100% !important;
   min-width: 0;
+  overflow-x: hidden;
 }
 
 .jm-calendar-page .weekday-heading {
@@ -568,11 +595,13 @@
 .jm-calendar-page .calendar-day {
   position: relative;
   min-width: 0;
+  max-width: 100%;
   min-height: 340px;
   padding: 8px;
   border: 1px solid rgba(248, 246, 239, 0.085);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.035);
+  background: rgba(255, 255, 255, 0.035) !important;
+  overflow: hidden;
 }
 
 .jm-calendar-page .calendar-day.empty-day {
@@ -580,7 +609,7 @@
 }
 
 .jm-calendar-page .calendar-day.no-events:not(.empty-day) {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.02) !important;
 }
 
 .jm-calendar-page .day-number {
@@ -588,7 +617,7 @@
   top: 7px;
   left: 9px;
   z-index: 3;
-  color: var(--calendar-white);
+  color: var(--calendar-white) !important;
   font-size: 0.78rem;
   font-weight: 900;
 }
@@ -596,6 +625,8 @@
 .jm-calendar-page .day-timeline {
   position: relative;
   height: 300px;
+  max-width: 100%;
+  overflow: hidden;
   margin-top: 24px;
   background:
     repeating-linear-gradient(
@@ -614,13 +645,14 @@
   z-index: 4;
   display: block;
   min-width: 0;
+  max-width: 100%;
   min-height: 24px;
   padding: 5px 6px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-left-width: 4px;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--calendar-white);
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: var(--calendar-white) !important;
   font: inherit;
   text-align: left;
   cursor: pointer;
@@ -647,7 +679,7 @@
 }
 
 .jm-calendar-page .calendar-event strong {
-  color: var(--calendar-white);
+  color: var(--calendar-white) !important;
   font-size: 0.68rem;
   font-weight: 950;
   line-height: 1.14;
@@ -673,9 +705,9 @@
   padding: 12px;
   border: 1px solid rgba(248, 246, 239, 0.22);
   border-radius: 8px;
-  background: rgba(3, 5, 4, 0.97);
+  background: rgba(3, 5, 4, 0.97) !important;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.46);
-  color: var(--calendar-muted);
+  color: var(--calendar-muted) !important;
   font-size: 0.78rem;
   font-weight: 650;
   line-height: 1.42;
@@ -691,7 +723,7 @@
 
 .jm-calendar-page .event-detail strong {
   margin-bottom: 4px;
-  color: var(--calendar-white);
+  color: var(--calendar-white) !important;
   font-size: 0.82rem;
 }
 
@@ -709,32 +741,32 @@
 
 .jm-calendar-page .location-bourbonnais {
   border-left-color: var(--calendar-bourbonnais);
-  background: rgba(151, 201, 87, 0.19);
+  background: rgba(151, 201, 87, 0.19) !important;
 }
 
 .jm-calendar-page .location-alsip {
   border-left-color: var(--calendar-alsip);
-  background: rgba(210, 163, 65, 0.18);
+  background: rgba(210, 163, 65, 0.18) !important;
 }
 
 .jm-calendar-page .location-frankfort {
   border-left-color: var(--calendar-frankfort);
-  background: rgba(111, 182, 255, 0.16);
+  background: rgba(111, 182, 255, 0.16) !important;
 }
 
 .jm-calendar-page .event-gbrs {
   border-left-color: #ffffff;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2) !important;
 }
 
 .jm-calendar-page .event-cert {
   border-left-color: #e5ff83;
-  background: rgba(229, 255, 131, 0.18);
+  background: rgba(229, 255, 131, 0.18) !important;
 }
 
 .jm-calendar-page .event-off {
   border-left-color: rgba(255, 255, 255, 0.28);
-  background: rgba(255, 255, 255, 0.065);
+  background: rgba(255, 255, 255, 0.065) !important;
   color: rgba(248, 246, 239, 0.62);
 }
 

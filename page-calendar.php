@@ -9,7 +9,7 @@ get_header();
 $jm_calendar_images_uri = get_stylesheet_directory_uri() . '/assets/images';
 ?>
 
-<div class="jm-calendar-page">
+<main class="jm-calendar-page">
 	<header class="calendar-site-header" aria-label="Calendar navigation">
 		<a class="calendar-brand" href="<?php echo esc_url(home_url('/')); ?>" aria-label="JM Training home">
 			<img class="calendar-brand-logo" src="<?php echo esc_url($jm_calendar_images_uri . '/jm-logo.png'); ?>" alt="JM Training logo">
@@ -34,7 +34,7 @@ $jm_calendar_images_uri = get_stylesheet_directory_uri() . '/assets/images';
 		</a>
 	</header>
 
-	<main id="top" class="calendar-main">
+	<div id="top" class="calendar-main">
 		<section class="calendar-section" id="training-calendar" aria-labelledby="calendar-title">
 			<div class="calendar-section-inner">
 				<div class="calendar-section-heading">
@@ -98,8 +98,8 @@ $jm_calendar_images_uri = get_stylesheet_directory_uri() . '/assets/images';
 				</p>
 			</div>
 		</section>
-	</main>
-</div>
+	</div>
+</main>
 
 <script>
 (() => {
