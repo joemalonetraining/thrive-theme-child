@@ -303,10 +303,9 @@ $landing_assets_uri = get_stylesheet_directory_uri() . '/assets/images';
 			<div class="section-inner program-original-grid">
 				<div>
 					<p class="eyebrow">From the printed overview</p>
-					<h2 id="original-title">The flyer translated into a landing page.</h2>
+					<h2 id="original-title">Download the program flier here</h2>
 					<p>
-						The original overview stays available as a visual reference, while the page breaks the same message into
-						web-friendly sections for scanning, comparison, and follow-up.
+						Click the image to download the program overview flier.
 					</p>
 					<p class="location-line">
 						<i data-lucide="map-pin" aria-hidden="true"></i>
@@ -314,7 +313,9 @@ $landing_assets_uri = get_stylesheet_directory_uri() . '/assets/images';
 					</p>
 				</div>
 				<figure class="program-flier-frame">
-					<img src="<?php echo esc_url($landing_assets_uri . '/program-overview-flier-hq.png'); ?>" alt="JM Training Defensive Shooting University program overview flyer">
+					<a href="<?php echo esc_url($landing_assets_uri . '/program-overview-flier-hq.png'); ?>" download="program-overview-flier-hq.png" aria-label="Download the JM Training program overview flier">
+						<img src="<?php echo esc_url($landing_assets_uri . '/program-overview-flier-hq.png'); ?>" alt="JM Training Defensive Shooting University program overview flyer">
+					</a>
 				</figure>
 			</div>
 		</section>
