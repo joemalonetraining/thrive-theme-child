@@ -5,13 +5,14 @@
 ?>
 <nav class="desktop-nav jm-site-nav" aria-label="Program sections">
 	<details class="nav-dropdown">
-		<summary>ILCCL</summary>
+		<summary>IL CCL</summary>
 		<div class="nav-dropdown-menu">
 			<a href="<?php echo esc_url(home_url('/16-hour-illinois-ccl/')); ?>">16-Hour Illinois CCL</a>
 			<a href="<?php echo esc_url(home_url('/3-hour-renewal/')); ?>">3-Hour Renewal</a>
 		</div>
 	</details>
 
+	<a href="<?php echo esc_url(home_url('/calendar/')); ?>">Calendar</a>
 	<a href="<?php echo esc_url(home_url('/memberships/')); ?>">Memberships</a>
 
 	<details class="nav-dropdown">
