@@ -27,11 +27,12 @@ $landing_assets_uri = get_stylesheet_directory_uri() . '/assets/images';
 			</span>
 		</a>
 		<nav class="desktop-nav" aria-label="Program sections">
-			<a href="#path">ILCCL</a>
-			<a href="#includes">Memberships</a>
-			<a href="#tiers">Courses</a>
-			<a href="#medical-training">Blog</a>
-			<a href="#private-training">About Us</a>
+			<a href="<?php echo esc_url(home_url('/16-hour-illinois-ccl/')); ?>">IL CCL</a>
+			<a href="<?php echo esc_url(home_url('/calendar/')); ?>">Calendar</a>
+			<a href="<?php echo esc_url(home_url('/memberships/')); ?>">Memberships</a>
+			<a href="<?php echo esc_url(home_url('/pistol/')); ?>">Courses</a>
+			<a href="<?php echo esc_url(home_url('/blog/')); ?>">Blog</a>
+			<a href="<?php echo esc_url(home_url('/about-us/')); ?>">About Us</a>
 		</nav>
 		<a class="header-cta" href="mailto:support@joemalonetraining.com?subject=Defensive%20Shooting%20University%20Inquiry">
 			<i data-lucide="send" aria-hidden="true"></i>
