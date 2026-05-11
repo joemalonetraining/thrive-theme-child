@@ -47,7 +47,19 @@ add_action('wp_enqueue_scripts', function () {
         'page-3-hour-renewal.php',
     ];
 
-    if (! is_page_template($support_page_templates)) {
+    $support_page_slugs = [
+        'calendar',
+        'memberships',
+        'pistol',
+        'rifle',
+        'rifle-pistol',
+        'blog',
+        'about-us',
+        '16-hour-illinois-ccl',
+        '3-hour-renewal',
+    ];
+
+    if (! is_page_template($support_page_templates) && ! is_page($support_page_slugs)) {
         return;
     }
 
