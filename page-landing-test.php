@@ -27,11 +27,11 @@ $landing_assets_uri = get_stylesheet_directory_uri() . '/assets/images';
 			</span>
 		</a>
 		<nav class="desktop-nav" aria-label="Program sections">
-			<a href="#path">Path</a>
-			<a href="#includes">Includes</a>
-			<a href="#tiers">Memberships</a>
-			<a href="#medical-training">Medical</a>
-			<a href="#private-training">Private Training</a>
+			<a href="#path">ILCCL</a>
+			<a href="#includes">Memberships</a>
+			<a href="#tiers">Courses</a>
+			<a href="#medical-training">Blog</a>
+			<a href="#private-training">About Us</a>
 		</nav>
 		<a class="header-cta" href="mailto:support@joemalonetraining.com?subject=Defensive%20Shooting%20University%20Inquiry">
 			<i data-lucide="send" aria-hidden="true"></i>
@@ -210,15 +210,15 @@ $landing_assets_uri = get_stylesheet_directory_uri() . '/assets/images';
 						<div class="program-tier-topline">
 							<span>Pro Performance Package</span>
 						</div>
-						<h3><span>$99</span> /mo</h3>
+						<h3><span>$99.99</span> /mo</h3>
 						<p class="program-tier-note">Includes everything in the Starter Program, plus:</p>
 						<ul>
 							<li>Members-only open range access</li>
 							<li>Tues-Thurs: 12-8pm | Fri: 12-5pm</li>
-							<li>50% off all qualification courses, Levels 0-3</li>
+							<li>50% off all qualification courses, Levels 0-5</li>
 							<li>Discounted medical and first aid training blocks</li>
 							<li>$25 gun transfers</li>
-							<li>10% off firearms, ammo, and store items</li>
+							<li>5% off limited in-store items: firearms, ammo, accessories</li>
 							<li>Priority access to the training schedule</li>
 						</ul>
 						<a class="segment-link" href="mailto:support@joemalonetraining.com?subject=Pro%20Performance%20Package%20Inquiry">
@@ -231,14 +231,14 @@ $landing_assets_uri = get_stylesheet_directory_uri() . '/assets/images';
 						<div class="program-tier-topline">
 							<span>Defensive Shooting University</span>
 						</div>
-						<h3><span>$200</span> /mo</h3>
+						<h3><span>$199.99</span> /mo</h3>
 						<p class="program-tier-note">Includes everything in the Pro Performance Package, plus:</p>
 						<ul>
-							<li>All qualification courses included, Levels 0-3</li>
+							<li>All qualification courses included, Levels 0-5</li>
 							<li>Medical and first aid training blocks included</li>
-							<li>Access to outdoor range in Frankfort after Level 1 proficiency is achieved</li>
+							<li>Private access to your own outdoor range in Frankfort, IL</li>
 							<li>$25 gun transfers</li>
-							<li>20% off firearms, ammo, and store items</li>
+							<li>5–15% off firearms, ammo, and store items</li>
 							<li>Accelerated progression through the training pipeline</li>
 						</ul>
 						<a class="segment-link" href="mailto:support@joemalonetraining.com?subject=Defensive%20Shooting%20University%20Membership%20Inquiry">
@@ -288,6 +288,10 @@ $landing_assets_uri = get_stylesheet_directory_uri() . '/assets/images';
 						<li>Skill-specific focus</li>
 						<li>High-value correction</li>
 					</ul>
+					<a class="segment-link" href="mailto:ceo@joemalonetraining.com?subject=Request%201-1%20Training">
+						Request 1-1 training here
+						<i data-lucide="send" aria-hidden="true"></i>
+					</a>
 				</article>
 
 				<article class="program-event-panel">
@@ -338,7 +342,7 @@ $landing_assets_uri = get_stylesheet_directory_uri() . '/assets/images';
 				<address class="contact-list">
 					<a href="tel:17087260946">Phone: 708-726-0946</a>
 					<a href="mailto:support@joemalonetraining.com">Email: support@joemalonetraining.com</a>
-					<span>Instagram: @JMTRAINING_</span>
+					<span>Instagram: Joe_Malone_training</span>
 				</address>
 			</div>
 		</section>
