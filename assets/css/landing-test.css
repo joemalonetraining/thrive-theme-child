@@ -990,3 +990,74 @@
   mix-blend-mode: normal !important;
   -webkit-text-fill-color: #ebe6da !important;
 }
+
+/* Thrive containment: keep nested text readable on dark landing surfaces. */
+.landing-test-page .program-path-section,
+.landing-test-page .program-includes-section,
+.landing-test-page .program-training-section,
+.landing-test-page .program-tiers-section,
+.landing-test-page .program-medical-section,
+.landing-test-page .program-original-section,
+.landing-test-page .cta-section,
+.landing-test-page .program-standards article,
+.landing-test-page .program-feature-grid article,
+.landing-test-page .program-tech-showcase,
+.landing-test-page .program-tier-card,
+.landing-test-page .program-private-panel,
+.landing-test-page .program-event-panel {
+  color: var(--white) !important;
+  -webkit-text-fill-color: var(--white) !important;
+}
+
+.landing-test-page .program-path-section h2,
+.landing-test-page .program-includes-section h2,
+.landing-test-page .program-training-section h2,
+.landing-test-page .program-tiers-section h2,
+.landing-test-page .program-medical-section h2,
+.landing-test-page .program-original-section h2,
+.landing-test-page .cta-section h2,
+.landing-test-page .program-standards article,
+.landing-test-page .program-feature-grid h3,
+.landing-test-page .program-tech-showcase h3,
+.landing-test-page .program-tier-card h3,
+.landing-test-page .program-tier-card h3 span,
+.landing-test-page .program-private-panel h2,
+.landing-test-page .program-event-panel h2,
+.landing-test-page .program-price-row strong {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.landing-test-page .program-path-section p:not(.eyebrow),
+.landing-test-page .program-includes-section p:not(.eyebrow),
+.landing-test-page .program-training-section p:not(.eyebrow),
+.landing-test-page .program-tiers-section p:not(.eyebrow),
+.landing-test-page .program-medical-section p:not(.eyebrow),
+.landing-test-page .program-original-section p:not(.eyebrow),
+.landing-test-page .cta-section p:not(.eyebrow),
+.landing-test-page .program-feature-grid p,
+.landing-test-page .program-tech-showcase p:not(.eyebrow),
+.landing-test-page .program-tier-card ul,
+.landing-test-page .program-tier-card li,
+.landing-test-page .program-private-panel ul,
+.landing-test-page .program-private-panel li {
+  color: #d9d4c8 !important;
+  -webkit-text-fill-color: #d9d4c8 !important;
+}
+
+.landing-test-page .eyebrow,
+.landing-test-page .program-tier-topline,
+.landing-test-page .program-tier-topline span,
+.landing-test-page .program-tier-note,
+.landing-test-page .program-event-panel p:not(.eyebrow) {
+  color: var(--gold) !important;
+  -webkit-text-fill-color: var(--gold) !important;
+}
+
+.landing-test-page .program-proof-list span,
+.landing-test-page .program-tech-stats span,
+.landing-test-page .program-medical-list span,
+.landing-test-page .program-price-row span {
+  color: #f0eadc !important;
+  -webkit-text-fill-color: #f0eadc !important;
+}
