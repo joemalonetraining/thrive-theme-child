@@ -2,7 +2,6 @@
 /**
  * Support-page JM Training navigation framework.
  */
-$jm_site_pistol_url = function_exists('jm_training_pistol_url') ? jm_training_pistol_url() : home_url('/handgun-training/');
 ?>
 <nav class="desktop-nav jm-site-nav" aria-label="Program sections">
 	<details class="nav-dropdown">
@@ -19,7 +18,7 @@ $jm_site_pistol_url = function_exists('jm_training_pistol_url') ? jm_training_pi
 	<details class="nav-dropdown">
 		<summary>Courses</summary>
 		<div class="nav-dropdown-menu">
-			<a href="<?php echo esc_url($jm_site_pistol_url); ?>">Pistol</a>
+			<a href="<?php echo esc_url(home_url('/handgun-training/')); ?>">Pistol</a>
 			<a href="<?php echo esc_url(home_url('/rifle/')); ?>">Rifle</a>
 			<a href="<?php echo esc_url(home_url('/rifle-pistol/')); ?>">Rifle &amp; Pistol</a>
 		</div>

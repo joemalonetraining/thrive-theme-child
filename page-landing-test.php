@@ -8,7 +8,6 @@ get_header();
 
 $landing_assets_uri = get_stylesheet_directory_uri() . '/assets/images';
 $landing_home_url = function_exists('jm_training_primary_landing_url') ? jm_training_primary_landing_url() : '#top';
-$landing_pistol_url = function_exists('jm_training_pistol_url') ? jm_training_pistol_url() : home_url('/handgun-training/');
 
 /*
  * Required image assets:
@@ -35,7 +34,7 @@ $landing_pistol_url = function_exists('jm_training_pistol_url') ? jm_training_pi
 			<details class="nav-dropdown">
 				<summary>Courses</summary>
 				<div class="nav-dropdown-menu">
-					<a href="<?php echo esc_url($landing_pistol_url); ?>">Pistol</a>
+					<a href="<?php echo esc_url(home_url('/handgun-training/')); ?>">Pistol</a>
 					<a href="<?php echo esc_url(home_url('/rifle/')); ?>">Rifle</a>
 					<a href="<?php echo esc_url(home_url('/rifle-pistol/')); ?>">Rifle &amp; Pistol</a>
 				</div>

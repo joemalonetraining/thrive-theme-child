@@ -8,7 +8,6 @@ get_header();
 
 $jm_calendar_images_uri = get_stylesheet_directory_uri() . '/assets/images';
 $jm_calendar_home_url = function_exists('jm_training_primary_landing_url') ? jm_training_primary_landing_url() : '#top';
-$jm_calendar_pistol_url = function_exists('jm_training_pistol_url') ? jm_training_pistol_url() : home_url('/handgun-training/');
 $jm_calendar_csv = <<<'CSV'
 event_id,start_date,end_date,start_time,end_time,all_day,title,location,category,description,status,recurrence_source,color_key,notes
 alsip-ics-001,2026-05-01,2026-05-01,6:00 PM,8:30 PM,False,OPE,Alsip,Alsip Event,,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
@@ -175,7 +174,7 @@ CSV;
 			<details class="nav-dropdown">
 				<summary>Courses</summary>
 				<div class="nav-dropdown-menu">
-					<a href="<?php echo esc_url($jm_calendar_pistol_url); ?>">Pistol</a>
+					<a href="<?php echo esc_url(home_url('/handgun-training/')); ?>">Pistol</a>
 					<a href="<?php echo esc_url(home_url('/rifle/')); ?>">Rifle</a>
 					<a href="<?php echo esc_url(home_url('/rifle-pistol/')); ?>">Rifle &amp; Pistol</a>
 				</div>
