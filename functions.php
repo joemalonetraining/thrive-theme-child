@@ -42,6 +42,57 @@ if (! function_exists('jm_training_primary_landing_url')) {
     }
 }
 
+if (! function_exists('jm_training_template_page_url')) {
+    function jm_training_template_page_url($template, $fallback_path = '#top')
+    {
+        static $template_urls = [];
+
+        $cache_key = $template . '|' . $fallback_path;
+
+        if (isset($template_urls[$cache_key])) {
+            return $template_urls[$cache_key];
+        }
+
+        $front_page_id = (int) get_option('page_on_front');
+
+        if ($front_page_id > 0 && get_page_template_slug($front_page_id) === $template) {
+            $front_page_url = get_permalink($front_page_id);
+
+            if ($front_page_url) {
+                $template_urls[$cache_key] = $front_page_url;
+                return $template_urls[$cache_key];
+            }
+        }
+
+        $template_pages = get_pages([
+            'meta_key' => '_wp_page_template',
+            'meta_value' => $template,
+            'number' => 1,
+            'post_status' => 'publish',
+            'sort_column' => 'menu_order,post_title',
+        ]);
+
+        if (! empty($template_pages)) {
+            $template_page_url = get_permalink($template_pages[0]->ID);
+
+            if ($template_page_url) {
+                $template_urls[$cache_key] = $template_page_url;
+                return $template_urls[$cache_key];
+            }
+        }
+
+        $template_urls[$cache_key] = $fallback_path === '#top' ? '#top' : home_url($fallback_path);
+        return $template_urls[$cache_key];
+    }
+}
+
+if (! function_exists('jm_training_pistol_url')) {
+    function jm_training_pistol_url()
+    {
+        return jm_training_template_page_url('page-pistol.php', '/handgun-training/');
+    }
+}
+
 add_action('wp_enqueue_scripts', function () {
     wp_enqueue_style(
         'parent-style',
@@ -94,6 +145,7 @@ add_action('wp_enqueue_scripts', function () {
         'calendar',
         'memberships',
         'pistol',
+        'handgun-training',
         'rifle',
         'rifle-pistol',
         'blog',
