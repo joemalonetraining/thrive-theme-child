@@ -222,6 +222,279 @@
   padding-left: 20px;
 }
 
+.jm-support-page .nav-dropdown summary:focus-visible,
+.jm-support-page .nav-dropdown-menu a:focus-visible,
+.jm-support-page .support-button:focus-visible,
+.jm-support-page .support-header-cta:focus-visible {
+  outline: 2px solid rgba(196, 154, 74, 0.92);
+  outline-offset: 4px;
+}
+
+.jm-support-page .support-button-secondary {
+  background: rgba(247, 245, 239, 0.05);
+  color: var(--support-white);
+}
+
+.jm-support-page.jm-pistol-page {
+  background:
+    radial-gradient(circle at 78% 8%, rgba(196, 154, 74, 0.13), transparent 28rem),
+    linear-gradient(180deg, #050505 0%, #0b0b0b 46%, #050505 100%);
+}
+
+.jm-support-page.jm-pistol-page .pistol-main {
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(196, 154, 74, 0.07), transparent 18rem),
+    var(--support-black);
+}
+
+.jm-support-page.jm-pistol-page .pistol-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: clamp(520px, 74svh, 760px);
+  padding: clamp(92px, 12vw, 150px) clamp(20px, 6vw, 80px) clamp(64px, 8vw, 104px);
+  border-bottom: 1px solid var(--support-line);
+  background:
+    linear-gradient(90deg, rgba(5, 5, 5, 0.98) 0%, rgba(5, 5, 5, 0.78) 48%, rgba(5, 5, 5, 0.45) 100%),
+    radial-gradient(circle at 75% 48%, rgba(196, 154, 74, 0.16), transparent 32rem);
+}
+
+.jm-support-page.jm-pistol-page .pistol-hero::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  opacity: 0.28;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(180deg, black, transparent 82%);
+}
+
+.jm-support-page.jm-pistol-page .pistol-hero-inner,
+.jm-support-page.jm-pistol-page .pistol-blocks-inner,
+.jm-support-page.jm-pistol-page .pistol-levels,
+.jm-support-page.jm-pistol-page .pistol-final-cta {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+.jm-support-page.jm-pistol-page .pistol-hero h1 {
+  width: min(820px, 100%);
+  margin: 0 0 20px;
+  color: var(--support-white);
+  font-size: clamp(3.45rem, 8.6vw, 7.5rem);
+  line-height: 0.9;
+  letter-spacing: 0;
+}
+
+.jm-support-page.jm-pistol-page .pistol-hero p:not(.support-eyebrow) {
+  width: min(680px, 100%);
+  color: var(--support-muted);
+  font-size: clamp(1.05rem, 2vw, 1.28rem);
+  line-height: 1.55;
+}
+
+.jm-support-page.jm-pistol-page .pistol-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.jm-support-page.jm-pistol-page .pistol-blocks {
+  padding: clamp(54px, 8vw, 88px) clamp(20px, 6vw, 80px);
+  border-bottom: 1px solid var(--support-line);
+}
+
+.jm-support-page.jm-pistol-page .pistol-blocks-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+  gap: clamp(24px, 5vw, 64px);
+  align-items: center;
+}
+
+.jm-support-page.jm-pistol-page .pistol-blocks h2,
+.jm-support-page.jm-pistol-page .pistol-level-content h2,
+.jm-support-page.jm-pistol-page .pistol-final-cta h2 {
+  margin: 0 0 18px;
+  color: var(--support-white);
+  font-size: clamp(2rem, 4vw, 4.2rem);
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+
+.jm-support-page.jm-pistol-page .pistol-blocks p,
+.jm-support-page.jm-pistol-page .pistol-level-content p,
+.jm-support-page.jm-pistol-page .pistol-final-cta p {
+  color: var(--support-muted);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.jm-support-page.jm-pistol-page .pistol-blocks-card {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: clamp(18px, 3vw, 28px);
+  border: 1px solid rgba(196, 154, 74, 0.34);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025)),
+    rgba(14, 14, 14, 0.9);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.35);
+}
+
+.jm-support-page.jm-pistol-page .pistol-blocks-card span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  border: 1px solid rgba(247, 245, 239, 0.1);
+  border-radius: 8px;
+  background: rgba(247, 245, 239, 0.045);
+  color: var(--support-white);
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.jm-support-page.jm-pistol-page .pistol-blocks-card strong {
+  grid-column: 1 / -1;
+  display: block;
+  margin-top: 8px;
+  padding-top: 18px;
+  border-top: 1px solid var(--support-line);
+  color: var(--support-gold);
+  font-size: 1.02rem;
+  line-height: 1.45;
+}
+
+.jm-support-page.jm-pistol-page .pistol-levels {
+  display: grid;
+  gap: clamp(34px, 6vw, 72px);
+  padding: clamp(58px, 8vw, 96px) clamp(20px, 6vw, 80px);
+}
+
+.jm-support-page.jm-pistol-page .pistol-level-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  gap: clamp(22px, 4vw, 52px);
+  align-items: stretch;
+  min-height: 520px;
+  padding: clamp(14px, 2vw, 22px);
+  border: 1px solid rgba(247, 245, 239, 0.13);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.018)),
+    rgba(12, 12, 12, 0.88);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.38);
+}
+
+.jm-support-page.jm-pistol-page .pistol-level-section.is-reversed {
+  grid-template-columns: minmax(320px, 0.9fr) minmax(0, 1.1fr);
+}
+
+.jm-support-page.jm-pistol-page .pistol-level-section.is-reversed .pistol-level-media {
+  order: 2;
+}
+
+.jm-support-page.jm-pistol-page .pistol-level-media {
+  position: relative;
+  overflow: hidden;
+  min-height: 460px;
+  border-radius: 8px;
+  background: #0d0d0d;
+}
+
+.jm-support-page.jm-pistol-page .pistol-level-media::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(5, 5, 5, 0.12), rgba(5, 5, 5, 0.38)),
+    linear-gradient(90deg, rgba(5, 5, 5, 0.36), transparent 48%, rgba(5, 5, 5, 0.22));
+}
+
+.jm-support-page.jm-pistol-page .pistol-level-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 460px;
+  object-fit: cover;
+  filter: saturate(0.9) contrast(1.08) brightness(0.82);
+}
+
+.jm-support-page.jm-pistol-page .level-0 .pistol-level-media img {
+  object-position: center center;
+}
+
+.jm-support-page.jm-pistol-page .level-1 .pistol-level-media img {
+  object-position: 58% center;
+}
+
+.jm-support-page.jm-pistol-page .level-2 .pistol-level-media img {
+  object-position: center center;
+}
+
+.jm-support-page.jm-pistol-page .level-3 .pistol-level-media img {
+  object-position: center center;
+}
+
+.jm-support-page.jm-pistol-page .pistol-level-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding: clamp(18px, 4vw, 46px);
+}
+
+.jm-support-page.jm-pistol-page .pistol-level-content ul {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.jm-support-page.jm-pistol-page .pistol-level-content li {
+  position: relative;
+  padding-left: 20px;
+  color: var(--support-white);
+  line-height: 1.5;
+}
+
+.jm-support-page.jm-pistol-page .pistol-level-content li::before {
+  position: absolute;
+  top: 0.62em;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--support-gold);
+  content: "";
+}
+
+.jm-support-page.jm-pistol-page .pistol-final-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: clamp(48px, 8vw, 90px);
+  padding: clamp(24px, 4vw, 42px);
+  border: 1px solid rgba(196, 154, 74, 0.32);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(196, 154, 74, 0.16), rgba(247, 245, 239, 0.035)),
+    #0d0d0d;
+}
+
+.jm-support-page.jm-pistol-page .pistol-final-cta p {
+  width: min(650px, 100%);
+  margin-bottom: 0;
+}
+
 @media (max-width: 880px) {
   .jm-support-page .support-site-header {
     align-items: flex-start;
@@ -240,6 +513,57 @@
 
   .jm-support-page .support-grid {
     grid-template-columns: 1fr;
+  }
+
+  .jm-support-page.jm-pistol-page .pistol-hero {
+    min-height: auto;
+    padding-top: 78px;
+  }
+
+  .jm-support-page.jm-pistol-page .pistol-blocks-inner,
+  .jm-support-page.jm-pistol-page .pistol-level-section,
+  .jm-support-page.jm-pistol-page .pistol-level-section.is-reversed {
+    grid-template-columns: 1fr;
+  }
+
+  .jm-support-page.jm-pistol-page .pistol-level-section.is-reversed .pistol-level-media {
+    order: 0;
+  }
+
+  .jm-support-page.jm-pistol-page .pistol-level-section {
+    min-height: 0;
+  }
+
+  .jm-support-page.jm-pistol-page .pistol-level-media,
+  .jm-support-page.jm-pistol-page .pistol-level-media img {
+    min-height: 320px;
+  }
+
+  .jm-support-page.jm-pistol-page .pistol-final-cta {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 560px) {
+  .jm-support-page.jm-pistol-page .pistol-actions,
+  .jm-support-page.jm-pistol-page .support-button {
+    width: 100%;
+  }
+
+  .jm-support-page.jm-pistol-page .pistol-blocks-card {
+    grid-template-columns: 1fr;
+  }
+
+  .jm-support-page.jm-pistol-page .pistol-levels {
+    gap: 28px;
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .jm-support-page.jm-pistol-page .pistol-level-media,
+  .jm-support-page.jm-pistol-page .pistol-level-media img {
+    min-height: 250px;
   }
 }
 

@@ -20,7 +20,7 @@
 		<div class="nav-dropdown-menu">
 			<a href="<?php echo esc_url(home_url('/pistol/')); ?>">Pistol</a>
 			<a href="<?php echo esc_url(home_url('/rifle/')); ?>">Rifle</a>
-			<a href="<?php echo esc_url(home_url('/rifle-pistol/')); ?>">Rifle / Pistol</a>
+			<a href="<?php echo esc_url(home_url('/rifle-pistol/')); ?>">Rifle &amp; Pistol</a>
 		</div>
 	</details>
 
