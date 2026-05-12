@@ -250,7 +250,8 @@
 
 .jm-support-page.jm-pistol-training-overview-page .pistol-overview-hero,
 .jm-support-page.jm-pistol-training-overview-page .pistol-level-zero,
-.jm-support-page.jm-pistol-training-overview-page .pistol-level-one {
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-one,
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-two {
   padding: clamp(58px, 8vw, 104px) clamp(20px, 6vw, 80px);
 }
 
@@ -260,7 +261,8 @@
 
 .jm-support-page.jm-pistol-training-overview-page .pistol-overview-hero-inner,
 .jm-support-page.jm-pistol-training-overview-page .pistol-level-zero-inner,
-.jm-support-page.jm-pistol-training-overview-page .pistol-level-one-inner {
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-one-inner,
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-two-inner {
   width: min(1180px, 100%);
   margin: 0 auto;
 }
@@ -275,12 +277,14 @@
 }
 
 .jm-support-page.jm-pistol-training-overview-page .pistol-level-zero,
-.jm-support-page.jm-pistol-training-overview-page .pistol-level-one {
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-one,
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-two {
   border-bottom: 1px solid var(--support-line);
 }
 
 .jm-support-page.jm-pistol-training-overview-page .pistol-level-zero-inner,
-.jm-support-page.jm-pistol-training-overview-page .pistol-level-one-inner {
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-one-inner,
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-two-inner {
   display: grid;
   grid-template-columns: minmax(0, 1.03fr) minmax(320px, 0.97fr);
   gap: clamp(26px, 5vw, 70px);
@@ -288,7 +292,8 @@
 }
 
 .jm-support-page.jm-pistol-training-overview-page .pistol-level-zero-media,
-.jm-support-page.jm-pistol-training-overview-page .pistol-level-one-media {
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-one-media,
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-two-media {
   position: relative;
   overflow: hidden;
   min-height: clamp(320px, 42vw, 560px);
@@ -299,7 +304,8 @@
 }
 
 .jm-support-page.jm-pistol-training-overview-page .pistol-level-zero-media::after,
-.jm-support-page.jm-pistol-training-overview-page .pistol-level-one-media::after {
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-one-media::after,
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-two-media::after {
   position: absolute;
   inset: 0;
   content: "";
@@ -310,7 +316,8 @@
 }
 
 .jm-support-page.jm-pistol-training-overview-page .pistol-level-zero-media img,
-.jm-support-page.jm-pistol-training-overview-page .pistol-level-one-media img {
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-one-media img,
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-two-media img {
   display: block;
   width: 100%;
   height: 100%;
@@ -321,14 +328,16 @@
 }
 
 .jm-support-page.jm-pistol-training-overview-page .pistol-level-zero-copy,
-.jm-support-page.jm-pistol-training-overview-page .pistol-level-one-copy {
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-one-copy,
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-two-copy {
   display: grid;
   gap: 18px;
   min-width: 0;
 }
 
 .jm-support-page.jm-pistol-training-overview-page .pistol-level-zero-copy h2,
-.jm-support-page.jm-pistol-training-overview-page .pistol-level-one-copy h2 {
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-one-copy h2,
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-two-copy h2 {
   margin: 0;
   color: var(--support-white);
   font-size: clamp(2.35rem, 5vw, 5.2rem);
@@ -337,7 +346,8 @@
 }
 
 .jm-support-page.jm-pistol-training-overview-page .pistol-level-zero-copy p:not(.support-eyebrow),
-.jm-support-page.jm-pistol-training-overview-page .pistol-level-one-copy p:not(.support-eyebrow) {
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-one-copy p:not(.support-eyebrow),
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-two-copy p:not(.support-eyebrow) {
   margin: 0;
   color: var(--support-muted);
   font-size: clamp(1rem, 1.6vw, 1.12rem);
@@ -345,7 +355,8 @@
 }
 
 .jm-support-page.jm-pistol-training-overview-page .pistol-level-zero-copy .support-button,
-.jm-support-page.jm-pistol-training-overview-page .pistol-level-one-copy .support-button {
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-one-copy .support-button,
+.jm-support-page.jm-pistol-training-overview-page .pistol-level-two-copy .support-button {
   justify-self: start;
   margin-top: 6px;
 }
@@ -660,17 +671,20 @@
   }
 
   .jm-support-page.jm-pistol-training-overview-page .pistol-level-zero-inner,
-  .jm-support-page.jm-pistol-training-overview-page .pistol-level-one-inner {
+  .jm-support-page.jm-pistol-training-overview-page .pistol-level-one-inner,
+  .jm-support-page.jm-pistol-training-overview-page .pistol-level-two-inner {
     grid-template-columns: 1fr;
   }
 
   .jm-support-page.jm-pistol-training-overview-page .pistol-level-zero-media,
-  .jm-support-page.jm-pistol-training-overview-page .pistol-level-one-media {
+  .jm-support-page.jm-pistol-training-overview-page .pistol-level-one-media,
+  .jm-support-page.jm-pistol-training-overview-page .pistol-level-two-media {
     min-height: 320px;
   }
 
   .jm-support-page.jm-pistol-training-overview-page .pistol-level-zero-media img,
-  .jm-support-page.jm-pistol-training-overview-page .pistol-level-one-media img {
+  .jm-support-page.jm-pistol-training-overview-page .pistol-level-one-media img,
+  .jm-support-page.jm-pistol-training-overview-page .pistol-level-two-media img {
     min-height: 320px;
   }
 }
@@ -698,13 +712,15 @@
 
   .jm-support-page.jm-pistol-training-overview-page .pistol-overview-hero,
   .jm-support-page.jm-pistol-training-overview-page .pistol-level-zero,
-  .jm-support-page.jm-pistol-training-overview-page .pistol-level-one {
+  .jm-support-page.jm-pistol-training-overview-page .pistol-level-one,
+  .jm-support-page.jm-pistol-training-overview-page .pistol-level-two {
     padding-right: 14px;
     padding-left: 14px;
   }
 
   .jm-support-page.jm-pistol-training-overview-page .pistol-level-zero-copy .support-button,
-  .jm-support-page.jm-pistol-training-overview-page .pistol-level-one-copy .support-button {
+  .jm-support-page.jm-pistol-training-overview-page .pistol-level-one-copy .support-button,
+  .jm-support-page.jm-pistol-training-overview-page .pistol-level-two-copy .support-button {
     width: 100%;
   }
 }

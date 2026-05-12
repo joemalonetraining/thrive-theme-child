@@ -95,6 +95,33 @@ $pistol_overview_home_url = function_exists('jm_training_primary_landing_url') ?
 				</div>
 			</div>
 		</section>
+
+		<section class="pistol-level-two" aria-labelledby="pistol-level-2-title">
+			<div class="pistol-level-two-inner">
+				<div class="pistol-level-two-media">
+					<img
+						src="<?php echo esc_url($pistol_overview_assets_uri . '/pistol-training-overview-level-2.png'); ?>"
+						alt="JM Training pistol student practicing Level 2 marksmanship and target discrimination"
+						width="1594"
+						height="987"
+						loading="lazy"
+						decoding="async"
+					>
+				</div>
+				<div class="pistol-level-two-copy">
+					<p class="support-eyebrow">Pistol Level 2</p>
+					<h2 id="pistol-level-2-title">Level 2 — Spatial Awareness and Decision-Making</h2>
+					<p>
+						Level 2 builds spatial awareness and decision-making under greater performance pressure. Students begin
+						incorporating movement, higher speed and accuracy standards, positive identification, shoot/no-shoot target
+						discrimination, and more advanced low-light work. The goal is to improve the student’s ability to process the
+						environment, make better decisions, and apply accurate fire only when appropriate.
+					</p>
+					<!-- This placeholder will later connect to a Gravity Forms registration flow. -->
+					<a class="support-button" href="#">Learn More / Register</a>
+				</div>
+			</div>
+		</section>
 	</main>
 </div>
 
