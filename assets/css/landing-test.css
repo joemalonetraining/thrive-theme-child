@@ -121,6 +121,7 @@
 }
 
 .landing-test-page .desktop-nav a,
+.landing-test-page .nav-dropdown summary,
 .landing-test-page .header-cta {
   transition:
     color 180ms ease,
@@ -129,8 +130,63 @@
     transform 180ms ease;
 }
 
-.landing-test-page .desktop-nav a:hover {
+.landing-test-page .desktop-nav a:hover,
+.landing-test-page .nav-dropdown summary:hover,
+.landing-test-page .nav-dropdown:focus-within summary {
   color: var(--white);
+}
+
+.landing-test-page .nav-dropdown {
+  position: relative;
+}
+
+.landing-test-page .nav-dropdown summary {
+  cursor: pointer;
+  color: var(--muted);
+  font: inherit;
+  list-style: none;
+}
+
+.landing-test-page .nav-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.landing-test-page .nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  z-index: 50;
+  display: none;
+  min-width: 220px;
+  padding: 8px;
+  border: 1px solid rgba(196, 154, 74, 0.3);
+  border-radius: 8px;
+  background: rgba(8, 8, 8, 0.98);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.46);
+}
+
+.landing-test-page .nav-dropdown[open] .nav-dropdown-menu,
+.landing-test-page .nav-dropdown:hover .nav-dropdown-menu,
+.landing-test-page .nav-dropdown:focus-within .nav-dropdown-menu {
+  display: grid;
+  gap: 4px;
+}
+
+.landing-test-page .nav-dropdown-menu a {
+  padding: 9px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.landing-test-page .nav-dropdown-menu a:hover,
+.landing-test-page .nav-dropdown-menu a:focus-visible {
+  background: rgba(196, 154, 74, 0.14);
+}
+
+.landing-test-page .nav-dropdown summary:focus-visible,
+.landing-test-page .nav-dropdown-menu a:focus-visible {
+  outline: 2px solid rgba(196, 154, 74, 0.92);
+  outline-offset: 4px;
 }
 
 .landing-test-page .header-cta {
@@ -839,13 +895,27 @@
 
 @media (max-width: 780px) {
   .landing-test-page .site-header {
+    align-items: flex-start;
+    flex-wrap: wrap;
     min-height: 64px;
     padding: 10px 16px;
   }
 
-  .landing-test-page .desktop-nav,
   .landing-test-page .header-cta {
     display: none;
+  }
+
+  .landing-test-page .desktop-nav {
+    order: 3;
+    flex-wrap: wrap;
+    gap: 12px 16px;
+    width: 100%;
+    font-size: 0.88rem;
+  }
+
+  .landing-test-page .nav-dropdown-menu {
+    position: static;
+    margin-top: 8px;
   }
 
   .landing-test-page .brand small {

@@ -701,14 +701,65 @@ body:has(.jm-calendar-page) .entry-content {
   font-weight: 750;
 }
 
-.jm-calendar-page .calendar-nav a {
+.jm-calendar-page .calendar-nav a,
+.jm-calendar-page .nav-dropdown summary {
+  cursor: pointer;
   color: var(--calendar-muted);
+  font: inherit;
+  list-style: none;
   white-space: nowrap;
 }
 
+.jm-calendar-page .nav-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
 .jm-calendar-page .calendar-nav a:hover,
-.jm-calendar-page .calendar-nav a[aria-current="page"] {
+.jm-calendar-page .calendar-nav a[aria-current="page"],
+.jm-calendar-page .nav-dropdown summary:hover,
+.jm-calendar-page .nav-dropdown:focus-within summary {
   color: var(--calendar-white);
+}
+
+.jm-calendar-page .nav-dropdown {
+  position: relative;
+}
+
+.jm-calendar-page .nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  z-index: 80;
+  display: none;
+  min-width: 220px;
+  padding: 8px;
+  border: 1px solid rgba(200, 155, 69, 0.32);
+  border-radius: 8px;
+  background: rgba(3, 6, 4, 0.98);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.5);
+}
+
+.jm-calendar-page .nav-dropdown[open] .nav-dropdown-menu,
+.jm-calendar-page .nav-dropdown:hover .nav-dropdown-menu,
+.jm-calendar-page .nav-dropdown:focus-within .nav-dropdown-menu {
+  display: grid;
+  gap: 4px;
+}
+
+.jm-calendar-page .nav-dropdown-menu a {
+  padding: 9px 10px;
+  border-radius: 6px;
+}
+
+.jm-calendar-page .nav-dropdown-menu a:hover,
+.jm-calendar-page .nav-dropdown-menu a:focus-visible {
+  background: rgba(200, 155, 69, 0.14);
+}
+
+.jm-calendar-page .nav-dropdown summary:focus-visible,
+.jm-calendar-page .nav-dropdown-menu a:focus-visible {
+  outline: 2px solid rgba(200, 155, 69, 0.92);
+  outline-offset: 4px;
 }
 
 .jm-calendar-page .calendar-header-cta {
@@ -1286,6 +1337,11 @@ body:has(.jm-calendar-page) .entry-content {
   .jm-calendar-page .calendar-nav {
     gap: 10px 16px;
     font-size: 0.84rem;
+  }
+
+  .jm-calendar-page .nav-dropdown-menu {
+    position: static;
+    margin-top: 8px;
   }
 
   .jm-calendar-page .calendar-section {
