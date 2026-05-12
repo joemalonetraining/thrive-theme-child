@@ -17,11 +17,12 @@ $page = wp_parse_args(
 );
 
 $logo_uri = get_stylesheet_directory_uri() . '/assets/images/jm-logo.png';
+$support_home_url = home_url('/landing-test/');
 ?>
 
 <div class="jm-support-page">
 	<header class="support-site-header" aria-label="Primary navigation">
-		<a class="support-brand" href="<?php echo esc_url(home_url('/')); ?>" aria-label="JM Training home">
+		<a class="support-brand" href="<?php echo esc_url($support_home_url); ?>" aria-label="JM Training home">
 			<img class="support-brand-logo" src="<?php echo esc_url($logo_uri); ?>" alt="JM Training logo">
 			<span>
 				<strong>JM Training</strong>

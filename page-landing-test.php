@@ -7,6 +7,7 @@
 get_header();
 
 $landing_assets_uri = get_stylesheet_directory_uri() . '/assets/images';
+$landing_home_url = home_url('/landing-test/');
 
 /*
  * Required image assets:
@@ -19,7 +20,7 @@ $landing_assets_uri = get_stylesheet_directory_uri() . '/assets/images';
 
 <div class="landing-test-page">
 	<header class="site-header" aria-label="Primary navigation">
-		<a class="brand" href="<?php echo esc_url(home_url('/')); ?>" aria-label="JM Training home">
+		<a class="brand" href="<?php echo esc_url($landing_home_url); ?>" aria-label="JM Training home">
 			<img class="brand-logo" src="<?php echo esc_url($landing_assets_uri . '/jm-logo.png'); ?>" alt="JM Training logo">
 			<span>
 				<strong>JM Training</strong>
