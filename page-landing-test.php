@@ -34,9 +34,9 @@ $landing_home_url = function_exists('jm_training_primary_landing_url') ? jm_trai
 			<details class="nav-dropdown">
 				<summary>Courses</summary>
 				<div class="nav-dropdown-menu">
-					<a href="<?php echo esc_url(home_url('/handgun-training/')); ?>">Pistol</a>
-					<a href="<?php echo esc_url(home_url('/rifle/')); ?>">Rifle</a>
-					<a href="<?php echo esc_url(home_url('/rifle-pistol/')); ?>">Rifle &amp; Pistol</a>
+					<a href="<?php echo esc_url(home_url('/pistol-training-overview/')); ?>">Pistol</a>
+					<a href="<?php echo esc_url(home_url('/rifle-training-overview/')); ?>">Rifle</a>
+					<a href="<?php echo esc_url(home_url('/rifle-pistol-training-overview/')); ?>">Rifle &amp; Pistol</a>
 				</div>
 			</details>
 			<a href="<?php echo esc_url(home_url('/blog/')); ?>">Blog</a>
