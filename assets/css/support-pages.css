@@ -625,6 +625,16 @@ body:has(.jm-calendar-page) .entry-content {
   background: rgba(255, 255, 255, 0.02) !important;
 }
 
+.jm-calendar-page .calendar-day.is-today {
+  border-color: rgba(248, 246, 239, 0.38);
+  background:
+    linear-gradient(180deg, rgba(155, 108, 255, 0.085), rgba(255, 255, 255, 0.035)) !important;
+  box-shadow:
+    0 0 0 1px rgba(155, 108, 255, 0.28),
+    0 0 24px rgba(155, 108, 255, 0.22),
+    inset 0 0 18px rgba(255, 255, 255, 0.035);
+}
+
 .jm-calendar-page .day-number {
   position: absolute;
   top: 7px;
@@ -633,6 +643,31 @@ body:has(.jm-calendar-page) .entry-content {
   color: var(--calendar-white) !important;
   font-size: 0.78rem;
   font-weight: 900;
+}
+
+.jm-calendar-page .calendar-day.is-today .day-number {
+  color: #ffffff !important;
+  text-shadow: 0 0 12px rgba(248, 246, 239, 0.58);
+}
+
+.jm-calendar-page .today-label {
+  position: absolute;
+  top: 6px;
+  right: 7px;
+  z-index: 3;
+  max-width: calc(100% - 42px);
+  padding: 3px 7px;
+  border: 1px solid rgba(248, 246, 239, 0.24);
+  border-radius: 999px;
+  background: rgba(248, 246, 239, 0.11) !important;
+  color: var(--calendar-white) !important;
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 .jm-calendar-page .day-timeline {

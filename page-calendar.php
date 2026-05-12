@@ -107,30 +107,33 @@ event_id,start_date,end_date,start_time,end_time,all_day,title,location,category
 2026-07-29-090,2026-07-29,2026-07-29,12:00 PM,8:00 PM,False,Members Only Open Range,Bourbonnais,Members Only Open Range,Members-only open range.,Scheduled,Every Tue/Wed/Thu,Bourbonnais,
 2026-07-30-091,2026-07-30,2026-07-30,12:00 PM,8:00 PM,False,Members Only Open Range,Bourbonnais,Members Only Open Range,Members-only open range.,Scheduled,Every Tue/Wed/Thu,Bourbonnais,
 2026-07-31-092,2026-07-31,2026-07-31,12:00 PM,5:00 PM,False,Members Only Open Range,Bourbonnais,Members Only Open Range,Members-only open range.,Scheduled,Every Friday,Bourbonnais,
-ics-1,2026-06-24,2026-06-25,10:00 PM,1:30 AM,false,Concealed Carry Renewal,,Imported,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-2,2026-06-30,2026-07-01,11:00 PM,1:30 AM,false,OPE Event,,Imported,,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-3,2026-07-13,2026-07-14,10:00 PM,1:30 AM,false,Concealed Carry Renewal,,Imported,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-4,2026-06-07,2026-06-07,3:00 PM,9:00 PM,false,16-Hour Concealed Carry Course — Day 2,,Imported,Day 2 of 2. Sunday session: 10:00 AM–4:00 PM.,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-5,2026-07-22,2026-07-23,10:00 PM,1:30 AM,false,Concealed Carry Renewal,,Imported,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-6,2026-06-15,2026-06-16,10:00 PM,1:30 AM,false,Concealed Carry Renewal,,Imported,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-7,2026-07-08,2026-07-09,10:00 PM,1:30 AM,false,Concealed Carry Renewal,,Imported,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-8,2026-06-01,2026-06-02,10:00 PM,1:30 AM,false,Concealed Carry Renewal,,Imported,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-9,2026-07-27,2026-07-28,10:00 PM,1:30 AM,false,Concealed Carry Renewal,,Imported,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-10,2026-07-18,2026-07-19,2:00 PM,12:00 AM,false,16-Hour Concealed Carry Course — Day 1,,Imported,Day 1 of 2. Saturday session: 9:00 AM–7:00 PM.,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-11,2026-07-19,2026-07-19,3:00 PM,9:00 PM,false,16-Hour Concealed Carry Course — Day 2,,Imported,Day 2 of 2. Sunday session: 10:00 AM–4:00 PM.,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-12,2026-06-29,2026-06-30,10:00 PM,1:30 AM,false,Concealed Carry Renewal,,Imported,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-13,2026-06-06,2026-06-07,2:00 PM,12:00 AM,false,16-Hour Concealed Carry Course — Day 1,,Imported,Day 1 of 2. Saturday session: 9:00 AM–7:00 PM.,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-14,2026-06-10,2026-06-11,10:00 PM,1:30 AM,false,Concealed Carry Renewal,,Imported,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-15,2026-06-13,2026-06-13,3:00 PM,8:00 PM,false,Lethal U Group Shoot,,Imported,,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-16,2026-06-13,2026-06-13,10:00 AM,4:00 PM,false,Group Shoot Event,,Imported,,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-17,2026-06-13,2026-06-13,8:00 AM,10:00 AM,false,Holster Draw,,Imported,,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-18,2026-05-16,2026-05-16,8:00 AM,10:00 AM,false,Holster Draw- Frankfort,,Imported,,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-19,2026-05-02,2026-05-02,3:00 PM,8:00 PM,false,Lethal U Group Shoot,,Imported,,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-20,2026-06-08,2026-06-09,,,false,Norm 1:1 Monique Hall time?,,Imported,,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-21,2026-07-03,2026-07-04,,,false,4th of July BBQ,,Imported,,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-22,2026-05-16,2026-05-16,3:00 PM,8:00 PM,false,All LVL Group Shoot,,Imported,,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-24,2026-05-02,2026-05-02,8:00 AM,10:00 AM,false,Holster Draw -Bourbonnais,,Imported,,Scheduled,Imported ICS,General,Imported from uploaded calendar
-ics-25,2026-05-02,2026-05-02,8:00 AM,10:00 AM,false,Holster Draw -Frankfort,,Imported,,Scheduled,Imported ICS,General,Imported from uploaded calendar
+alsip-ics-001,2026-05-05,2026-05-05,5:30 PM,8:30 PM,False,Gun Cleaning and Networking,Alsip,First Tuesday Member Event,First Tuesday Member Event First Tuesday gun cleaning and networking event. Rotating location: Alsip.,Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-002,2026-05-06,2026-05-06,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,3-Hour Renewal Class,3-Hour Renewal Class Wednesday concealed carry renewal class.,Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-003,2026-05-09,2026-05-09,9:00 AM,7:00 PM,False,16-Hour Concealed Carry - Day 1,Alsip,Concealed Carry Class,"Concealed Carry Class Two-day 16-hour concealed carry class, day 1.",Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-004,2026-05-10,2026-05-10,10:00 AM,4:00 PM,False,16-Hour Concealed Carry - Day 2,Alsip,Concealed Carry Class,"Concealed Carry Class Two-day 16-hour concealed carry class, day 2.",Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-005,2026-05-11,2026-05-11,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Monday Renewal Class,Monday Renewal Class Monday concealed carry renewal class.,Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-006,2026-05-20,2026-05-20,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,3-Hour Renewal Class,3-Hour Renewal Class Wednesday concealed carry renewal class.,Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-007,2026-05-23,2026-05-23,9:00 AM,7:00 PM,False,16-Hour Concealed Carry - Day 1,Alsip,Concealed Carry Class,"Concealed Carry Class Two-day 16-hour concealed carry class, day 1.",Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-008,2026-05-24,2026-05-24,10:00 AM,4:00 PM,False,16-Hour Concealed Carry - Day 2,Alsip,Concealed Carry Class,"Concealed Carry Class Two-day 16-hour concealed carry class, day 2.",Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-009,2026-05-25,2026-05-25,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Monday Renewal Class,Monday Renewal Class Monday concealed carry renewal class.,Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-010,2026-06-03,2026-06-03,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,3-Hour Renewal Class,3-Hour Renewal Class Wednesday concealed carry renewal class.,Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-011,2026-06-08,2026-06-08,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Monday Renewal Class,Monday Renewal Class Monday concealed carry renewal class.,Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-012,2026-06-13,2026-06-13,9:00 AM,7:00 PM,False,16-Hour Concealed Carry - Day 1,Alsip,Concealed Carry Class,"Concealed Carry Class Two-day 16-hour concealed carry class, day 1.",Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-013,2026-06-14,2026-06-14,10:00 AM,4:00 PM,False,16-Hour Concealed Carry - Day 2,Alsip,Concealed Carry Class,"Concealed Carry Class Two-day 16-hour concealed carry class, day 2.",Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-014,2026-06-17,2026-06-17,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,3-Hour Renewal Class,3-Hour Renewal Class Wednesday concealed carry renewal class.,Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-015,2026-06-22,2026-06-22,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Monday Renewal Class,Monday Renewal Class Monday concealed carry renewal class.,Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-016,2026-06-27,2026-06-27,9:00 AM,7:00 PM,False,16-Hour Concealed Carry - Day 1,Alsip,Concealed Carry Class,"Concealed Carry Class Two-day 16-hour concealed carry class, day 1.",Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-017,2026-06-28,2026-06-28,10:00 AM,4:00 PM,False,16-Hour Concealed Carry - Day 2,Alsip,Concealed Carry Class,"Concealed Carry Class Two-day 16-hour concealed carry class, day 2.",Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-018,2026-07-01,2026-07-01,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,3-Hour Renewal Class,3-Hour Renewal Class Wednesday concealed carry renewal class.,Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-019,2026-07-06,2026-07-06,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Monday Renewal Class,Monday Renewal Class Monday concealed carry renewal class.,Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-020,2026-07-07,2026-07-07,5:30 PM,8:30 PM,False,Gun Cleaning and Networking,Alsip,First Tuesday Member Event,First Tuesday Member Event First Tuesday gun cleaning and networking event. Rotating location: Alsip.,Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-021,2026-07-11,2026-07-11,9:00 AM,7:00 PM,False,16-Hour Concealed Carry - Day 1,Alsip,Concealed Carry Class,"Concealed Carry Class Two-day 16-hour concealed carry class, day 1.",Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-022,2026-07-12,2026-07-12,10:00 AM,4:00 PM,False,16-Hour Concealed Carry - Day 2,Alsip,Concealed Carry Class,"Concealed Carry Class Two-day 16-hour concealed carry class, day 2.",Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-023,2026-07-15,2026-07-15,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,3-Hour Renewal Class,3-Hour Renewal Class Wednesday concealed carry renewal class.,Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-024,2026-07-20,2026-07-20,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Monday Renewal Class,Monday Renewal Class Monday concealed carry renewal class.,Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-025,2026-07-25,2026-07-25,9:00 AM,7:00 PM,False,16-Hour Concealed Carry - Day 1,Alsip,Concealed Carry Class,"Concealed Carry Class Two-day 16-hour concealed carry class, day 1.",Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-026,2026-07-26,2026-07-26,10:00 AM,4:00 PM,False,16-Hour Concealed Carry - Day 2,Alsip,Concealed Carry Class,"Concealed Carry Class Two-day 16-hour concealed carry class, day 2.",Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
+alsip-ics-027,2026-07-29,2026-07-29,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,3-Hour Renewal Class,3-Hour Renewal Class Wednesday concealed carry renewal class.,Scheduled,Alsip ICS,Alsip,Imported from Alsip calendar
 CSV;
 ?>
 
@@ -236,11 +239,18 @@ CSV;
 	const calendarCsv = calendarCsvElement ? JSON.parse(calendarCsvElement.textContent || '""') : '';
 	const calendarStartDate = parseDate('2026-05-01');
 	const calendarEndDate = parseDate('2026-07-31');
+	const browserToday = startOfDay(new Date());
+	const todayKey = formatDate(browserToday);
+	const highlightToday = browserToday >= calendarStartDate && browserToday <= calendarEndDate;
 	let activeTooltipEvent = null;
 
 	function parseDate(value) {
 		const parts = value.split('-').map(Number);
 		return new Date(parts[0], parts[1] - 1, parts[2]);
+	}
+
+	function startOfDay(date) {
+		return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 	}
 
 	function formatDate(date) {
@@ -755,15 +765,18 @@ CSV;
 			const outsideRange = date && date > endDate;
 			const key = date ? formatDate(date) : '';
 			const dayEvents = date && !outsideRange ? layoutDayEvents(events.get(key) || []) : [];
+			const isToday = validDay && !outsideRange && highlightToday && key === todayKey;
 			const classes = [
 				'calendar-day',
 				!validDay || outsideRange ? 'empty-day' : '',
 				dayEvents.length ? 'has-events' : 'no-events',
+				isToday ? 'is-today' : '',
 			].filter(Boolean).join(' ');
 
 			cells.push(`
 				<div class="${classes}">
 					${validDay && !outsideRange ? `<div class="day-number">${dayNum}</div>` : ''}
+					${isToday ? '<span class="today-label">Today</span>' : ''}
 					<div class="day-timeline">
 						${dayEvents.map(renderEvent).join('')}
 					</div>
