@@ -4,6 +4,14 @@
  * Template Post Type: page
  */
 
+$pistol_overview_stylesheet = get_stylesheet_directory() . '/assets/css/support-pages.css';
+wp_enqueue_style(
+	'jm-support-pages',
+	get_stylesheet_directory_uri() . '/assets/css/support-pages.css',
+	['child-style'],
+	file_exists($pistol_overview_stylesheet) ? filemtime($pistol_overview_stylesheet) : null
+);
+
 get_header();
 
 $pistol_overview_assets_uri = get_stylesheet_directory_uri() . '/assets/images';
@@ -28,60 +36,35 @@ $pistol_overview_home_url = function_exists('jm_training_primary_landing_url') ?
 				<div class="pistol-overview-copy">
 					<p class="support-eyebrow">JM Training Courses</p>
 					<h1 id="pistol-training-overview-title">Pistol Training Overview</h1>
-					<p>
-						A structured progression from safe foundational handling to applied performance under pressure.
-						Each level builds on measurable standards before the student moves forward.
-					</p>
 				</div>
-				<div class="pistol-overview-media" aria-label="Pistol instruction at JM Training">
+			</div>
+		</section>
+
+		<section class="pistol-level-zero" aria-labelledby="pistol-level-0-title">
+			<div class="pistol-level-zero-inner">
+				<div class="pistol-level-zero-media">
 					<img
 						src="<?php echo esc_url($pistol_overview_assets_uri . '/pistol-training-overview-level-0.png'); ?>"
-						alt="JM Training instructor coaching a pistol student on the indoor range"
+						alt="JM Training pistol student receiving Level 0 handgun instruction"
 						width="2944"
 						height="1680"
 						loading="eager"
 						decoding="async"
 					>
 				</div>
-			</div>
-		</section>
-
-		<section class="pistol-level-overview" aria-labelledby="pistol-level-overview-title">
-			<div class="pistol-level-overview-inner">
-				<div class="pistol-level-heading">
-					<p class="support-eyebrow">Pistol Progression</p>
-					<h2 id="pistol-level-overview-title">Move through the levels in order.</h2>
+				<div class="pistol-level-zero-copy">
+					<p class="support-eyebrow">Pistol Level 0</p>
+					<h2 id="pistol-level-0-title">Level 0 — Foundation</h2>
+					<p>
+						Level 0 is the foundation of the pistol training path. This course introduces the student to handgun safety,
+						basic handgun nomenclature, how a handgun works, safe handling, storage and daily responsibility, proper grip,
+						stance, basic marksmanship, and an introductory holster draw. The goal is to help students understand how to
+						live with a handgun safely, handle it responsibly, and begin building the skill to draw and fire without
+						endangering themselves or innocent people.
+					</p>
+					<!-- This placeholder will later connect to a Gravity Forms registration flow. -->
+					<a class="support-button" href="#">Learn More / Register</a>
 				</div>
-				<div class="pistol-level-list">
-					<article class="pistol-level-card">
-						<span>Level 0</span>
-						<h3>Foundation and Safe Operation</h3>
-						<p>Build safe handling, loading, unloading, storage, transport, range conduct, and basic marksmanship.</p>
-						<a class="support-button" href="<?php echo esc_url(home_url('/pistol-training-level-0/')); ?>">Learn More / Register</a>
-					</article>
-
-					<article class="pistol-level-card">
-						<span>Level 1</span>
-						<h3>Control and Manipulation</h3>
-						<p>Develop repeatable presentation, recoil control, reloads, stoppage response, and accuracy standards.</p>
-						<a class="support-button" href="<?php echo esc_url(home_url('/pistol-training-level-1/')); ?>">Learn More / Register</a>
-					</article>
-
-					<article class="pistol-level-card">
-						<span>Level 2</span>
-						<h3>Movement and Applied Standards</h3>
-						<p>Add movement, communication, positional awareness, and accountability around other trained students.</p>
-						<a class="support-button" href="<?php echo esc_url(home_url('/pistol-training-level-2/')); ?>">Learn More / Register</a>
-					</article>
-
-					<article class="pistol-level-card">
-						<span>Level 3</span>
-						<h3>Dynamic Problem Solving</h3>
-						<p>Apply the system through more complex range problems while maintaining control, safety, and discipline.</p>
-						<a class="support-button" href="<?php echo esc_url(home_url('/pistol-training-level-3/')); ?>">Learn More / Register</a>
-					</article>
-				</div>
-				<!-- Replace the level links with Gravity Forms registration flows when those forms are ready. -->
 			</div>
 		</section>
 	</main>
