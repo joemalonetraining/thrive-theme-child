@@ -67,6 +67,34 @@ $pistol_overview_home_url = function_exists('jm_training_primary_landing_url') ?
 				</div>
 			</div>
 		</section>
+
+		<section class="pistol-level-one" aria-labelledby="pistol-level-1-title">
+			<div class="pistol-level-one-inner">
+				<div class="pistol-level-one-copy">
+					<p class="support-eyebrow">Pistol Level 1</p>
+					<h2 id="pistol-level-1-title">Level 1 — Control and Manipulation</h2>
+					<p>
+						Level 1 moves beyond basic handling into repeatable pistol control. Students refine grip, presentation,
+						sight management, trigger control, recoil management, reloads, and clearing common stoppages while
+						maintaining strict muzzle and trigger discipline. The goal is to help students build safe, accountable
+						gun handling at a higher tempo and begin performing core manipulations without sacrificing accuracy or
+						awareness.
+					</p>
+					<!-- This placeholder will later connect to a Gravity Forms registration flow. -->
+					<a class="support-button" href="#">Learn More / Register</a>
+				</div>
+				<div class="pistol-level-one-media">
+					<img
+						src="<?php echo esc_url($pistol_overview_assets_uri . '/pistol-training-overview-level-1.png'); ?>"
+						alt="JM Training pistol student practicing Level 1 control and manipulation"
+						width="1586"
+						height="992"
+						loading="lazy"
+						decoding="async"
+					>
+				</div>
+			</div>
+		</section>
 	</main>
 </div>
 
