@@ -707,49 +707,60 @@ body:has(.jm-calendar-page) .entry-content {
   text-transform: uppercase;
 }
 
-.jm-calendar-page .event-detail {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 50%;
-  z-index: 30;
-  display: none;
-  width: min(260px, 72vw);
-  max-width: 100%;
-  padding: 12px;
-  border: 1px solid rgba(248, 246, 239, 0.22);
-  border-radius: 8px;
-  background: rgba(3, 5, 4, 0.97) !important;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.46);
+.jm-calendar-page .calendar-floating-tooltip {
+  position: fixed;
+  z-index: 999999;
+  width: min(260px, calc(100vw - 24px));
+  max-width: calc(100vw - 24px);
+  padding: 8px 9px;
+  border: 1px solid rgba(248, 246, 239, 0.26);
+  border-radius: 6px;
+  background: rgba(3, 5, 4, 0.98) !important;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.58);
   color: var(--calendar-muted) !important;
-  font-size: 0.78rem;
-  font-weight: 650;
-  line-height: 1.42;
-  text-transform: none;
-  white-space: normal;
-  transform: translateX(-50%);
+  font-size: 0.74rem;
+  font-weight: 700;
+  line-height: 1.25;
+  pointer-events: none;
 }
 
-.jm-calendar-page .event-detail strong,
-.jm-calendar-page .event-detail em {
+.jm-calendar-page .calendar-floating-tooltip[hidden] {
+  display: none !important;
+}
+
+.jm-calendar-page .calendar-floating-tooltip strong,
+.jm-calendar-page .calendar-floating-tooltip span,
+.jm-calendar-page .calendar-floating-tooltip em {
   display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.jm-calendar-page .event-detail strong {
+.jm-calendar-page .calendar-floating-tooltip .tooltip-location {
+  margin-bottom: 3px;
+  color: var(--calendar-gold) !important;
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.jm-calendar-page .calendar-floating-tooltip .tooltip-title {
   margin-bottom: 4px;
   color: var(--calendar-white) !important;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
+  font-weight: 950;
+  white-space: normal;
 }
 
-.jm-calendar-page .event-detail em {
-  margin-bottom: 7px;
-  color: var(--calendar-gold);
+.jm-calendar-page .calendar-floating-tooltip .tooltip-time {
+  color: rgba(248, 246, 239, 0.76) !important;
   font-style: normal;
-}
-
-.jm-calendar-page .calendar-event:hover .event-detail,
-.jm-calendar-page .calendar-event:focus-visible .event-detail,
-.jm-calendar-page .calendar-event.is-open .event-detail {
-  display: block;
+  font-size: 0.66rem;
+  font-weight: 850;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .jm-calendar-page .location-bourbonnais {
@@ -929,9 +940,4 @@ body:has(.jm-calendar-page) .entry-content {
     height: 212px;
   }
 
-  .jm-calendar-page .event-detail {
-    left: 0;
-    width: min(240px, calc(100vw - 58px));
-    transform: none;
-  }
 }

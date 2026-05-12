@@ -226,6 +226,7 @@ CSV;
 			</div>
 		</section>
 	</div>
+	<div id="jm-calendar-floating-tooltip" class="calendar-floating-tooltip" data-calendar-tooltip role="tooltip" aria-hidden="true" hidden></div>
 </main>
 
 <script id="jm-calendar-csv-data" type="application/json"><?php echo wp_json_encode($jm_calendar_csv); ?></script>
@@ -255,10 +256,12 @@ CSV;
 	});
 
 	const calendarRoot = pageRoot.querySelector('[data-training-calendar]');
+	const calendarTooltip = pageRoot.querySelector('[data-calendar-tooltip]');
 	const calendarCsvElement = document.getElementById('jm-calendar-csv-data');
 	const calendarCsv = calendarCsvElement ? JSON.parse(calendarCsvElement.textContent || '""') : '';
 	const calendarStartDate = parseDate('2026-05-01');
 	const calendarEndDate = parseDate('2026-07-31');
+	let activeTooltipEvent = null;
 
 	function parseDate(value) {
 		const parts = value.split('-').map(Number);
@@ -628,21 +631,100 @@ CSV;
 		const months = [4, 5, 6];
 		root.innerHTML = months.map((monthIndex) => renderMonth(monthIndex, events, endDate)).join('');
 		root.querySelectorAll('.calendar-event').forEach((eventElement) => {
-			eventElement.addEventListener('click', () => {
-				const isOpen = eventElement.classList.contains('is-open');
-				root.querySelectorAll('.calendar-event.is-open').forEach((openEvent) => openEvent.classList.remove('is-open'));
-
-				if (!isOpen) {
-					eventElement.classList.add('is-open');
-				}
+			eventElement.addEventListener('mouseenter', () => showCalendarTooltip(eventElement));
+			eventElement.addEventListener('focus', () => showCalendarTooltip(eventElement));
+			eventElement.addEventListener('mouseleave', () => hideCalendarTooltip());
+			eventElement.addEventListener('blur', () => hideCalendarTooltip());
+			eventElement.addEventListener('click', (event) => {
+				event.stopPropagation();
+				showCalendarTooltip(eventElement);
 			});
 		});
 
 		document.addEventListener('click', (event) => {
-			if (!root.contains(event.target)) {
-				root.querySelectorAll('.calendar-event.is-open').forEach((openEvent) => openEvent.classList.remove('is-open'));
+			if (!event.target.closest('.calendar-event')) {
+				hideCalendarTooltip();
 			}
 		});
+		window.addEventListener('scroll', hideCalendarTooltip, true);
+		window.addEventListener('resize', hideCalendarTooltip);
+	}
+
+	function showCalendarTooltip(eventElement) {
+		if (!calendarTooltip) {
+			return;
+		}
+
+		activeTooltipEvent = eventElement;
+		calendarRoot.querySelectorAll('.calendar-event.is-open').forEach((openEvent) => {
+			openEvent.classList.remove('is-open');
+			openEvent.removeAttribute('aria-describedby');
+		});
+		eventElement.classList.add('is-open');
+		eventElement.setAttribute('aria-describedby', 'jm-calendar-floating-tooltip');
+		calendarTooltip.innerHTML = `
+			<strong class="tooltip-location">${eventElement.dataset.tooltipLocation || ''}</strong>
+			<span class="tooltip-title">${eventElement.dataset.tooltipTitle || ''}</span>
+			<em class="tooltip-time">${eventElement.dataset.tooltipTime || ''}</em>
+		`;
+		calendarTooltip.hidden = false;
+		calendarTooltip.setAttribute('aria-hidden', 'false');
+		positionCalendarTooltip(eventElement);
+	}
+
+	function positionCalendarTooltip(eventElement) {
+		if (!calendarTooltip || calendarTooltip.hidden) {
+			return;
+		}
+
+		const viewportPadding = 12;
+		const eventRect = eventElement.getBoundingClientRect();
+		const viewportWidth = window.innerWidth;
+		const viewportHeight = window.innerHeight;
+		const tooltipWidth = Math.min(Math.max(eventRect.width, 170), 300, viewportWidth - (viewportPadding * 2));
+
+		calendarTooltip.style.width = `${tooltipWidth}px`;
+		calendarTooltip.style.left = '0px';
+		calendarTooltip.style.top = '0px';
+
+		const tooltipRect = calendarTooltip.getBoundingClientRect();
+		let left = eventRect.left;
+		let top = eventRect.bottom + 8;
+
+		if (left + tooltipRect.width > viewportWidth - viewportPadding) {
+			left = viewportWidth - viewportPadding - tooltipRect.width;
+		}
+
+		if (left < viewportPadding) {
+			left = viewportPadding;
+		}
+
+		if (top + tooltipRect.height > viewportHeight - viewportPadding) {
+			top = eventRect.top - tooltipRect.height - 8;
+		}
+
+		if (top < viewportPadding) {
+			top = Math.max(viewportPadding, viewportHeight - viewportPadding - tooltipRect.height);
+		}
+
+		calendarTooltip.style.left = `${left}px`;
+		calendarTooltip.style.top = `${top}px`;
+	}
+
+	function hideCalendarTooltip() {
+		if (!calendarTooltip) {
+			return;
+		}
+
+		if (activeTooltipEvent) {
+			activeTooltipEvent.classList.remove('is-open');
+			activeTooltipEvent.removeAttribute('aria-describedby');
+		}
+
+		activeTooltipEvent = null;
+		calendarTooltip.hidden = true;
+		calendarTooltip.setAttribute('aria-hidden', 'true');
+		calendarTooltip.innerHTML = '';
 	}
 
 	function renderMonth(monthIndex, events, endDate) {
@@ -701,18 +783,12 @@ CSV;
 		const title = escapeHtml(event.title);
 		const location = escapeHtml(event.location);
 		const timeLabel = escapeHtml(event.timeLabel);
-		const detail = escapeHtml(event.detail);
 
 		return `
-			<button class="${eventClasses}" style="${eventStyle(event)}" type="button">
+			<button class="${eventClasses}" style="${eventStyle(event)}" type="button" data-tooltip-location="${location}" data-tooltip-title="${title}" data-tooltip-time="${timeLabel}">
 				<span class="event-time">${timeLabel}</span>
 				<strong>${title}</strong>
 				<small>${location}</small>
-				<span class="event-detail">
-					<strong>${title}</strong>
-					<em>${location} | ${timeLabel}</em>
-					${detail ? `<span>${detail}</span>` : ''}
-				</span>
 			</button>
 		`;
 	}
