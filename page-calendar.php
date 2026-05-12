@@ -38,7 +38,7 @@ $jm_calendar_images_uri = get_stylesheet_directory_uri() . '/assets/images';
 		<section class="calendar-section" id="training-calendar" aria-labelledby="calendar-title">
 			<div class="calendar-section-inner">
 				<div class="calendar-section-heading">
-					<p class="calendar-eyebrow">May 1-October 1, 2026 standalone calendar</p>
+					<p class="calendar-eyebrow">May 1-July 31, 2026 standalone calendar</p>
 					<h1 id="calendar-title">JM Training Schedule</h1>
 					<p>
 						This calendar shows the live training ecosystem across Bourbonnais, Alsip, and Frankfort. Friday evening
@@ -158,8 +158,13 @@ $jm_calendar_images_uri = get_stylesheet_directory_uri() . '/assets/images';
 		const usable = timelineEnd - timelineStart;
 		const top = Math.max(0, ((start - timelineStart) / usable) * 100);
 		const height = Math.max(5, ((end - start) / usable) * 100);
+		const columnCount = Math.max(1, event.columnCount || 1);
+		const columnIndex = Math.min(columnCount - 1, Math.max(0, event.columnIndex || 0));
+		const horizontalGap = columnCount > 1 ? 3 : 0;
+		const width = columnCount > 1 ? `calc(100% / ${columnCount} - ${horizontalGap}px)` : '100%';
+		const left = columnCount > 1 ? `calc(${columnIndex * 100}% / ${columnCount})` : '0';
 
-		return `top:${top}%;height:${height}%;`;
+		return `top:${top}%;height:${height}%;width:${width};left:${left};`;
 	}
 
 	function titleCaseMonth(date) {
@@ -181,10 +186,85 @@ $jm_calendar_images_uri = get_stylesheet_directory_uri() . '/assets/images';
 		return Math.floor((day - 1) / 7) + 1;
 	}
 
+	function layoutDayEvents(dayEvents) {
+		const sortedEvents = dayEvents.map((event, originalIndex) => ({
+			...event,
+			originalIndex,
+			startMinutes: minutesFromTime(event.start),
+			endMinutes: minutesFromTime(event.end),
+			columnIndex: 0,
+			columnCount: 1,
+		})).sort((first, second) => {
+			if (first.startMinutes !== second.startMinutes) {
+				return first.startMinutes - second.startMinutes;
+			}
+
+			if (first.endMinutes !== second.endMinutes) {
+				return first.endMinutes - second.endMinutes;
+			}
+
+			return first.originalIndex - second.originalIndex;
+		});
+		const laidOutEvents = [];
+		let overlapGroup = [];
+		let overlapGroupEnd = -1;
+
+		sortedEvents.forEach((event) => {
+			if (overlapGroup.length && event.startMinutes >= overlapGroupEnd) {
+				laidOutEvents.push(...assignOverlapColumns(overlapGroup));
+				overlapGroup = [event];
+				overlapGroupEnd = event.endMinutes;
+				return;
+			}
+
+			overlapGroup.push(event);
+			overlapGroupEnd = Math.max(overlapGroupEnd, event.endMinutes);
+		});
+
+		if (overlapGroup.length) {
+			laidOutEvents.push(...assignOverlapColumns(overlapGroup));
+		}
+
+		return laidOutEvents.sort((first, second) => {
+			if (first.startMinutes !== second.startMinutes) {
+				return first.startMinutes - second.startMinutes;
+			}
+
+			return first.originalIndex - second.originalIndex;
+		}).map((event) => {
+			const { startMinutes, endMinutes, originalIndex, ...renderableEvent } = event;
+			return renderableEvent;
+		});
+	}
+
+	function assignOverlapColumns(overlapGroup) {
+		const activeColumns = [];
+
+		overlapGroup.forEach((event) => {
+			let assignedColumn = activeColumns.findIndex((activeEvent) => {
+				return !activeEvent || activeEvent.endMinutes <= event.startMinutes;
+			});
+
+			if (assignedColumn === -1) {
+				assignedColumn = activeColumns.length;
+			}
+
+			event.columnIndex = assignedColumn;
+			activeColumns[assignedColumn] = event;
+		});
+
+		const columnCount = Math.max(1, activeColumns.length);
+
+		return overlapGroup.map((event) => ({
+			...event,
+			columnCount,
+		}));
+	}
+
 	function buildTrainingCalendar(root) {
 		// GoHighLevel calendar config hook: update data attributes above if the live schedule start dates move.
 		const startDate = new Date(2026, 4, 1);
-		const endDate = new Date(2026, 9, 1);
+		const endDate = new Date(2026, 6, 31);
 		const fridayEventStart = parseDate(root.dataset.fridayEventStart || '2026-05-15');
 		const bourbonnaisBlockStart = parseDate(root.dataset.bourbonnaisBlockStart || '2026-05-15');
 		const bourbonnaisTrainingStart = parseDate(root.dataset.bourbonnaisTrainingStart || '2026-05-08');
@@ -394,7 +474,7 @@ $jm_calendar_images_uri = get_stylesheet_directory_uri() . '/assets/images';
 			}
 		}
 
-		const months = [4, 5, 6, 7, 8, 9];
+		const months = [4, 5, 6];
 		root.innerHTML = months.map((monthIndex) => renderMonth(monthIndex, events, endDate)).join('');
 		root.querySelectorAll('.calendar-event').forEach((eventElement) => {
 			eventElement.addEventListener('click', () => {
@@ -428,7 +508,7 @@ $jm_calendar_images_uri = get_stylesheet_directory_uri() . '/assets/images';
 			const date = validDay ? new Date(2026, monthIndex, dayNum) : null;
 			const outsideRange = date && date > endDate;
 			const key = date ? formatDate(date) : '';
-			const dayEvents = date && !outsideRange ? (events.get(key) || []) : [];
+			const dayEvents = date && !outsideRange ? layoutDayEvents(events.get(key) || []) : [];
 			const classes = [
 				'calendar-day',
 				!validDay || outsideRange ? 'empty-day' : '',
