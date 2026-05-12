@@ -166,48 +166,23 @@ CSV;
 					<p class="calendar-eyebrow">May 1-July 31, 2026 standalone calendar</p>
 					<h1 id="calendar-title">JM Training Schedule</h1>
 					<p>
-						This calendar is populated from the merged May-July 2026 course schedule. It includes scheduled courses,
-						member open range windows, imported calendar items, closures, and holiday markers across the active JM
-						Training locations.
+						View scheduled classes, member range availability, special events, closures, and holiday notices across
+						active JM Training locations.
 					</p>
 				</div>
 
 				<div class="calendar-key" aria-label="Calendar location colors">
 					<span class="legend-bourbonnais"><span aria-hidden="true" data-calendar-icon="pin"></span> Bourbonnais</span>
-					<span class="legend-berkeley"><span aria-hidden="true" data-calendar-icon="pin"></span> Berkeley</span>
-					<span class="legend-general"><span aria-hidden="true" data-calendar-icon="pin"></span> General / Imported</span>
+					<span class="legend-alsip"><span aria-hidden="true" data-calendar-icon="pin"></span> Alsip</span>
+					<span class="legend-frankfort"><span aria-hidden="true" data-calendar-icon="pin"></span> Frankfort</span>
 					<span class="legend-closure"><span aria-hidden="true" data-calendar-icon="pin"></span> Closed</span>
-					<span class="legend-holiday"><span aria-hidden="true" data-calendar-icon="pin"></span> Holiday</span>
+					<span class="legend-holiday"><span aria-hidden="true" data-calendar-icon="pin"></span> Holidays</span>
 				</div>
 
 				<div class="calendar-assumptions">
 					<article>
-						<strong>CSV source</strong>
-						<span>All visible events are parsed from the uploaded merged May-July 2026 calendar file.</span>
-					</article>
-					<article>
-						<strong>Color key</strong>
-						<span>Event colors come from the CSV color_key and location fields.</span>
-					</article>
-					<article>
-						<strong>Closures</strong>
-						<span>Closed rows render as muted full-day closure blocks.</span>
-					</article>
-					<article>
-						<strong>Holidays</strong>
-						<span>Holiday and informational rows render as lightweight markers.</span>
-					</article>
-					<article>
-						<strong>Overlaps</strong>
-						<span>Events sharing the same time window are placed side by side inside the day column.</span>
-					</article>
-					<article>
-						<strong>Imported items</strong>
-						<span>Imported calendar rows are preserved and coded as general events unless a specific color key is present.</span>
-					</article>
-					<article>
-						<strong>Date range</strong>
-						<span>Only events from May 1 through July 31, 2026 are rendered.</span>
+						<strong>Schedule Notice</strong>
+						<span>Training schedules, range availability, and special events may change. When possible, register for any class or event you plan to attend so you receive updates regarding schedule changes, cancellations, or rescheduling.</span>
 					</article>
 				</div>
 
@@ -288,6 +263,44 @@ CSV;
 	function slugify(value) {
 		const slug = String(value || 'general').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 		return slug || 'general';
+	}
+
+	function publicLocationLabel(value) {
+		const normalizedValue = String(value || '').trim().toLowerCase();
+
+		if (normalizedValue === 'berkeley') {
+			return 'Alsip';
+		}
+
+		if (!normalizedValue || normalizedValue === 'general') {
+			return 'Frankfort';
+		}
+
+		return String(value || '').trim() || 'Frankfort';
+	}
+
+	function publicColorKey(row, type) {
+		const rawColorKey = String(row.color_key || '').trim().toLowerCase();
+		const rawLocation = String(row.location || '').trim().toLowerCase();
+		const sourceValue = type === 'closure' ? rawLocation || rawColorKey : rawColorKey || rawLocation;
+
+		if (sourceValue === 'berkeley') {
+			return 'Alsip';
+		}
+
+		if (!sourceValue || sourceValue === 'general') {
+			return 'Frankfort';
+		}
+
+		if (sourceValue === 'holiday') {
+			return 'Holiday';
+		}
+
+		if (sourceValue === 'closure') {
+			return 'Closed';
+		}
+
+		return publicLocationLabel(sourceValue);
 	}
 
 	function escapeHtml(value) {
@@ -511,8 +524,8 @@ CSV;
 		const isUntimed = isTruthy(row.all_day) || !hasProvidedTimes || isClosure || isHoliday;
 		const start = isClosure ? '06:00' : isHoliday ? '06:00' : providedStart || '09:00';
 		const end = isClosure ? '23:00' : isHoliday ? '07:00' : providedEnd || '10:00';
-		const location = row.location || row.color_key || 'General';
-		const colorKey = row.color_key || row.location || 'General';
+		const location = publicLocationLabel(row.location || row.color_key);
+		const colorKey = publicColorKey(row, type);
 		const timeLabel = isClosure ? 'Closed' : isHoliday ? 'Holiday' : hasProvidedTimes ? `${formatTimeLabel(start)}-${formatTimeLabel(end)}` : 'All day';
 		const details = [row.description, row.notes].filter(Boolean).join(' ');
 
