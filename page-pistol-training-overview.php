@@ -87,8 +87,8 @@ $pistol_overview_home_url = function_exists('jm_training_primary_landing_url') ?
 					<img
 						src="<?php echo esc_url($pistol_overview_assets_uri . '/pistol-training-overview-level-1.png'); ?>"
 						alt="JM Training pistol student practicing Level 1 control and manipulation"
-						width="1586"
-						height="992"
+						width="2908"
+						height="1826"
 						loading="lazy"
 						decoding="async"
 					>
@@ -102,8 +102,8 @@ $pistol_overview_home_url = function_exists('jm_training_primary_landing_url') ?
 					<img
 						src="<?php echo esc_url($pistol_overview_assets_uri . '/pistol-training-overview-level-2.png'); ?>"
 						alt="JM Training pistol student practicing Level 2 marksmanship and target discrimination"
-						width="1594"
-						height="987"
+						width="2600"
+						height="1610"
 						loading="lazy"
 						decoding="async"
 					>
@@ -120,6 +120,49 @@ $pistol_overview_home_url = function_exists('jm_training_primary_landing_url') ?
 					<!-- This placeholder will later connect to a Gravity Forms registration flow. -->
 					<a class="support-button" href="#">Learn More / Register</a>
 				</div>
+			</div>
+		</section>
+
+		<section class="pistol-level-three" aria-labelledby="pistol-level-3-title">
+			<div class="pistol-level-three-inner">
+				<div class="pistol-level-three-copy">
+					<p class="support-eyebrow">Pistol Level 3</p>
+					<h2 id="pistol-level-3-title">Level 3 — Asymmetry and Stress Integration</h2>
+					<p>
+						Level 3 is where the pistol progression shifts from isolated skill-building into adaptive problem-solving.
+						Students are placed under greater stress, less predictable conditions, and more asymmetric shooting problems
+						that require them to process information, move efficiently, communicate, use cover, and make accurate decisions
+						under pressure. This level begins integrating multi-domain response concepts: movement, positioning, visual
+						processing, target discrimination, low-light considerations, and performance standards that demand both speed
+						and accountability. The goal is not just to shoot faster, but to remain composed, accurate, and adaptable when
+						the problem is no longer clean or predictable.
+					</p>
+					<!-- This placeholder will later connect to a Gravity Forms registration flow. -->
+					<a class="support-button" href="#">Learn More / Register</a>
+				</div>
+				<div class="pistol-level-three-media">
+					<img
+						src="<?php echo esc_url($pistol_overview_assets_uri . '/pistol-training-overview-level-3.png'); ?>"
+						alt="JM Training pistol students practicing Level 3 asymmetry and stress integration"
+						width="1605"
+						height="980"
+						loading="lazy"
+						decoding="async"
+					>
+				</div>
+			</div>
+		</section>
+
+		<section class="pistol-overview-final-cta" aria-labelledby="pistol-overview-final-title">
+			<div class="pistol-overview-final-cta-inner">
+				<p class="support-eyebrow">Pistol Training Path</p>
+				<h2 id="pistol-overview-final-title">Build the foundation before the pressure rises.</h2>
+				<p>
+					The pistol program is designed to move students from safe ownership and responsible handling into accountable
+					performance across Levels 0 through 3.
+				</p>
+				<!-- This placeholder will later connect to a Gravity Forms registration flow. -->
+				<a class="support-button" href="#">Learn More / Register</a>
 			</div>
 		</section>
 	</main>
