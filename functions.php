@@ -1,4 +1,47 @@
 <?php
+if (! function_exists('jm_training_primary_landing_url')) {
+    function jm_training_primary_landing_url()
+    {
+        static $landing_url = null;
+
+        if ($landing_url !== null) {
+            return $landing_url;
+        }
+
+        $landing_template = 'page-landing-test.php';
+        $front_page_id = (int) get_option('page_on_front');
+
+        if ($front_page_id > 0 && get_page_template_slug($front_page_id) === $landing_template) {
+            $front_page_url = get_permalink($front_page_id);
+
+            if ($front_page_url) {
+                $landing_url = $front_page_url;
+                return $landing_url;
+            }
+        }
+
+        $landing_pages = get_pages([
+            'meta_key' => '_wp_page_template',
+            'meta_value' => $landing_template,
+            'number' => 1,
+            'post_status' => 'publish',
+            'sort_column' => 'menu_order,post_title',
+        ]);
+
+        if (! empty($landing_pages)) {
+            $template_page_url = get_permalink($landing_pages[0]->ID);
+
+            if ($template_page_url) {
+                $landing_url = $template_page_url;
+                return $landing_url;
+            }
+        }
+
+        $landing_url = '#top';
+        return $landing_url;
+    }
+}
+
 add_action('wp_enqueue_scripts', function () {
     wp_enqueue_style(
         'parent-style',

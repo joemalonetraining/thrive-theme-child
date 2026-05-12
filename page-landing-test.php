@@ -7,7 +7,7 @@
 get_header();
 
 $landing_assets_uri = get_stylesheet_directory_uri() . '/assets/images';
-$landing_home_url = home_url('/landing-test/');
+$landing_home_url = function_exists('jm_training_primary_landing_url') ? jm_training_primary_landing_url() : '#top';
 
 /*
  * Required image assets:

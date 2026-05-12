@@ -17,7 +17,7 @@ $page = wp_parse_args(
 );
 
 $logo_uri = get_stylesheet_directory_uri() . '/assets/images/jm-logo.png';
-$support_home_url = home_url('/landing-test/');
+$support_home_url = function_exists('jm_training_primary_landing_url') ? jm_training_primary_landing_url() : '#top';
 ?>
 
 <div class="jm-support-page">
