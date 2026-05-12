@@ -271,6 +271,10 @@ body:has(.jm-calendar-page) .entry-content {
   --calendar-bourbonnais: #b6d765;
   --calendar-alsip: #d2a341;
   --calendar-frankfort: #6fb6ff;
+  --calendar-berkeley: #d2a341;
+  --calendar-general: #8db6ff;
+  --calendar-closure: #8f8a80;
+  --calendar-holiday: #f0d06b;
   display: block;
   width: 100%;
   max-width: 100% !important;
@@ -484,12 +488,20 @@ body:has(.jm-calendar-page) .entry-content {
   color: var(--calendar-bourbonnais);
 }
 
-.jm-calendar-page .calendar-key .legend-alsip {
-  color: var(--calendar-alsip);
+.jm-calendar-page .calendar-key .legend-berkeley {
+  color: var(--calendar-berkeley);
 }
 
-.jm-calendar-page .calendar-key .legend-frankfort {
-  color: var(--calendar-frankfort);
+.jm-calendar-page .calendar-key .legend-general {
+  color: var(--calendar-general);
+}
+
+.jm-calendar-page .calendar-key .legend-closure {
+  color: var(--calendar-closure);
+}
+
+.jm-calendar-page .calendar-key .legend-holiday {
+  color: var(--calendar-holiday);
 }
 
 .jm-calendar-page .calendar-assumptions {
@@ -745,6 +757,11 @@ body:has(.jm-calendar-page) .entry-content {
   background: rgba(151, 201, 87, 0.19) !important;
 }
 
+.jm-calendar-page .color-bourbonnais {
+  border-left-color: var(--calendar-bourbonnais);
+  background: rgba(151, 201, 87, 0.19) !important;
+}
+
 .jm-calendar-page .location-alsip {
   border-left-color: var(--calendar-alsip);
   background: rgba(210, 163, 65, 0.18) !important;
@@ -753,6 +770,57 @@ body:has(.jm-calendar-page) .entry-content {
 .jm-calendar-page .location-frankfort {
   border-left-color: var(--calendar-frankfort);
   background: rgba(111, 182, 255, 0.16) !important;
+}
+
+.jm-calendar-page .color-berkeley {
+  border-left-color: var(--calendar-berkeley);
+  background: rgba(210, 163, 65, 0.18) !important;
+}
+
+.jm-calendar-page .color-general {
+  border-left-color: var(--calendar-general);
+  background: rgba(141, 182, 255, 0.15) !important;
+}
+
+.jm-calendar-page .color-closure,
+.jm-calendar-page .status-closed,
+.jm-calendar-page .event-closure {
+  border-left-color: var(--calendar-closure);
+  background: rgba(255, 255, 255, 0.065) !important;
+  color: rgba(248, 246, 239, 0.7) !important;
+}
+
+.jm-calendar-page .color-holiday,
+.jm-calendar-page .status-info,
+.jm-calendar-page .event-holiday {
+  border-color: rgba(240, 208, 107, 0.32);
+  border-left-color: var(--calendar-holiday);
+  background: rgba(240, 208, 107, 0.11) !important;
+  color: #f7e6a6 !important;
+}
+
+.jm-calendar-page .event-holiday {
+  border-style: dashed;
+}
+
+.jm-calendar-page .event-holiday strong,
+.jm-calendar-page .event-holiday small,
+.jm-calendar-page .event-holiday .event-time {
+  color: #f7e6a6 !important;
+}
+
+.jm-calendar-page .event-closure strong,
+.jm-calendar-page .event-closure small,
+.jm-calendar-page .event-closure .event-time,
+.jm-calendar-page .status-closed strong,
+.jm-calendar-page .status-closed small,
+.jm-calendar-page .status-closed .event-time {
+  color: rgba(248, 246, 239, 0.72) !important;
+}
+
+.jm-calendar-page .is-marker {
+  min-height: 20px;
+  opacity: 0.9;
 }
 
 .jm-calendar-page .event-gbrs {
