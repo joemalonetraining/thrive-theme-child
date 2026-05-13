@@ -1,36 +1,46 @@
 <?php
 /**
- * Reusable landing page for individual pistol course levels.
+ * Reusable landing page for individual course levels.
  */
 
 $course = wp_parse_args(
 	$args['course'] ?? [],
 	[
+		'course_family' => 'pistol',
 		'level' => '',
 		'title' => get_the_title(),
 		'label' => '',
-		'eyebrow' => 'JM Training Pistol Course',
+		'eyebrow' => 'JM Training Course',
 		'time' => '8:00 AM - 5:00 PM',
 		'image' => '',
 		'image_width' => '',
 		'image_height' => '',
 		'image_alt' => '',
+		'image_placeholder' => '',
 		'intro' => '',
 		'detail' => [],
 		'outcomes' => [],
 		'prerequisites' => [],
 		'blocks' => [],
 		'cta_label' => 'Learn More / Register',
-		'cta_href' => '#course-registration',
+		'cta_href' => home_url('/pistol-training-overview/'),
+		'overview_href' => home_url('/pistol-training-overview/'),
 	]
 );
 
-$assets_uri       = get_stylesheet_directory_uri() . '/assets/images';
-$course_image_uri = $course['image'] ? $assets_uri . '/' . $course['image'] : '';
-$support_home_url = function_exists('jm_training_primary_landing_url') ? jm_training_primary_landing_url() : '#top';
+$course_family    = sanitize_html_class($course['course_family']);
+$assets_uri        = get_stylesheet_directory_uri() . '/assets/images';
+$course_image_uri  = $course['image'] ? $assets_uri . '/' . $course['image'] : '';
+$placeholder_label = $course['image_placeholder'] ?: trim($course['level'] . ' Image Placeholder');
+$support_home_url  = function_exists('jm_training_primary_landing_url') ? jm_training_primary_landing_url() : home_url('/');
+
+$course_root_classes = sprintf(
+	'jm-support-page jm-course-landing jm-%1$s-course-landing',
+	$course_family
+);
 ?>
 
-<div class="jm-support-page jm-pistol-course-landing">
+<div class="<?php echo esc_attr($course_root_classes); ?>">
 	<header class="support-site-header" aria-label="Primary navigation">
 		<a class="support-brand" href="<?php echo esc_url($support_home_url); ?>" aria-label="JM Training home">
 			<img class="support-brand-logo" src="<?php echo esc_url($assets_uri . '/jm-logo.png'); ?>" alt="JM Training logo">
@@ -45,10 +55,10 @@ $support_home_url = function_exists('jm_training_primary_landing_url') ? jm_trai
 		</a>
 	</header>
 
-	<main class="pistol-course-main" id="top">
-		<section class="pistol-course-hero" aria-labelledby="pistol-course-title">
-			<?php if ($course_image_uri) : ?>
-				<div class="pistol-course-hero-media" aria-hidden="true">
+	<main class="course-main pistol-course-main" id="top">
+		<section class="course-hero pistol-course-hero" aria-labelledby="course-title">
+			<div class="course-hero-media pistol-course-hero-media course-placeholder" aria-hidden="true">
+				<?php if ($course_image_uri) : ?>
 					<img
 						src="<?php echo esc_url($course_image_uri); ?>"
 						alt=""
@@ -57,24 +67,26 @@ $support_home_url = function_exists('jm_training_primary_landing_url') ? jm_trai
 						loading="eager"
 						decoding="async"
 					>
-				</div>
-			<?php endif; ?>
-			<div class="pistol-course-hero-inner">
-				<div class="pistol-course-hero-copy">
+				<?php else : ?>
+					<span><?php echo esc_html($placeholder_label); ?></span>
+				<?php endif; ?>
+			</div>
+			<div class="course-hero-inner pistol-course-hero-inner">
+				<div class="course-hero-copy pistol-course-hero-copy">
 					<p class="support-eyebrow"><?php echo esc_html($course['eyebrow']); ?></p>
-					<h1 id="pistol-course-title"><?php echo esc_html($course['title']); ?></h1>
+					<h1 id="course-title"><?php echo esc_html($course['title']); ?></h1>
 					<p><?php echo esc_html($course['intro']); ?></p>
-					<div class="pistol-course-actions" aria-label="Course actions">
+					<div class="course-actions pistol-course-actions" aria-label="Course actions">
 						<a class="support-button" href="<?php echo esc_url($course['cta_href']); ?>">
 							<?php echo esc_html($course['cta_label']); ?>
 						</a>
-						<a class="support-button support-button-secondary" href="/pistol-training-overview/">
+						<a class="support-button support-button-secondary" href="<?php echo esc_url($course['overview_href']); ?>">
 							View Training Path
 						</a>
 					</div>
 					<!-- This placeholder will later connect to a Gravity Forms registration flow. -->
 				</div>
-				<div class="pistol-course-quick-facts" aria-label="Course quick facts">
+				<div class="course-quick-facts pistol-course-quick-facts" aria-label="Course quick facts">
 					<div>
 						<span>Course Day</span>
 						<strong><?php echo esc_html($course['time']); ?></strong>
@@ -91,17 +103,17 @@ $support_home_url = function_exists('jm_training_primary_landing_url') ? jm_trai
 			</div>
 		</section>
 
-		<section class="pistol-course-overview" aria-labelledby="pistol-course-overview-title">
-			<div class="pistol-course-overview-inner">
-				<div class="pistol-course-overview-copy">
+		<section class="course-overview pistol-course-overview" aria-labelledby="course-overview-title">
+			<div class="course-overview-inner pistol-course-overview-inner">
+				<div class="course-overview-copy pistol-course-overview-copy">
 					<p class="support-eyebrow">Course Overview</p>
-					<h2 id="pistol-course-overview-title">What This Course Builds</h2>
+					<h2 id="course-overview-title">What This Course Builds</h2>
 					<?php foreach ($course['detail'] as $paragraph) : ?>
 						<p><?php echo esc_html($paragraph); ?></p>
 					<?php endforeach; ?>
 				</div>
-				<?php if ($course_image_uri) : ?>
-					<div class="pistol-course-overview-media">
+				<div class="course-overview-media pistol-course-overview-media course-placeholder" role="img" aria-label="<?php echo esc_attr($course_image_uri ? $course['image_alt'] : $placeholder_label); ?>">
+					<?php if ($course_image_uri) : ?>
 						<img
 							src="<?php echo esc_url($course_image_uri); ?>"
 							alt="<?php echo esc_attr($course['image_alt']); ?>"
@@ -110,20 +122,22 @@ $support_home_url = function_exists('jm_training_primary_landing_url') ? jm_trai
 							loading="lazy"
 							decoding="async"
 						>
-					</div>
-				<?php endif; ?>
+					<?php else : ?>
+						<span><?php echo esc_html($placeholder_label); ?></span>
+					<?php endif; ?>
+				</div>
 			</div>
 		</section>
 
 		<?php if (! empty($course['outcomes'])) : ?>
-			<section class="pistol-course-section" aria-labelledby="pistol-course-outcomes-title">
-				<div class="pistol-course-section-heading">
+			<section class="course-section pistol-course-section" aria-labelledby="course-outcomes-title">
+				<div class="course-section-heading pistol-course-section-heading">
 					<p class="support-eyebrow">Training Focus</p>
-					<h2 id="pistol-course-outcomes-title">Primary Course Outcomes</h2>
+					<h2 id="course-outcomes-title">Primary Course Outcomes</h2>
 				</div>
-				<div class="pistol-course-outcomes">
+				<div class="course-outcomes pistol-course-outcomes">
 					<?php foreach ($course['outcomes'] as $outcome) : ?>
-						<article class="pistol-course-outcome">
+						<article class="course-outcome pistol-course-outcome">
 							<h3><?php echo esc_html($outcome['title']); ?></h3>
 							<p><?php echo esc_html($outcome['text']); ?></p>
 						</article>
@@ -132,21 +146,21 @@ $support_home_url = function_exists('jm_training_primary_landing_url') ? jm_trai
 			</section>
 		<?php endif; ?>
 
-		<section class="pistol-course-section" aria-labelledby="pistol-course-blocks-title">
-			<div class="pistol-course-section-heading">
+		<section class="course-section pistol-course-section" aria-labelledby="course-blocks-title">
+			<div class="course-section-heading pistol-course-section-heading">
 				<p class="support-eyebrow">8:00 AM - 5:00 PM</p>
-				<h2 id="pistol-course-blocks-title">Alpha and Bravo Blocks</h2>
+				<h2 id="course-blocks-title">Alpha and Bravo Blocks</h2>
 			</div>
-			<div class="pistol-course-blocks">
+			<div class="course-blocks pistol-course-blocks">
 				<?php foreach ($course['blocks'] as $block) : ?>
-					<article class="pistol-course-block">
-						<div class="pistol-course-block-header">
+					<article class="course-block pistol-course-block">
+						<div class="course-block-header pistol-course-block-header">
 							<p class="support-eyebrow"><?php echo esc_html($block['name']); ?></p>
 							<strong><?php echo esc_html($block['time']); ?></strong>
 						</div>
 						<h3><?php echo esc_html($block['title']); ?></h3>
 						<p><?php echo esc_html($block['text']); ?></p>
-						<div class="pistol-course-qualification">
+						<div class="course-qualification pistol-course-qualification">
 							<span>Qualification Required</span>
 							<p><?php echo esc_html($block['qualification']); ?></p>
 						</div>
@@ -156,10 +170,10 @@ $support_home_url = function_exists('jm_training_primary_landing_url') ? jm_trai
 		</section>
 
 		<?php if (! empty($course['prerequisites'])) : ?>
-			<section class="pistol-course-section pistol-course-readiness" aria-labelledby="pistol-course-readiness-title">
+			<section class="course-section course-readiness pistol-course-section pistol-course-readiness" aria-labelledby="course-readiness-title">
 				<div>
 					<p class="support-eyebrow">Student Readiness</p>
-					<h2 id="pistol-course-readiness-title">Before You Register</h2>
+					<h2 id="course-readiness-title">Before You Register</h2>
 				</div>
 				<ul>
 					<?php foreach ($course['prerequisites'] as $prerequisite) : ?>
@@ -169,13 +183,13 @@ $support_home_url = function_exists('jm_training_primary_landing_url') ? jm_trai
 			</section>
 		<?php endif; ?>
 
-		<section class="pistol-course-final-cta" id="course-registration" aria-labelledby="pistol-course-registration-title">
+		<section class="course-final-cta pistol-course-final-cta" aria-labelledby="course-registration-title">
 			<div>
 				<p class="support-eyebrow"><?php echo esc_html($course['level']); ?> Registration</p>
-				<h2 id="pistol-course-registration-title">Train the standard before moving forward.</h2>
+				<h2 id="course-registration-title">Train the standard before moving forward.</h2>
 				<p>
-					Registration will connect here once the Gravity Forms flow is ready. Until then, this preview keeps the
-					page structure, course language, and calls to action in place for review.
+					Registration will connect here once the Gravity Forms flow is ready. Until then, this page keeps the
+					course structure, imagery, and calls to action in place for review.
 				</p>
 			</div>
 			<a class="support-button" href="<?php echo esc_url($course['cta_href']); ?>">

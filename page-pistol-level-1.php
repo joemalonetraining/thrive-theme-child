@@ -13,6 +13,7 @@ wp_enqueue_style(
 );
 
 $jm_pistol_course = [
+	'course_family' => 'pistol',
 	'level' => 'Pistol Level 1',
 	'title' => 'Level 1 — Control and Manipulation',
 	'label' => 'Control and Manipulation',
@@ -22,6 +23,8 @@ $jm_pistol_course = [
 	'image_height' => '1826',
 	'image_alt' => 'JM Training pistol student practicing Level 1 control and manipulation',
 	'intro' => 'A focused development course for students who need repeatable pistol control, accountable manipulation, and safer performance at a higher tempo.',
+	'cta_href' => home_url('/pistol-level-1/'),
+	'overview_href' => home_url('/pistol-training-overview/'),
 	'detail' => [
 		'Level 1 moves beyond basic handling into repeatable pistol control. Students refine grip, presentation, sight management, trigger control, recoil management, reloads, and clearing common stoppages while maintaining strict muzzle and trigger discipline.',
 		'The course is built around consistency. Students learn to recognize when technique breaks down, correct problems under instructor observation, and keep accuracy and safety intact as the pace increases.',
@@ -65,5 +68,5 @@ $jm_pistol_course = [
 ];
 
 get_header();
-get_template_part('template-parts/pistol-course-landing', null, ['course' => $jm_pistol_course]);
+get_template_part('template-parts/course-landing', null, ['course' => $jm_pistol_course]);
 get_footer();

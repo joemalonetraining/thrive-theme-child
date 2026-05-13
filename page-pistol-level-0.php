@@ -13,6 +13,7 @@ wp_enqueue_style(
 );
 
 $jm_pistol_course = [
+	'course_family' => 'pistol',
 	'level' => 'Pistol Level 0',
 	'title' => 'Level 0 — Foundation',
 	'label' => 'Foundation',
@@ -22,6 +23,8 @@ $jm_pistol_course = [
 	'image_height' => '1680',
 	'image_alt' => 'JM Training pistol student receiving Level 0 handgun instruction',
 	'intro' => 'A disciplined introduction to responsible handgun ownership, safe handling, basic marksmanship, and the first steps toward accountable defensive skill.',
+	'cta_href' => home_url('/pistol-level-0/'),
+	'overview_href' => home_url('/pistol-training-overview/'),
 	'detail' => [
 		'Level 0 is the foundation of the pistol training path. This course introduces handgun safety, basic handgun nomenclature, how a handgun works, safe handling, storage and daily responsibility, proper grip, stance, basic marksmanship, and an introductory holster draw.',
 		'The course is intentionally beginner-accessible. Students are not rushed into speed or complexity. The priority is understanding how to live with a handgun safely, handle it responsibly, and begin building the skill to draw and fire without endangering themselves or innocent people.',
@@ -65,5 +68,5 @@ $jm_pistol_course = [
 ];
 
 get_header();
-get_template_part('template-parts/pistol-course-landing', null, ['course' => $jm_pistol_course]);
+get_template_part('template-parts/course-landing', null, ['course' => $jm_pistol_course]);
 get_footer();

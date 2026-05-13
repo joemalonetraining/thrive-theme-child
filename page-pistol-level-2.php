@@ -13,6 +13,7 @@ wp_enqueue_style(
 );
 
 $jm_pistol_course = [
+	'course_family' => 'pistol',
 	'level' => 'Pistol Level 2',
 	'title' => 'Level 2 — Spatial Awareness and Decision-Making',
 	'label' => 'Spatial Awareness',
@@ -22,6 +23,8 @@ $jm_pistol_course = [
 	'image_height' => '1610',
 	'image_alt' => 'JM Training pistol student practicing Level 2 marksmanship and target discrimination',
 	'intro' => 'A pressure-building course that adds movement, target discrimination, positive identification, and decision-making to accountable pistol performance.',
+	'cta_href' => home_url('/pistol-level-2/'),
+	'overview_href' => home_url('/pistol-training-overview/'),
 	'detail' => [
 		'Level 2 builds spatial awareness and decision-making under greater performance pressure. Students begin incorporating movement, higher speed and accuracy standards, positive identification, shoot/no-shoot target discrimination, and more advanced low-light work.',
 		'This course asks students to process more information while preserving the core standards earned in earlier levels. The environment becomes more demanding, but the expectation remains the same: apply accurate fire only when appropriate.',
@@ -65,5 +68,5 @@ $jm_pistol_course = [
 ];
 
 get_header();
-get_template_part('template-parts/pistol-course-landing', null, ['course' => $jm_pistol_course]);
+get_template_part('template-parts/course-landing', null, ['course' => $jm_pistol_course]);
 get_footer();

@@ -13,6 +13,7 @@ wp_enqueue_style(
 );
 
 $jm_pistol_course = [
+	'course_family' => 'pistol',
 	'level' => 'Pistol Level 3',
 	'title' => 'Level 3 — Asymmetry and Stress Integration',
 	'label' => 'Stress Integration',
@@ -22,6 +23,8 @@ $jm_pistol_course = [
 	'image_height' => '1530',
 	'image_alt' => 'JM Training pistol students practicing Level 3 asymmetry and stress integration',
 	'intro' => 'An advanced integration course that places the pistol progression into less predictable problems requiring composure, movement, communication, and accountability.',
+	'cta_href' => home_url('/pistol-level-3/'),
+	'overview_href' => home_url('/pistol-training-overview/'),
 	'detail' => [
 		'Level 3 is where the pistol progression shifts from isolated skill-building into adaptive problem-solving. Students are placed under greater stress, less predictable conditions, and more asymmetric shooting problems that require them to process information, move efficiently, communicate, use cover, and make accurate decisions under pressure.',
 		'This level begins integrating multi-domain response concepts: movement, positioning, visual processing, target discrimination, low-light considerations, and performance standards that demand both speed and accountability.',
@@ -65,5 +68,5 @@ $jm_pistol_course = [
 ];
 
 get_header();
-get_template_part('template-parts/pistol-course-landing', null, ['course' => $jm_pistol_course]);
+get_template_part('template-parts/course-landing', null, ['course' => $jm_pistol_course]);
 get_footer();
