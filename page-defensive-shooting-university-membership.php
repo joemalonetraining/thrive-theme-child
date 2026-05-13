@@ -27,6 +27,38 @@ $jm_membership_tier = [
 		'All qualification courses included, Levels 0-5',
 		'Medical blocks, private range access, and accelerated progression',
 	],
+	'media_heading' => 'The full path is built around applied performance.',
+	'media_intro' => 'DSU members are not just buying range time. The program puts students into live skill work: movement, low-light search problems, pistol performance, rifle integration, and pressure that has to be managed with discipline.',
+	'media' => [
+		[
+			'image' => 'dsu-outdoor-rifle-movement-sunset.png',
+			'width' => '1126',
+			'height' => '1500',
+			'alt' => 'JM Training students moving with rifles during an outdoor Defensive Shooting University training block',
+			'caption' => 'Movement and rifle work under outdoor range conditions.',
+		],
+		[
+			'image' => 'dsu-low-light-pistol-search.png',
+			'width' => '1504',
+			'height' => '1338',
+			'alt' => 'JM Training student working a pistol with a handheld light in a low-light indoor scenario',
+			'caption' => 'Low-light search, identification, and pistol handling.',
+		],
+		[
+			'image' => 'dsu-outdoor-pistol-fundamentals.png',
+			'width' => '1802',
+			'height' => '1896',
+			'alt' => 'JM Training student firing a pistol outdoors during defensive handgun training',
+			'caption' => 'Outdoor pistol performance with accountable fundamentals.',
+		],
+		[
+			'image' => 'dsu-night-vision-rifle.png',
+			'width' => '2528',
+			'height' => '1688',
+			'alt' => 'JM Training student integrating rifle and night vision equipment during Defensive Shooting University training',
+			'caption' => 'Advanced rifle integration and night-vision concepts.',
+		],
+	],
 	'benefits_heading' => 'Everything in Pro, plus the full DSU path',
 	'benefits' => [
 		[

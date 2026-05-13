@@ -17,6 +17,9 @@ $tier = wp_parse_args(
 		'cta_href' => 'mailto:support@joemalonetraining.com?subject=Membership%20Inquiry',
 		'overview_href' => home_url('/memberships/'),
 		'proof_points' => [],
+		'media_heading' => '',
+		'media_intro' => '',
+		'media' => [],
 		'benefits_heading' => 'Included in this membership',
 		'benefits' => [],
 		'sections' => [],
@@ -26,6 +29,7 @@ $tier = wp_parse_args(
 );
 
 $logo_uri = get_stylesheet_directory_uri() . '/assets/images/jm-logo.png';
+$image_base_uri = get_stylesheet_directory_uri() . '/assets/images';
 $membership_home_url = function_exists('jm_training_primary_landing_url') ? jm_training_primary_landing_url() : '#top';
 ?>
 
@@ -84,6 +88,62 @@ $membership_home_url = function_exists('jm_training_primary_landing_url') ? jm_t
 				</aside>
 			</div>
 		</section>
+
+		<?php if (! empty($tier['media'])) : ?>
+			<section class="membership-tier-media" aria-label="Membership training photos">
+				<div class="membership-tier-media-inner">
+					<?php if (! empty($tier['media_heading']) || ! empty($tier['media_intro'])) : ?>
+						<div class="membership-section-heading">
+							<p class="support-eyebrow">Training environment</p>
+							<?php if (! empty($tier['media_heading'])) : ?>
+								<h2><?php echo esc_html($tier['media_heading']); ?></h2>
+							<?php endif; ?>
+							<?php if (! empty($tier['media_intro'])) : ?>
+								<p><?php echo esc_html($tier['media_intro']); ?></p>
+							<?php endif; ?>
+						</div>
+					<?php endif; ?>
+
+					<div class="membership-tier-media-grid">
+						<?php foreach ($tier['media'] as $index => $media_item) : ?>
+							<?php
+							$media_item = wp_parse_args(
+								$media_item,
+								[
+									'image' => '',
+									'alt' => '',
+									'caption' => '',
+									'width' => '',
+									'height' => '',
+								]
+							);
+
+							if (empty($media_item['image'])) {
+								continue;
+							}
+							?>
+							<figure class="membership-training-photo<?php echo 0 === $index ? ' is-featured' : ''; ?>">
+								<img
+									src="<?php echo esc_url($image_base_uri . '/' . ltrim($media_item['image'], '/')); ?>"
+									alt="<?php echo esc_attr($media_item['alt']); ?>"
+									<?php if (! empty($media_item['width'])) : ?>
+										width="<?php echo esc_attr($media_item['width']); ?>"
+									<?php endif; ?>
+									<?php if (! empty($media_item['height'])) : ?>
+										height="<?php echo esc_attr($media_item['height']); ?>"
+									<?php endif; ?>
+									loading="<?php echo 0 === $index ? 'eager' : 'lazy'; ?>"
+									decoding="async"
+								>
+								<?php if (! empty($media_item['caption'])) : ?>
+									<figcaption><?php echo esc_html($media_item['caption']); ?></figcaption>
+								<?php endif; ?>
+							</figure>
+						<?php endforeach; ?>
+					</div>
+				</div>
+			</section>
+		<?php endif; ?>
 
 		<section class="membership-tier-section" aria-labelledby="membership-benefits-title">
 			<div class="membership-tier-section-inner">

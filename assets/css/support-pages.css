@@ -1460,6 +1460,105 @@
   margin-bottom: 30px;
 }
 
+.jm-support-page.jm-membership-tier-page .membership-tier-media {
+  padding: clamp(58px, 8vw, 104px) clamp(20px, 6vw, 80px);
+  border-bottom: 1px solid var(--support-line);
+  background:
+    radial-gradient(circle at 18% 16%, rgba(196, 154, 74, 0.12), transparent 32rem),
+    rgba(8, 8, 8, 0.94);
+}
+
+.jm-support-page.jm-membership-tier-page .membership-tier-media-inner {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-section-heading p:not(.support-eyebrow) {
+  margin: 0;
+  color: var(--support-muted);
+  font-size: 1.04rem;
+  line-height: 1.65;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-tier-media-grid {
+  display: grid;
+  grid-template-areas:
+    "lead lowlight"
+    "lead pistol"
+    "rifle rifle";
+  grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.96fr);
+  grid-template-rows: minmax(260px, 1fr) minmax(260px, 1fr) minmax(320px, 0.85fr);
+  gap: 16px;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-training-photo {
+  position: relative;
+  min-width: 0;
+  min-height: 260px;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(247, 245, 239, 0.13);
+  border-radius: 8px;
+  background: #0d0d0d;
+  box-shadow: 0 28px 82px rgba(0, 0, 0, 0.38);
+}
+
+.jm-support-page.jm-membership-tier-page .membership-training-photo:nth-child(1) {
+  grid-area: lead;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-training-photo:nth-child(2) {
+  grid-area: lowlight;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-training-photo:nth-child(3) {
+  grid-area: pistol;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-training-photo:nth-child(4) {
+  grid-area: rifle;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-training-photo::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(5, 5, 5, 0.04), rgba(5, 5, 5, 0.54)),
+    linear-gradient(90deg, rgba(5, 5, 5, 0.28), transparent 56%);
+}
+
+.jm-support-page.jm-membership-tier-page .membership-training-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  object-fit: cover;
+  object-position: center center;
+  filter: saturate(0.92) contrast(1.08) brightness(0.84);
+}
+
+.jm-support-page.jm-membership-tier-page .membership-training-photo.is-featured img {
+  object-position: 42% center;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-training-photo figcaption {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  left: 14px;
+  z-index: 1;
+  padding: 10px 12px;
+  border: 1px solid rgba(196, 154, 74, 0.28);
+  border-radius: 8px;
+  background: rgba(5, 5, 5, 0.68);
+  color: var(--support-white);
+  font-size: 0.82rem;
+  font-weight: 850;
+  line-height: 1.3;
+}
+
 .jm-support-page.jm-membership-tier-page .membership-section-heading h2,
 .jm-support-page.jm-membership-tier-page .membership-detail-panel h2,
 .jm-support-page.jm-membership-tier-page .membership-final-cta h2 {
@@ -1563,6 +1662,20 @@
   .jm-support-page.jm-membership-tier-page .membership-benefit-grid,
   .jm-support-page.jm-membership-tier-page .membership-detail-panel {
     grid-template-columns: 1fr;
+  }
+
+  .jm-support-page.jm-membership-tier-page .membership-tier-media-grid {
+    grid-template-areas:
+      "lead"
+      "lowlight"
+      "pistol"
+      "rifle";
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+  }
+
+  .jm-support-page.jm-membership-tier-page .membership-training-photo {
+    min-height: 340px;
   }
 
   .jm-support-page.jm-membership-tier-page .membership-final-cta {
@@ -1702,6 +1815,7 @@
   .jm-support-page.jm-memberships-page .memberships-hero,
   .jm-support-page.jm-memberships-page .memberships-tier-section,
   .jm-support-page.jm-membership-tier-page .membership-tier-hero,
+  .jm-support-page.jm-membership-tier-page .membership-tier-media,
   .jm-support-page.jm-membership-tier-page .membership-tier-section {
     padding-right: 14px;
     padding-left: 14px;
@@ -1719,6 +1833,17 @@
   .jm-support-page.jm-membership-tier-page .membership-final-cta .support-button,
   .jm-support-page.jm-memberships-page .memberships-tier-card .support-button {
     width: 100%;
+  }
+
+  .jm-support-page.jm-membership-tier-page .membership-training-photo {
+    min-height: 280px;
+  }
+
+  .jm-support-page.jm-membership-tier-page .membership-training-photo figcaption {
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+    font-size: 0.76rem;
   }
 
   .jm-support-page.jm-pistol-training-overview-page .pistol-overview-hero,
