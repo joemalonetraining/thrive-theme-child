@@ -144,8 +144,8 @@ $pistol_overview_home_url = function_exists('jm_training_primary_landing_url') ?
 					<img
 						src="<?php echo esc_url($pistol_overview_assets_uri . '/pistol-training-overview-level-3.png'); ?>"
 						alt="JM Training pistol students practicing Level 3 asymmetry and stress integration"
-						width="1605"
-						height="980"
+						width="2848"
+						height="1530"
 						loading="lazy"
 						decoding="async"
 					>
