@@ -63,7 +63,7 @@ $pistol_overview_home_url = function_exists('jm_training_primary_landing_url') ?
 						endangering themselves or innocent people.
 					</p>
 					<!-- This placeholder will later connect to a Gravity Forms registration flow. -->
-					<a class="support-button" href="#">Learn More / Register</a>
+					<a class="support-button" href="<?php echo esc_url(home_url('/pistol-level-0/')); ?>">Learn More / Register</a>
 				</div>
 			</div>
 		</section>
@@ -81,7 +81,7 @@ $pistol_overview_home_url = function_exists('jm_training_primary_landing_url') ?
 						awareness.
 					</p>
 					<!-- This placeholder will later connect to a Gravity Forms registration flow. -->
-					<a class="support-button" href="#">Learn More / Register</a>
+					<a class="support-button" href="<?php echo esc_url(home_url('/pistol-level-1/')); ?>">Learn More / Register</a>
 				</div>
 				<div class="pistol-level-one-media">
 					<img
@@ -118,7 +118,7 @@ $pistol_overview_home_url = function_exists('jm_training_primary_landing_url') ?
 						environment, make better decisions, and apply accurate fire only when appropriate.
 					</p>
 					<!-- This placeholder will later connect to a Gravity Forms registration flow. -->
-					<a class="support-button" href="#">Learn More / Register</a>
+					<a class="support-button" href="<?php echo esc_url(home_url('/pistol-level-2/')); ?>">Learn More / Register</a>
 				</div>
 			</div>
 		</section>
@@ -138,7 +138,7 @@ $pistol_overview_home_url = function_exists('jm_training_primary_landing_url') ?
 						the problem is no longer clean or predictable.
 					</p>
 					<!-- This placeholder will later connect to a Gravity Forms registration flow. -->
-					<a class="support-button" href="#">Learn More / Register</a>
+					<a class="support-button" href="<?php echo esc_url(home_url('/pistol-level-3/')); ?>">Learn More / Register</a>
 				</div>
 				<div class="pistol-level-three-media">
 					<img
@@ -162,7 +162,7 @@ $pistol_overview_home_url = function_exists('jm_training_primary_landing_url') ?
 					performance across Levels 0 through 3.
 				</p>
 				<!-- This placeholder will later connect to a Gravity Forms registration flow. -->
-				<a class="support-button" href="#">Learn More / Register</a>
+				<a class="support-button" href="<?php echo esc_url(home_url('/pistol-level-0/')); ?>">Learn More / Register</a>
 			</div>
 		</section>
 	</main>
