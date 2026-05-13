@@ -8,6 +8,11 @@ get_header();
 
 $landing_assets_uri = get_stylesheet_directory_uri() . '/assets/images';
 $landing_home_url = function_exists('jm_training_primary_landing_url') ? jm_training_primary_landing_url() : '#top';
+$membership_tier_urls = [
+	'starter' => home_url('/starter-program/'),
+	'pro' => home_url('/pro-performance-package/'),
+	'dsu' => home_url('/defensive-shooting-university-membership/'),
+];
 
 /*
  * Required image assets:
@@ -209,8 +214,8 @@ $landing_home_url = function_exists('jm_training_primary_landing_url') ? jm_trai
 							<li>Try a variety of guns and gear before buying</li>
 							<li>Free USCCA membership</li>
 						</ul>
-						<a class="segment-link" href="mailto:support@joemalonetraining.com?subject=Starter%20Program%20Inquiry">
-							Ask About Starter
+						<a class="segment-link" href="<?php echo esc_url($membership_tier_urls['starter']); ?>">
+							View Starter Details
 							<i data-lucide="send" aria-hidden="true"></i>
 						</a>
 					</article>
@@ -230,8 +235,8 @@ $landing_home_url = function_exists('jm_training_primary_landing_url') ? jm_trai
 							<li>5% off limited in-store items: firearms, ammo, accessories</li>
 							<li>Priority access to the training schedule</li>
 						</ul>
-						<a class="segment-link" href="mailto:support@joemalonetraining.com?subject=Pro%20Performance%20Package%20Inquiry">
-							Ask About Pro
+						<a class="segment-link" href="<?php echo esc_url($membership_tier_urls['pro']); ?>">
+							View Pro Details
 							<i data-lucide="send" aria-hidden="true"></i>
 						</a>
 					</article>
@@ -250,8 +255,8 @@ $landing_home_url = function_exists('jm_training_primary_landing_url') ? jm_trai
 							<li>5–15% off firearms, ammo, and store items</li>
 							<li>Accelerated progression through the training pipeline</li>
 						</ul>
-						<a class="segment-link" href="mailto:support@joemalonetraining.com?subject=Defensive%20Shooting%20University%20Membership%20Inquiry">
-							Ask About DSU
+						<a class="segment-link" href="<?php echo esc_url($membership_tier_urls['dsu']); ?>">
+							View DSU Details
 							<i data-lucide="send" aria-hidden="true"></i>
 						</a>
 					</article>
