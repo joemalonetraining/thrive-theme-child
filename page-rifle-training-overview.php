@@ -42,8 +42,15 @@ $rifle_overview_home_url   = function_exists('jm_training_primary_landing_url') 
 
 		<section class="rifle-level-zero" aria-labelledby="rifle-level-0-title">
 			<div class="rifle-level-zero-inner">
-				<div class="rifle-level-zero-media rifle-placeholder-media" role="img" aria-label="Placeholder for Rifle Level 0 course image">
-					<span>Rifle Level 0 Image Placeholder</span>
+				<div class="rifle-level-zero-media">
+					<img
+						src="<?php echo esc_url($rifle_overview_assets_uri . '/rifle-training-overview-level-0.png'); ?>"
+						alt="JM Training rifle student receiving Level 0 rifle foundation instruction"
+						width="2008"
+						height="1604"
+						loading="eager"
+						decoding="async"
+					>
 				</div>
 				<div class="rifle-level-zero-copy">
 					<p class="support-eyebrow">Rifle Level 0</p>
@@ -70,16 +77,30 @@ $rifle_overview_home_url   = function_exists('jm_training_primary_landing_url') 
 					</p>
 					<a class="support-button" href="<?php echo esc_url(home_url('/rifle-level-1/')); ?>">Learn More / Register</a>
 				</div>
-				<div class="rifle-level-one-media rifle-placeholder-media" role="img" aria-label="Placeholder for Rifle Level 1 course image">
-					<span>Rifle Level 1 Image Placeholder</span>
+				<div class="rifle-level-one-media">
+					<img
+						src="<?php echo esc_url($rifle_overview_assets_uri . '/rifle-training-overview-level-1.png'); ?>"
+						alt="JM Training rifle student practicing Level 1 control and manipulation"
+						width="3240"
+						height="1812"
+						loading="lazy"
+						decoding="async"
+					>
 				</div>
 			</div>
 		</section>
 
 		<section class="rifle-level-two" aria-labelledby="rifle-level-2-title">
 			<div class="rifle-level-two-inner">
-				<div class="rifle-level-two-media rifle-placeholder-media" role="img" aria-label="Placeholder for Rifle Level 2 course image">
-					<span>Rifle Level 2 Image Placeholder</span>
+				<div class="rifle-level-two-media">
+					<img
+						src="<?php echo esc_url($rifle_overview_assets_uri . '/rifle-training-overview-level-2.png'); ?>"
+						alt="JM Training rifle students practicing Level 2 movement and target processing"
+						width="4324"
+						height="2010"
+						loading="lazy"
+						decoding="async"
+					>
 				</div>
 				<div class="rifle-level-two-copy">
 					<p class="support-eyebrow">Rifle Level 2</p>
@@ -106,8 +127,15 @@ $rifle_overview_home_url   = function_exists('jm_training_primary_landing_url') 
 					</p>
 					<a class="support-button" href="<?php echo esc_url(home_url('/rifle-level-3/')); ?>">Learn More / Register</a>
 				</div>
-				<div class="rifle-level-three-media rifle-placeholder-media" role="img" aria-label="Placeholder for Rifle Level 3 course image">
-					<span>Rifle Level 3 Image Placeholder</span>
+				<div class="rifle-level-three-media">
+					<img
+						src="<?php echo esc_url($rifle_overview_assets_uri . '/rifle-training-overview-level-3.png'); ?>"
+						alt="JM Training rifle student practicing Level 3 applied rifle integration"
+						width="1146"
+						height="888"
+						loading="lazy"
+						decoding="async"
+					>
 				</div>
 			</div>
 		</section>
