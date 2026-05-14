@@ -48,9 +48,16 @@ $rifle_pistol_overview_home_url   = function_exists('jm_training_primary_landing
 
 		<section class="rifle-pistol-level-four" aria-labelledby="rifle-pistol-level-4-title">
 			<div class="rifle-pistol-level-four-inner">
-				<div class="rifle-pistol-level-four-media rifle-pistol-placeholder-media" role="img" aria-label="Rifle / Pistol Level 4 image placeholder">
-					<span>Level 4 Image Placeholder</span>
-				</div>
+				<figure class="rifle-pistol-level-four-media">
+					<img
+						src="<?php echo esc_url($rifle_pistol_overview_assets_uri . '/rifle-pistol-level-4-overview.jpg'); ?>"
+						alt="Level 4 students and instructors coordinating on the range."
+						width="6016"
+						height="4016"
+						loading="lazy"
+						decoding="async"
+					>
+				</figure>
 				<div class="rifle-pistol-level-four-copy">
 					<p class="support-eyebrow">Rifle / Pistol Level 4</p>
 					<h2 id="rifle-pistol-level-4-title">Level 4 — Rifle / Pistol Integration and Small-Team Foundations</h2>
