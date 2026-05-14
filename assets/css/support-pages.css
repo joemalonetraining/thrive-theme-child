@@ -1466,6 +1466,7 @@
   margin-bottom: 30px;
 }
 
+.jm-support-page.jm-membership-tier-page .membership-tier-feature-media,
 .jm-support-page.jm-membership-tier-page .membership-tier-media {
   padding: clamp(58px, 8vw, 104px) clamp(20px, 6vw, 80px);
   border-bottom: 1px solid var(--support-line);
@@ -1474,6 +1475,7 @@
     rgba(8, 8, 8, 0.94);
 }
 
+.jm-support-page.jm-membership-tier-page .membership-tier-feature-media-inner,
 .jm-support-page.jm-membership-tier-page .membership-tier-media-inner {
   width: min(1180px, 100%);
   margin: 0 auto;
@@ -1509,19 +1511,29 @@
   box-shadow: 0 28px 82px rgba(0, 0, 0, 0.38);
 }
 
-.jm-support-page.jm-membership-tier-page .membership-training-photo:nth-child(1) {
+.jm-support-page.jm-membership-tier-page .membership-feature-photo {
+  height: clamp(360px, 48vw, 560px);
+  min-height: 0;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-section-photo {
+  min-height: 0;
+  height: clamp(280px, 32vw, 430px);
+}
+
+.jm-support-page.jm-membership-tier-page .membership-tier-media-grid > .membership-training-photo:nth-child(1) {
   grid-area: lead;
 }
 
-.jm-support-page.jm-membership-tier-page .membership-training-photo:nth-child(2) {
+.jm-support-page.jm-membership-tier-page .membership-tier-media-grid > .membership-training-photo:nth-child(2) {
   grid-area: lowlight;
 }
 
-.jm-support-page.jm-membership-tier-page .membership-training-photo:nth-child(3) {
+.jm-support-page.jm-membership-tier-page .membership-tier-media-grid > .membership-training-photo:nth-child(3) {
   grid-area: pistol;
 }
 
-.jm-support-page.jm-membership-tier-page .membership-training-photo:nth-child(4) {
+.jm-support-page.jm-membership-tier-page .membership-tier-media-grid > .membership-training-photo:nth-child(4) {
   grid-area: rifle;
 }
 
@@ -1621,7 +1633,28 @@
   display: grid;
   grid-template-columns: minmax(0, 0.95fr) minmax(300px, 1fr);
   gap: clamp(20px, 4vw, 48px);
+  align-items: center;
   padding: clamp(22px, 4vw, 34px);
+}
+
+.jm-support-page.jm-membership-tier-page .membership-detail-panel.has-media {
+  grid-template-columns: minmax(0, 0.94fr) minmax(320px, 1.06fr);
+}
+
+.jm-support-page.jm-membership-tier-page .membership-detail-panel.has-media.is-reversed {
+  grid-template-columns: minmax(320px, 1.06fr) minmax(0, 0.94fr);
+}
+
+.jm-support-page.jm-membership-tier-page .membership-detail-panel.has-media.is-reversed .membership-detail-copy {
+  order: 2;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-detail-copy {
+  min-width: 0;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-detail-copy ul {
+  margin-top: 18px;
 }
 
 .jm-support-page.jm-membership-tier-page .membership-final-cta {
@@ -1666,8 +1699,14 @@
   .jm-support-page.jm-memberships-page .memberships-tier-grid,
   .jm-support-page.jm-membership-tier-page .membership-tier-hero-inner,
   .jm-support-page.jm-membership-tier-page .membership-benefit-grid,
+  .jm-support-page.jm-membership-tier-page .membership-detail-panel.has-media,
+  .jm-support-page.jm-membership-tier-page .membership-detail-panel.has-media.is-reversed,
   .jm-support-page.jm-membership-tier-page .membership-detail-panel {
     grid-template-columns: 1fr;
+  }
+
+  .jm-support-page.jm-membership-tier-page .membership-detail-panel.has-media.is-reversed .membership-detail-copy {
+    order: 0;
   }
 
   .jm-support-page.jm-membership-tier-page .membership-tier-media-grid {
@@ -1682,6 +1721,11 @@
 
   .jm-support-page.jm-membership-tier-page .membership-training-photo {
     min-height: 340px;
+  }
+
+  .jm-support-page.jm-membership-tier-page .membership-feature-photo,
+  .jm-support-page.jm-membership-tier-page .membership-section-photo {
+    height: clamp(300px, 54vw, 430px);
   }
 
   .jm-support-page.jm-membership-tier-page .membership-final-cta {
@@ -1821,6 +1865,7 @@
   .jm-support-page.jm-memberships-page .memberships-hero,
   .jm-support-page.jm-memberships-page .memberships-tier-section,
   .jm-support-page.jm-membership-tier-page .membership-tier-hero,
+  .jm-support-page.jm-membership-tier-page .membership-tier-feature-media,
   .jm-support-page.jm-membership-tier-page .membership-tier-media,
   .jm-support-page.jm-membership-tier-page .membership-tier-section {
     padding-right: 14px;
@@ -1843,6 +1888,11 @@
 
   .jm-support-page.jm-membership-tier-page .membership-training-photo {
     min-height: 280px;
+  }
+
+  .jm-support-page.jm-membership-tier-page .membership-feature-photo,
+  .jm-support-page.jm-membership-tier-page .membership-section-photo {
+    height: 280px;
   }
 
   .jm-support-page.jm-membership-tier-page .membership-training-photo figcaption {

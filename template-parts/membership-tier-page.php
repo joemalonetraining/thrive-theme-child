@@ -17,9 +17,9 @@ $tier = wp_parse_args(
 		'cta_href' => 'mailto:support@joemalonetraining.com?subject=Membership%20Inquiry',
 		'overview_href' => home_url('/memberships/'),
 		'proof_points' => [],
-		'media_heading' => '',
-		'media_intro' => '',
-		'media' => [],
+		'feature_media_heading' => '',
+		'feature_media_intro' => '',
+		'feature_media' => [],
 		'benefits_heading' => 'Included in this membership',
 		'benefits' => [],
 		'sections' => [],
@@ -89,6 +89,137 @@ $membership_home_url = function_exists('jm_training_primary_landing_url') ? jm_t
 			</div>
 		</section>
 
+		<?php if (! empty($tier['feature_media'])) : ?>
+			<?php
+			$feature_media = wp_parse_args(
+				$tier['feature_media'],
+				[
+					'image' => '',
+					'alt' => '',
+					'caption' => '',
+					'width' => '',
+					'height' => '',
+				]
+			);
+			?>
+			<?php if (! empty($feature_media['image'])) : ?>
+				<section class="membership-tier-feature-media" aria-label="Membership training photo">
+					<div class="membership-tier-feature-media-inner">
+						<?php if (! empty($tier['feature_media_heading']) || ! empty($tier['feature_media_intro'])) : ?>
+							<div class="membership-section-heading">
+								<p class="support-eyebrow">Training environment</p>
+								<?php if (! empty($tier['feature_media_heading'])) : ?>
+									<h2><?php echo esc_html($tier['feature_media_heading']); ?></h2>
+								<?php endif; ?>
+								<?php if (! empty($tier['feature_media_intro'])) : ?>
+									<p><?php echo esc_html($tier['feature_media_intro']); ?></p>
+								<?php endif; ?>
+							</div>
+						<?php endif; ?>
+
+						<figure class="membership-training-photo membership-feature-photo">
+							<img
+								src="<?php echo esc_url($image_base_uri . '/' . ltrim($feature_media['image'], '/')); ?>"
+								alt="<?php echo esc_attr($feature_media['alt']); ?>"
+								<?php if (! empty($feature_media['width'])) : ?>
+									width="<?php echo esc_attr($feature_media['width']); ?>"
+								<?php endif; ?>
+								<?php if (! empty($feature_media['height'])) : ?>
+									height="<?php echo esc_attr($feature_media['height']); ?>"
+								<?php endif; ?>
+								loading="eager"
+								decoding="async"
+							>
+							<?php if (! empty($feature_media['caption'])) : ?>
+								<figcaption><?php echo esc_html($feature_media['caption']); ?></figcaption>
+							<?php endif; ?>
+						</figure>
+					</div>
+				</section>
+			<?php endif; ?>
+		<?php endif; ?>
+
+		<section class="membership-tier-section" aria-labelledby="membership-benefits-title">
+			<div class="membership-tier-section-inner">
+				<div class="membership-section-heading">
+					<p class="support-eyebrow">Membership details</p>
+					<h2 id="membership-benefits-title"><?php echo esc_html($tier['benefits_heading']); ?></h2>
+				</div>
+				<?php if (! empty($tier['benefits'])) : ?>
+					<div class="membership-benefit-grid">
+						<?php foreach ($tier['benefits'] as $benefit) : ?>
+							<article>
+								<h3><?php echo esc_html($benefit['title'] ?? 'Benefit'); ?></h3>
+								<p><?php echo esc_html($benefit['text'] ?? ''); ?></p>
+							</article>
+						<?php endforeach; ?>
+					</div>
+				<?php endif; ?>
+			</div>
+		</section>
+
+		<?php if (! empty($tier['sections'])) : ?>
+			<section class="membership-tier-section membership-tier-breakdown" aria-label="Membership breakdown">
+				<div class="membership-tier-section-inner">
+					<?php foreach ($tier['sections'] as $index => $section) : ?>
+						<?php
+						$section_media = [];
+
+						if (! empty($section['media'])) {
+							$section_media = wp_parse_args(
+								$section['media'],
+								[
+									'image' => '',
+									'alt' => '',
+									'caption' => '',
+									'width' => '',
+									'height' => '',
+									'position' => 'center center',
+								]
+							);
+						}
+						?>
+						<article class="membership-detail-panel<?php echo ! empty($section_media['image']) ? ' has-media' : ''; ?><?php echo 1 === $index % 2 ? ' is-reversed' : ''; ?>">
+							<div class="membership-detail-copy">
+								<p class="support-eyebrow"><?php echo esc_html($section['eyebrow'] ?? 'Program detail'); ?></p>
+								<h2><?php echo esc_html($section['title'] ?? 'Membership Detail'); ?></h2>
+								<?php if (! empty($section['text'])) : ?>
+									<p><?php echo esc_html($section['text']); ?></p>
+								<?php endif; ?>
+								<?php if (! empty($section['items'])) : ?>
+									<ul>
+										<?php foreach ($section['items'] as $item) : ?>
+											<li><?php echo esc_html($item); ?></li>
+										<?php endforeach; ?>
+									</ul>
+								<?php endif; ?>
+							</div>
+							<?php if (! empty($section_media['image'])) : ?>
+								<figure class="membership-training-photo membership-section-photo">
+									<img
+										src="<?php echo esc_url($image_base_uri . '/' . ltrim($section_media['image'], '/')); ?>"
+										alt="<?php echo esc_attr($section_media['alt']); ?>"
+										style="object-position: <?php echo esc_attr($section_media['position']); ?>;"
+										<?php if (! empty($section_media['width'])) : ?>
+											width="<?php echo esc_attr($section_media['width']); ?>"
+										<?php endif; ?>
+										<?php if (! empty($section_media['height'])) : ?>
+											height="<?php echo esc_attr($section_media['height']); ?>"
+										<?php endif; ?>
+										loading="lazy"
+										decoding="async"
+									>
+									<?php if (! empty($section_media['caption'])) : ?>
+										<figcaption><?php echo esc_html($section_media['caption']); ?></figcaption>
+									<?php endif; ?>
+								</figure>
+							<?php endif; ?>
+						</article>
+					<?php endforeach; ?>
+				</div>
+			</section>
+		<?php endif; ?>
+
 		<?php if (! empty($tier['media'])) : ?>
 			<section class="membership-tier-media" aria-label="Membership training photos">
 				<div class="membership-tier-media-inner">
@@ -141,50 +272,6 @@ $membership_home_url = function_exists('jm_training_primary_landing_url') ? jm_t
 							</figure>
 						<?php endforeach; ?>
 					</div>
-				</div>
-			</section>
-		<?php endif; ?>
-
-		<section class="membership-tier-section" aria-labelledby="membership-benefits-title">
-			<div class="membership-tier-section-inner">
-				<div class="membership-section-heading">
-					<p class="support-eyebrow">Membership details</p>
-					<h2 id="membership-benefits-title"><?php echo esc_html($tier['benefits_heading']); ?></h2>
-				</div>
-				<?php if (! empty($tier['benefits'])) : ?>
-					<div class="membership-benefit-grid">
-						<?php foreach ($tier['benefits'] as $benefit) : ?>
-							<article>
-								<h3><?php echo esc_html($benefit['title'] ?? 'Benefit'); ?></h3>
-								<p><?php echo esc_html($benefit['text'] ?? ''); ?></p>
-							</article>
-						<?php endforeach; ?>
-					</div>
-				<?php endif; ?>
-			</div>
-		</section>
-
-		<?php if (! empty($tier['sections'])) : ?>
-			<section class="membership-tier-section membership-tier-breakdown" aria-label="Membership breakdown">
-				<div class="membership-tier-section-inner">
-					<?php foreach ($tier['sections'] as $section) : ?>
-						<article class="membership-detail-panel">
-							<div>
-								<p class="support-eyebrow"><?php echo esc_html($section['eyebrow'] ?? 'Program detail'); ?></p>
-								<h2><?php echo esc_html($section['title'] ?? 'Membership Detail'); ?></h2>
-								<?php if (! empty($section['text'])) : ?>
-									<p><?php echo esc_html($section['text']); ?></p>
-								<?php endif; ?>
-							</div>
-							<?php if (! empty($section['items'])) : ?>
-								<ul>
-									<?php foreach ($section['items'] as $item) : ?>
-										<li><?php echo esc_html($item); ?></li>
-									<?php endforeach; ?>
-								</ul>
-							<?php endif; ?>
-						</article>
-					<?php endforeach; ?>
 				</div>
 			</section>
 		<?php endif; ?>
