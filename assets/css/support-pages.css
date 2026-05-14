@@ -1296,6 +1296,7 @@
 }
 
 .jm-support-page.jm-memberships-page .memberships-tier-card {
+  container-type: inline-size;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -1353,16 +1354,21 @@
 .jm-support-page.jm-memberships-page .memberships-tier-card h2 {
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: clamp(4px, 2cqw, 8px);
+  width: 100%;
+  max-width: 100%;
   margin: 14px 0 18px;
   color: var(--support-white);
-  font-size: 1rem;
+  font-size: clamp(0.82rem, 4cqw, 1rem);
   line-height: 1;
+  white-space: nowrap;
   text-transform: uppercase;
 }
 
 .jm-support-page.jm-memberships-page .memberships-tier-card h2 span {
-  font-size: clamp(3rem, 5vw, 4.6rem);
+  min-width: 0;
+  font-size: clamp(2.4rem, 4.2vw, 3.7rem);
+  font-size: clamp(2.4rem, 16cqw, 4.05rem);
   line-height: 0.9;
 }
 
