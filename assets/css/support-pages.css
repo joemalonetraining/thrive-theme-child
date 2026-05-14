@@ -1063,6 +1063,14 @@
   margin-top: clamp(40px, 5vw, 64px);
 }
 
+.jm-support-page:is(.jm-pistol-course-landing, .jm-course-landing) .pistol-course-editorial-media.is-before-final-cta {
+  margin-top: clamp(34px, 5vw, 56px);
+}
+
+.jm-support-page:is(.jm-pistol-course-landing, .jm-course-landing) .pistol-course-editorial-media.is-before-final-cta + .pistol-course-final-cta {
+  margin-top: clamp(42px, 5vw, 64px);
+}
+
 .jm-support-page.jm-rifle-pistol-course-landing .pistol-course-editorial-media.is-rifle-pistol-communication img {
   object-position: center center;
 }
@@ -1073,6 +1081,41 @@
 
 .jm-support-page.jm-rifle-pistol-course-landing .pistol-course-editorial-media.is-rifle-pistol-low-light img {
   object-position: center center;
+}
+
+.jm-support-page.jm-rifle-pistol-level-five-course .pistol-course-hero::after {
+  background:
+    linear-gradient(90deg, rgba(3, 4, 4, 0.99) 0%, rgba(4, 5, 5, 0.88) 43%, rgba(4, 5, 5, 0.54) 100%),
+    radial-gradient(circle at 70% 36%, rgba(101, 129, 137, 0.16), transparent 34rem),
+    linear-gradient(180deg, rgba(3, 4, 4, 0.26), rgba(3, 4, 4, 0.95));
+}
+
+.jm-support-page.jm-rifle-pistol-level-five-course .pistol-course-hero-media img {
+  object-position: center center;
+  filter: saturate(0.74) contrast(1.16) brightness(0.68);
+}
+
+.jm-support-page.jm-rifle-pistol-level-five-course .pistol-course-quick-facts {
+  background: rgba(8, 10, 10, 0.84);
+}
+
+.jm-support-page.jm-rifle-pistol-level-five-course .pistol-course-editorial-media.is-rifle-pistol-level-five-scenario {
+  aspect-ratio: 16 / 9;
+  margin-top: clamp(34px, 4vw, 52px);
+}
+
+.jm-support-page.jm-rifle-pistol-level-five-course .pistol-course-editorial-media.is-rifle-pistol-level-five-scenario img {
+  object-position: center center;
+  filter: saturate(0.82) contrast(1.1) brightness(0.82);
+}
+
+.jm-support-page.jm-rifle-pistol-level-five-course .pistol-course-editorial-media.is-rifle-pistol-level-five-coordination {
+  aspect-ratio: 16 / 8;
+}
+
+.jm-support-page.jm-rifle-pistol-level-five-course .pistol-course-editorial-media.is-rifle-pistol-level-five-coordination img {
+  object-position: center center;
+  filter: saturate(0.86) contrast(1.08) brightness(0.8);
 }
 
 .jm-support-page:is(.jm-pistol-course-landing, .jm-course-landing) .pistol-course-section-heading {
@@ -2047,6 +2090,16 @@
       linear-gradient(180deg, rgba(5, 5, 5, 0.32), rgba(5, 5, 5, 0.94));
   }
 
+  .jm-support-page.jm-rifle-pistol-level-five-course .pistol-course-hero::after {
+    background:
+      linear-gradient(90deg, rgba(3, 4, 4, 0.99), rgba(3, 4, 4, 0.86)),
+      linear-gradient(180deg, rgba(3, 4, 4, 0.28), rgba(3, 4, 4, 0.96));
+  }
+
+  .jm-support-page.jm-rifle-pistol-level-five-course .pistol-course-hero-media img {
+    object-position: 58% center;
+  }
+
   .jm-support-page:is(.jm-pistol-course-landing, .jm-course-landing) .pistol-course-hero-inner,
   .jm-support-page:is(.jm-pistol-course-landing, .jm-course-landing) .pistol-course-overview-inner,
   .jm-support-page:is(.jm-pistol-course-landing, .jm-course-landing) .pistol-course-readiness {
@@ -2076,6 +2129,18 @@
 
   .jm-support-page:is(.jm-pistol-course-landing, .jm-course-landing) .pistol-course-editorial-media.is-before-blocks {
     margin-top: clamp(32px, 6vw, 48px);
+  }
+
+  .jm-support-page:is(.jm-pistol-course-landing, .jm-course-landing) .pistol-course-editorial-media.is-before-final-cta {
+    margin-top: clamp(30px, 6vw, 46px);
+  }
+
+  .jm-support-page:is(.jm-pistol-course-landing, .jm-course-landing) .pistol-course-editorial-media.is-before-final-cta + .pistol-course-final-cta {
+    margin-top: clamp(32px, 6vw, 48px);
+  }
+
+  .jm-support-page.jm-rifle-pistol-level-five-course .pistol-course-editorial-media.is-rifle-pistol-level-five-coordination {
+    aspect-ratio: 4 / 3;
   }
 
   .jm-support-page:is(.jm-pistol-course-landing, .jm-course-landing) .pistol-course-outcomes,
@@ -2242,6 +2307,18 @@
 
   .jm-support-page:is(.jm-pistol-course-landing, .jm-course-landing) .pistol-course-editorial-media.is-before-blocks {
     margin-top: 30px;
+  }
+
+  .jm-support-page:is(.jm-pistol-course-landing, .jm-course-landing) .pistol-course-editorial-media.is-before-final-cta {
+    margin-top: 28px;
+  }
+
+  .jm-support-page:is(.jm-pistol-course-landing, .jm-course-landing) .pistol-course-editorial-media.is-before-final-cta + .pistol-course-final-cta {
+    margin-top: 30px;
+  }
+
+  .jm-support-page.jm-rifle-pistol-level-five-course .pistol-course-hero-media img {
+    object-position: 62% center;
   }
 }
 

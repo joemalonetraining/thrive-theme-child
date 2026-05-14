@@ -7,6 +7,7 @@ $course = wp_parse_args(
 	$args['course'] ?? [],
 	[
 		'course_family' => 'pistol',
+		'course_class' => '',
 		'level' => '',
 		'title' => get_the_title(),
 		'label' => '',
@@ -61,14 +62,21 @@ $course_section_media         = wp_parse_args(
 	[
 		'after_hero' => [],
 		'before_blocks' => [],
+		'before_final_cta' => [],
 	]
 );
 $support_home_url             = function_exists('jm_training_primary_landing_url') ? jm_training_primary_landing_url() : home_url('/');
 
-$course_root_classes = sprintf(
-	'jm-support-page jm-course-landing jm-%1$s-course-landing',
-	$course_family
-);
+$course_root_classes = [
+	'jm-support-page',
+	'jm-course-landing',
+	sprintf('jm-%1$s-course-landing', $course_family),
+];
+foreach (preg_split('/\s+/', (string) $course['course_class']) as $course_extra_class) {
+	if ($course_extra_class) {
+		$course_root_classes[] = sanitize_html_class($course_extra_class);
+	}
+}
 
 $course_overview_inner_classes = 'course-overview-inner pistol-course-overview-inner';
 if (! $course_show_overview_media) {
@@ -97,7 +105,11 @@ $course_render_editorial_media = static function ($media, $modifier = '') use ($
 		$media_classes[] = sanitize_html_class($modifier);
 	}
 	if ($media['class']) {
-		$media_classes[] = sanitize_html_class($media['class']);
+		foreach (preg_split('/\s+/', (string) $media['class']) as $media_extra_class) {
+			if ($media_extra_class) {
+				$media_classes[] = sanitize_html_class($media_extra_class);
+			}
+		}
 	}
 	?>
 	<figure class="<?php echo esc_attr(implode(' ', $media_classes)); ?>">
@@ -117,7 +129,7 @@ $course_render_editorial_media = static function ($media, $modifier = '') use ($
 };
 ?>
 
-<div class="<?php echo esc_attr($course_root_classes); ?>">
+<div class="<?php echo esc_attr(implode(' ', $course_root_classes)); ?>">
 	<header class="support-site-header" aria-label="Primary navigation">
 		<a class="support-brand" href="<?php echo esc_url($support_home_url); ?>" aria-label="JM Training home">
 			<img class="support-brand-logo" src="<?php echo esc_url($assets_uri . '/jm-logo.png'); ?>" alt="JM Training logo">
@@ -265,6 +277,8 @@ $course_render_editorial_media = static function ($media, $modifier = '') use ($
 				</ul>
 			</section>
 		<?php endif; ?>
+
+		<?php $course_render_editorial_media($course_section_media['before_final_cta'], 'is-before-final-cta'); ?>
 
 		<section class="course-final-cta pistol-course-final-cta" aria-labelledby="course-registration-title">
 			<div>

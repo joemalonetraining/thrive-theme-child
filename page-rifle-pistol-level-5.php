@@ -14,11 +14,16 @@ wp_enqueue_style(
 
 $jm_rifle_pistol_course = [
 	'course_family' => 'rifle-pistol',
+	'course_class' => 'jm-rifle-pistol-level-five-course',
 	'level' => 'Rifle / Pistol Level 5',
 	'title' => 'Rifle / Pistol Level 5 — Advanced Tactical Integration',
 	'label' => 'Advanced Integration',
 	'eyebrow' => 'Rifle / Pistol Level 5',
-	'image_placeholder' => 'Rifle / Pistol Level 5 Image Placeholder',
+	'hero_image' => 'rifle-pistol-level-5-night-ops.png',
+	'hero_image_width' => '2528',
+	'hero_image_height' => '1688',
+	'hero_placeholder' => '',
+	'show_overview_media' => false,
 	'intro' => 'The most selective JM Training progression level, built around supervised advanced integration, complex scenarios, professional conduct, and disciplined judgment under stress.',
 	'cta_href' => home_url('/rifle-pistol-level-5/'),
 	'overview_href' => home_url('/rifle-pistol-training-overview/'),
@@ -60,6 +65,22 @@ $jm_rifle_pistol_course = [
 			'title' => 'Complex Scenarios and Stress-Induced Decision-Making',
 			'text' => 'Bravo places students into supervised scenario-driven exercises that may include environmental stress effects, advanced equipment concepts, communication demands, and complex decision pressure.',
 			'qualification' => 'Students must preserve safety, judgment, communication, and professional conduct while working through Level 5 scenario standards.',
+		],
+	],
+	'section_media' => [
+		'before_blocks' => [
+			'image' => 'rifle-pistol-level-5-scenario.jpg',
+			'image_width' => '5163',
+			'image_height' => '3447',
+			'image_alt' => 'Advanced rifle and pistol student evaluating a target array during scenario training.',
+			'class' => 'is-rifle-pistol-level-five-scenario',
+		],
+		'before_final_cta' => [
+			'image' => 'rifle-pistol-level-5-coordination.jpg',
+			'image_width' => '5925',
+			'image_height' => '3955',
+			'image_alt' => 'Armed student moving through a complex tactical range with barriers and target positions.',
+			'class' => 'is-rifle-pistol-level-five-coordination',
 		],
 	],
 ];
