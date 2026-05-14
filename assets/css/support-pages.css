@@ -698,6 +698,11 @@
   min-height: 0;
 }
 
+.jm-support-page.jm-rifle-pistol-training-overview-page .rifle-pistol-level-five-media {
+  aspect-ratio: 3 / 2;
+  min-height: 0;
+}
+
 .jm-support-page.jm-rifle-pistol-training-overview-page .rifle-pistol-level-four-media::after,
 .jm-support-page.jm-rifle-pistol-training-overview-page .rifle-pistol-level-five-media::after {
   position: absolute;
@@ -718,6 +723,11 @@
   object-fit: cover;
   object-position: center center;
   filter: saturate(0.82) contrast(1.1) brightness(0.84);
+}
+
+.jm-support-page.jm-rifle-pistol-training-overview-page .rifle-pistol-level-five-media img {
+  object-position: center center;
+  filter: saturate(0.72) contrast(1.16) brightness(0.78);
 }
 
 .jm-support-page.jm-rifle-pistol-training-overview-page .rifle-pistol-placeholder-media {
@@ -2077,6 +2087,11 @@
   .jm-support-page.jm-rifle-pistol-training-overview-page .rifle-pistol-level-four-media,
   .jm-support-page.jm-rifle-pistol-training-overview-page .rifle-pistol-level-five-media {
     min-height: 320px;
+  }
+
+  .jm-support-page.jm-rifle-pistol-training-overview-page .rifle-pistol-level-five-media,
+  .jm-support-page.jm-rifle-pistol-training-overview-page .rifle-pistol-level-five-media img {
+    min-height: 0;
   }
 
   .jm-support-page:is(.jm-pistol-course-landing, .jm-course-landing) .pistol-course-hero {

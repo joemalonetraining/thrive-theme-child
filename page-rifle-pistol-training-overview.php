@@ -88,9 +88,16 @@ $rifle_pistol_overview_home_url   = function_exists('jm_training_primary_landing
 					</p>
 					<a class="support-button" href="<?php echo esc_url(home_url('/rifle-pistol-level-5/')); ?>">Learn More / Register</a>
 				</div>
-				<div class="rifle-pistol-level-five-media rifle-pistol-placeholder-media" role="img" aria-label="Rifle / Pistol Level 5 image placeholder">
-					<span>Level 5 Image Placeholder</span>
-				</div>
+				<figure class="rifle-pistol-level-five-media">
+					<img
+						src="<?php echo esc_url($rifle_pistol_overview_assets_uri . '/rifle-pistol-level-5-overview.png'); ?>"
+						alt="Level 5 student shouldering a rifle while using night vision equipment."
+						width="2528"
+						height="1688"
+						loading="lazy"
+						decoding="async"
+					>
+				</figure>
 			</div>
 		</section>
 
