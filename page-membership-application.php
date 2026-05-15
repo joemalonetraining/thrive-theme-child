@@ -124,7 +124,7 @@ $application_classes = [
 /*
  * Gravity Forms setup:
  * - Create one form in WP Admin titled "Membership Application".
- * - The shared form currently uses Gravity Form ID 6.
+ * - The shared form currently uses Gravity Form ID 62.
  * - Add a required "Select Your Membership" field with options:
  *   The Starter Program — $62.99/mo, Pro Performance Package — $99.99/mo,
  *   Defensive Shooting University — $199.99/mo.
@@ -135,7 +135,7 @@ $application_classes = [
  * - If Gravity Forms dynamic population is enabled, set the membership field
  *   parameter name to "membership" and allow values: starter, pro, dsu.
  */
-$membership_application_form_shortcode = '[gravityform id="6" title="false" description="false" ajax="true"]';
+$membership_application_form_shortcode = '[gravityform id="62" title="false" description="false" ajax="true"]';
 
 $render_membership_application_hero = static function ($theme) use ($membership_application_assets_uri) {
 	?>
