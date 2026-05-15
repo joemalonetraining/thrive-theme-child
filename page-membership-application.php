@@ -115,12 +115,10 @@ $application_classes = [
 	sanitize_html_class($application_theme['class']),
 ];
 
-$membership_application_form_id = 'REPLACE_WITH_MEMBERSHIP_FORM_ID';
-
 /*
  * Gravity Forms setup:
  * - Create one form in WP Admin titled "Membership Application".
- * - Replace REPLACE_WITH_MEMBERSHIP_FORM_ID below with the actual Gravity Form ID.
+ * - The shared form currently uses Gravity Form ID 6.
  * - Add a required "Select Your Membership" field with options:
  *   The Starter Program — $62.99/mo, Pro Performance Package — $99.99/mo,
  *   Defensive Shooting University — $199.99/mo.
@@ -131,10 +129,7 @@ $membership_application_form_id = 'REPLACE_WITH_MEMBERSHIP_FORM_ID';
  * - If Gravity Forms dynamic population is enabled, set the membership field
  *   parameter name to "membership" and allow values: starter, pro, dsu.
  */
-$membership_application_form_shortcode = sprintf(
-	'[gravityform id="%s" title="false" description="false" ajax="true"]',
-	$membership_application_form_id
-);
+$membership_application_form_shortcode = '[gravityform id="6" title="false" description="false" ajax="true"]';
 
 $render_membership_application_hero = static function ($theme) use ($membership_application_assets_uri) {
 	?>
@@ -198,16 +193,7 @@ get_header();
 				</aside>
 
 				<div class="membership-application-form-panel">
-					<?php if ('REPLACE_WITH_MEMBERSHIP_FORM_ID' === $membership_application_form_id) : ?>
-						<div class="membership-application-form-placeholder">
-							<p class="support-eyebrow">Gravity Forms placeholder</p>
-							<h3>Membership Application form setup pending</h3>
-							<p>Replace the placeholder ID with the real Gravity Form ID after creating the single shared form.</p>
-							<code><?php echo esc_html($membership_application_form_shortcode); ?></code>
-						</div>
-					<?php else : ?>
-						<?php echo do_shortcode($membership_application_form_shortcode); ?>
-					<?php endif; ?>
+					<?php echo do_shortcode($membership_application_form_shortcode); ?>
 				</div>
 			</div>
 		</section>
