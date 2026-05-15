@@ -105,6 +105,21 @@ $membership_application_themes = [
 $has_membership_param = isset($_GET['membership']);
 $requested_membership = $has_membership_param ? sanitize_key(wp_unslash($_GET['membership'])) : '';
 $requested_course     = isset($_GET['course']) ? sanitize_key(wp_unslash($_GET['course'])) : '';
+
+if ('starter' === $requested_membership) {
+	$starter_application_url   = 'https://api.cavucrm.com/widget/form/gJBjLouVXzI3MZWperI0';
+	$starter_application_query = [];
+
+	foreach ($_GET as $query_key => $query_value) {
+		if (is_scalar($query_value)) {
+			$starter_application_query[sanitize_key($query_key)] = sanitize_text_field(wp_unslash($query_value));
+		}
+	}
+
+	wp_redirect(esc_url_raw(add_query_arg($starter_application_query, $starter_application_url)));
+	exit;
+}
+
 $application_theme    = $membership_application_default_theme;
 
 if ($has_membership_param) {
