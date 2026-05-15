@@ -20,7 +20,7 @@ $jm_membership_tier = [
 	'price_suffix' => '/mo',
 	'intro' => 'The Starter Program gives members the structure, online education, community access, and recurring training touchpoints needed to start building a disciplined defensive training habit.',
 	'cta_label' => 'Ask About Starter',
-	'cta_href' => 'mailto:support@joemalonetraining.com?subject=Starter%20Program%20Inquiry',
+	'cta_href' => home_url('/membership-application/?membership=starter'),
 	'proof_points' => [
 		'Online Defensive Shooting University access',
 		'At-your-own-pace advancement roadmap',

@@ -1510,7 +1510,7 @@
   margin-bottom: 0;
 }
 
-.jm-support-page:is(.jm-memberships-page, .jm-membership-tier-page) {
+.jm-support-page:is(.jm-memberships-page, .jm-membership-tier-page, .jm-membership-application-page) {
   overflow-x: hidden;
   background:
     radial-gradient(circle at 78% 7%, rgba(196, 154, 74, 0.13), transparent 30rem),
@@ -1518,7 +1518,8 @@
 }
 
 .jm-support-page:is(.jm-memberships-page, .jm-membership-tier-page) .memberships-main,
-.jm-support-page:is(.jm-memberships-page, .jm-membership-tier-page) .membership-tier-main {
+.jm-support-page:is(.jm-memberships-page, .jm-membership-tier-page) .membership-tier-main,
+.jm-support-page.jm-membership-application-page .membership-application-main {
   overflow: hidden;
   background:
     linear-gradient(180deg, rgba(196, 154, 74, 0.07), transparent 18rem),
@@ -1958,6 +1959,175 @@
   width: min(650px, 100%);
 }
 
+.jm-support-page.jm-membership-application-page .membership-application-hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: end;
+  min-height: clamp(620px, 78vh, 820px);
+  padding: 112px clamp(20px, 6vw, 80px) 82px;
+  border-bottom: 1px solid var(--support-line);
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  margin: 0;
+  overflow: hidden;
+  background: #070707;
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-hero-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.82) contrast(1.12) brightness(0.68);
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-hero::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(5, 5, 5, 0.98) 0%, rgba(5, 5, 5, 0.84) 45%, rgba(5, 5, 5, 0.42) 100%),
+    linear-gradient(180deg, rgba(5, 5, 5, 0.24), rgba(5, 5, 5, 0.95));
+}
+
+.jm-support-page.jm-membership-application-page.is-dsu .membership-application-hero-media img {
+  filter: saturate(0.88) contrast(1.12) brightness(0.62);
+}
+
+.jm-support-page.jm-membership-application-page.is-rifle-pistol-level-5 .membership-application-hero-media img {
+  filter: saturate(0.72) contrast(1.16) brightness(0.64);
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-hero-inner,
+.jm-support-page.jm-membership-application-page .membership-application-form-inner {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-copy {
+  width: min(780px, 100%);
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-copy h1 {
+  margin: 0 0 20px;
+  color: var(--support-white);
+  font-size: clamp(3.1rem, 7.2vw, 6.9rem);
+  line-height: 0.92;
+  letter-spacing: 0;
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-copy > p:not(.support-eyebrow) {
+  margin: 0;
+  color: var(--support-muted);
+  font-size: clamp(1.04rem, 1.7vw, 1.2rem);
+  line-height: 1.65;
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-context {
+  display: grid;
+  gap: 6px;
+  width: min(520px, 100%);
+  margin-top: 28px;
+  padding: 16px 18px;
+  border: 1px solid rgba(196, 154, 74, 0.34);
+  border-radius: 8px;
+  background: rgba(8, 8, 8, 0.76);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.34);
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-context span {
+  color: var(--support-gold);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-context strong {
+  color: var(--support-white);
+  font-size: 1.08rem;
+  line-height: 1.32;
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-form-section {
+  padding: clamp(58px, 8vw, 104px) clamp(20px, 6vw, 80px) clamp(70px, 9vw, 118px);
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-form-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(320px, 1fr);
+  gap: clamp(24px, 5vw, 64px);
+  align-items: start;
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-form-summary,
+.jm-support-page.jm-membership-application-page .membership-application-form-panel {
+  min-width: 0;
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-form-summary h2 {
+  margin: 0 0 16px;
+  color: var(--support-white);
+  font-size: clamp(2.15rem, 4.4vw, 4.35rem);
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-form-summary p:not(.support-eyebrow) {
+  margin: 0;
+  color: var(--support-muted);
+  font-size: 1.02rem;
+  line-height: 1.68;
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-form-panel {
+  padding: clamp(22px, 4vw, 34px);
+  border: 1px solid rgba(247, 245, 239, 0.12);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.024)),
+    rgba(14, 14, 14, 0.94);
+  box-shadow: 0 28px 82px rgba(0, 0, 0, 0.38);
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-form-placeholder {
+  display: grid;
+  gap: 14px;
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-form-placeholder h3 {
+  margin: 0;
+  color: var(--support-white);
+  font-size: clamp(1.45rem, 3vw, 2.2rem);
+  line-height: 1.05;
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-form-placeholder p:not(.support-eyebrow) {
+  margin: 0;
+  color: var(--support-muted);
+  line-height: 1.62;
+}
+
+.jm-support-page.jm-membership-application-page .membership-application-form-placeholder code {
+  display: block;
+  max-width: 100%;
+  padding: 14px;
+  overflow-wrap: anywhere;
+  border: 1px solid rgba(196, 154, 74, 0.26);
+  border-radius: 8px;
+  background: rgba(5, 5, 5, 0.74);
+  color: var(--support-white);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
 @media (max-width: 880px) {
   .jm-support-page .support-site-header {
     align-items: flex-start;
@@ -2013,6 +2183,25 @@
   .jm-support-page.jm-membership-tier-page .membership-final-cta {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .jm-support-page.jm-membership-application-page .membership-application-hero {
+    min-height: auto;
+    padding-top: 96px;
+  }
+
+  .jm-support-page.jm-membership-application-page .membership-application-hero::after {
+    background:
+      linear-gradient(90deg, rgba(5, 5, 5, 0.98), rgba(5, 5, 5, 0.84)),
+      linear-gradient(180deg, rgba(5, 5, 5, 0.28), rgba(5, 5, 5, 0.96));
+  }
+
+  .jm-support-page.jm-membership-application-page .membership-application-form-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .jm-support-page.jm-membership-application-page .membership-application-copy h1 {
+    font-size: 4rem;
   }
 
   .jm-support-page.jm-pistol-page .pistol-hero {
@@ -2192,6 +2381,8 @@
 
   .jm-support-page.jm-memberships-page .memberships-hero,
   .jm-support-page.jm-memberships-page .memberships-tier-section,
+  .jm-support-page.jm-membership-application-page .membership-application-hero,
+  .jm-support-page.jm-membership-application-page .membership-application-form-section,
   .jm-support-page.jm-membership-tier-page .membership-tier-hero,
   .jm-support-page.jm-membership-tier-page .membership-tier-feature-media,
   .jm-support-page.jm-membership-tier-page .membership-tier-media,
@@ -2204,6 +2395,14 @@
   .jm-support-page.jm-membership-tier-page .membership-price-panel,
   .jm-support-page.jm-membership-tier-page .membership-detail-panel,
   .jm-support-page.jm-membership-tier-page .membership-benefit-grid article {
+    padding: 20px;
+  }
+
+  .jm-support-page.jm-membership-application-page .membership-application-copy h1 {
+    font-size: 3.05rem;
+  }
+
+  .jm-support-page.jm-membership-application-page .membership-application-form-panel {
     padding: 20px;
   }
 

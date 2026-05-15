@@ -7,14 +7,14 @@
 get_header();
 
 $logo_uri = get_stylesheet_directory_uri() . '/assets/images/jm-logo.png';
-$membership_home_url = function_exists('jm_training_primary_landing_url') ? jm_training_primary_landing_url() : '#top';
+$membership_home_url = function_exists('jm_training_primary_landing_url') ? jm_training_primary_landing_url() : home_url('/');
 $membership_tiers = [
 	[
 		'name' => 'The Starter Program',
 		'price' => '$62.99',
 		'suffix' => '/mo',
-		'href' => home_url('/starter-program/'),
-		'cta' => 'View Starter Details',
+		'href' => home_url('/membership-application/?membership=starter'),
+		'cta' => 'Ask About Starter',
 		'note' => 'The entry point for online education, community, events, legal seminars, and the JM Training advancement roadmap.',
 		'items' => [
 			'Defensive Shooting University online access',
@@ -32,8 +32,8 @@ $membership_tiers = [
 		'name' => 'Pro Performance Package',
 		'price' => '$99.99',
 		'suffix' => '/mo',
-		'href' => home_url('/pro-performance-package/'),
-		'cta' => 'View Pro Details',
+		'href' => home_url('/membership-application/?membership=pro'),
+		'cta' => 'Ask About Pro',
 		'note' => 'Includes everything in Starter, then adds range access, discounted qualifications, medical training discounts, and schedule priority.',
 		'items' => [
 			'Members-only open range access',
@@ -49,8 +49,8 @@ $membership_tiers = [
 		'name' => 'Defensive Shooting University',
 		'price' => '$199.99',
 		'suffix' => '/mo',
-		'href' => home_url('/defensive-shooting-university-membership/'),
-		'cta' => 'View DSU Details',
+		'href' => home_url('/membership-application/?membership=dsu'),
+		'cta' => 'Ask About DSU',
 		'featured' => true,
 		'note' => 'The full path membership with included qualification courses, included medical blocks, private outdoor range access, and accelerated progression.',
 		'items' => [
@@ -75,7 +75,7 @@ $membership_tiers = [
 			</span>
 		</a>
 		<?php get_template_part('template-parts/jm-site-nav'); ?>
-		<a class="support-header-cta" href="<?php echo esc_url(home_url('/starter-program/')); ?>">
+		<a class="support-header-cta" href="<?php echo esc_url(home_url('/membership-application/?membership=starter')); ?>">
 			Start With Starter
 		</a>
 	</header>

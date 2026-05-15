@@ -24,7 +24,7 @@ $jm_rifle_pistol_course = [
 	'hero_placeholder' => '',
 	'show_overview_media' => false,
 	'intro' => 'A selective combined-systems course that introduces rifle and pistol transition logic, movement, communication, and small-team problem-solving under structured standards.',
-	'cta_href' => home_url('/rifle-pistol-level-4/'),
+	'cta_href' => home_url('/membership-application/?course=rifle-pistol-level-4'),
 	'overview_href' => home_url('/rifle-pistol-training-overview/'),
 	'detail' => [
 		'Rifle / Pistol Level 4 is where students begin working both platforms inside the same problem. The emphasis is not speed for its own sake. Students learn to think through when each tool is appropriate, how to manage transitions safely, and how to keep accountability as tempo increases.',

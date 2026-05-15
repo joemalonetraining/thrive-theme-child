@@ -14,7 +14,7 @@ $tier = wp_parse_args(
 		'badge' => '',
 		'intro' => '',
 		'cta_label' => 'Ask About This Membership',
-		'cta_href' => 'mailto:support@joemalonetraining.com?subject=Membership%20Inquiry',
+		'cta_href' => home_url('/membership-application/'),
 		'overview_href' => home_url('/memberships/'),
 		'proof_points' => [],
 		'feature_media_heading' => '',
@@ -30,7 +30,7 @@ $tier = wp_parse_args(
 
 $logo_uri = get_stylesheet_directory_uri() . '/assets/images/jm-logo.png';
 $image_base_uri = get_stylesheet_directory_uri() . '/assets/images';
-$membership_home_url = function_exists('jm_training_primary_landing_url') ? jm_training_primary_landing_url() : '#top';
+$membership_home_url = function_exists('jm_training_primary_landing_url') ? jm_training_primary_landing_url() : home_url('/');
 ?>
 
 <div class="jm-support-page jm-membership-tier-page">
