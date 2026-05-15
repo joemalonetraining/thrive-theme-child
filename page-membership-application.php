@@ -36,6 +36,7 @@ $membership_application_themes = [
 			'key' => 'starter',
 			'class' => 'is-starter',
 			'eyebrow' => 'Starter Program Application',
+			'headline' => 'Apply for the Starter Program',
 			'intro' => 'You are applying for the Starter Program, the entry point for online education, community access, recurring training touchpoints, and the JM Training advancement roadmap.',
 			'selected_value' => 'The Starter Program — $62.99/mo',
 			'image' => 'handgun-level-0-foundations.png',
@@ -48,6 +49,7 @@ $membership_application_themes = [
 			'key' => 'pro',
 			'class' => 'is-pro',
 			'eyebrow' => 'Pro Performance Application',
+			'headline' => 'Apply for Pro Performance',
 			'intro' => 'You are applying for Pro Performance, the membership tier built for more consistent range access, discounted qualification training, and priority schedule movement.',
 			'selected_value' => 'Pro Performance Package — $99.99/mo',
 			'image' => 'handgun-level-3-dynamic-range.png',
@@ -60,6 +62,7 @@ $membership_application_themes = [
 			'key' => 'dsu',
 			'class' => 'is-dsu',
 			'eyebrow' => 'Defensive Shooting University Application',
+			'headline' => 'Apply for Defensive Shooting University',
 			'intro' => 'You are applying for Defensive Shooting University, the full-path membership for included qualification courses, medical blocks, private range access, and accelerated progression.',
 			'selected_value' => 'Defensive Shooting University — $199.99/mo',
 			'image' => 'dsu-outdoor-rifle-movement-sunset.png',
@@ -99,12 +102,15 @@ $membership_application_themes = [
 	],
 ];
 
-$requested_membership = isset($_GET['membership']) ? sanitize_key(wp_unslash($_GET['membership'])) : '';
+$has_membership_param = isset($_GET['membership']);
+$requested_membership = $has_membership_param ? sanitize_key(wp_unslash($_GET['membership'])) : '';
 $requested_course     = isset($_GET['course']) ? sanitize_key(wp_unslash($_GET['course'])) : '';
 $application_theme    = $membership_application_default_theme;
 
-if ($requested_membership && isset($membership_application_themes['membership'][$requested_membership])) {
-	$application_theme = wp_parse_args($membership_application_themes['membership'][$requested_membership], $membership_application_default_theme);
+if ($has_membership_param) {
+	if (isset($membership_application_themes['membership'][$requested_membership])) {
+		$application_theme = wp_parse_args($membership_application_themes['membership'][$requested_membership], $membership_application_default_theme);
+	}
 } elseif ($requested_course && isset($membership_application_themes['course'][$requested_course])) {
 	$application_theme = wp_parse_args($membership_application_themes['course'][$requested_course], $membership_application_default_theme);
 }
