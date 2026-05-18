@@ -106,17 +106,8 @@ $has_membership_param = isset($_GET['membership']);
 $requested_membership = $has_membership_param ? sanitize_key(wp_unslash($_GET['membership'])) : '';
 $requested_course     = isset($_GET['course']) ? sanitize_key(wp_unslash($_GET['course'])) : '';
 
-if ('starter' === $requested_membership) {
-	$starter_application_url   = 'https://api.cavucrm.com/widget/form/gJBjLouVXzI3MZWperI0';
-	$starter_application_query = [];
-
-	foreach ($_GET as $query_key => $query_value) {
-		if (is_scalar($query_value)) {
-			$starter_application_query[sanitize_key($query_key)] = sanitize_text_field(wp_unslash($query_value));
-		}
-	}
-
-	wp_redirect(esc_url_raw(add_query_arg($starter_application_query, $starter_application_url)));
+if ('pro' === $requested_membership) {
+	wp_redirect(esc_url_raw('https://api.cavucrm.com/widget/form/p8QRhzecGMZoegOrIUUL'));
 	exit;
 }
 
@@ -135,22 +126,6 @@ $application_classes = [
 	'jm-membership-application-page',
 	sanitize_html_class($application_theme['class']),
 ];
-
-/*
- * Gravity Forms setup:
- * - Create one form in WP Admin titled "Membership Application".
- * - The shared form currently uses Gravity Form ID 62.
- * - Add a required "Select Your Membership" field with options:
- *   The Starter Program — $62.99/mo, Pro Performance Package — $99.99/mo,
- *   Defensive Shooting University — $199.99/mo.
- * - Collect First Name, Last Name, Email, Phone, Date of Birth,
- *   Preferred Training Location, Firearms Experience Level,
- *   Current Membership Status, Notes / Questions, and a consent checkbox
- *   acknowledging this is an application/request, not automatic enrollment.
- * - If Gravity Forms dynamic population is enabled, set the membership field
- *   parameter name to "membership" and allow values: starter, pro, dsu.
- */
-$membership_application_form_shortcode = '[gravityform id="62" title="false" description="false" ajax="true"]';
 
 $render_membership_application_hero = static function ($theme) use ($membership_application_assets_uri) {
 	?>
@@ -214,7 +189,13 @@ get_header();
 				</aside>
 
 				<div class="membership-application-form-panel">
-					<?php echo do_shortcode($membership_application_form_shortcode); ?>
+					<iframe
+						src="https://api.cavucrm.com/widget/form/gJBjLouVXzI3MZWperI0"
+						style="width:100%;height:900px;border:none;border-radius:18px;overflow:hidden;"
+						scrolling="no"
+						id="gJBjLouVXzI3MZWperI0"
+						title="Membership & Course Application"
+					></iframe>
 				</div>
 			</div>
 		</section>

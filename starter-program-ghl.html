@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Starter Program | JM Training</title>
+  <style>
+    :root {
+      --jm-black: #050505;
+      --jm-ink: #0b0b0b;
+      --jm-panel: #111213;
+      --jm-panel-strong: #191a1b;
+      --jm-white: #f7f5ef;
+      --jm-muted: #c7c2b7;
+      --jm-soft: #9f9a90;
+      --jm-gold: #c49a4a;
+      --jm-gold-bright: #e2bd68;
+      --jm-line: rgba(247, 245, 239, 0.13);
+      --jm-gold-line: rgba(196, 154, 74, 0.42);
+      --jm-shadow: 0 18px 52px rgba(0, 0, 0, 0.34);
+      --jm-radius: 8px;
+      --jm-max: 960px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--jm-black);
+      color: var(--jm-white);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .starter-page {
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 78% 7%, rgba(196, 154, 74, 0.16), transparent 31rem),
+        linear-gradient(180deg, #050505 0%, #0b0b0b 48%, #050505 100%);
+    }
+
+    .starter-header {
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 62px;
+      padding: 10px clamp(14px, 4vw, 34px);
+      border-bottom: 1px solid var(--jm-line);
+      background: rgba(5, 5, 5, 0.9);
+      backdrop-filter: blur(14px);
+    }
+
+    .starter-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .starter-brand-mark {
+      display: inline-grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      flex: 0 0 36px;
+      border: 1px solid var(--jm-gold-line);
+      border-radius: var(--jm-radius);
+      background:
+        linear-gradient(135deg, rgba(196, 154, 74, 0.28), rgba(255, 255, 255, 0.04)),
+        #101010;
+      color: var(--jm-white);
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 0.03em;
+    }
+
+    .starter-brand-text strong,
+    .starter-brand-text small {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .starter-brand-text strong {
+      color: var(--jm-white);
+      font-size: 0.9rem;
+      line-height: 1.1;
+    }
+
+    .starter-brand-text small {
+      color: var(--jm-muted);
+      font-size: 0.68rem;
+    }
+
+    .starter-nav {
+      display: none;
+      align-items: center;
+      gap: clamp(12px, 2vw, 22px);
+      color: var(--jm-muted);
+      font-size: 0.84rem;
+    }
+
+    .starter-nav a:hover {
+      color: var(--jm-white);
+    }
+
+    .starter-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 15px;
+      border: 1px solid rgba(196, 154, 74, 0.58);
+      border-radius: var(--jm-radius);
+      background:
+        linear-gradient(180deg, rgba(196, 154, 74, 0.22), rgba(196, 154, 74, 0.08)),
+        rgba(196, 154, 74, 0.12);
+      color: var(--jm-white);
+      font-size: 0.92rem;
+      font-weight: 820;
+      text-align: center;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .starter-button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(226, 189, 104, 0.82);
+      background:
+        linear-gradient(180deg, rgba(196, 154, 74, 0.32), rgba(196, 154, 74, 0.12)),
+        rgba(196, 154, 74, 0.16);
+    }
+
+    .starter-button:focus-visible,
+    .starter-nav a:focus-visible {
+      outline: 2px solid var(--jm-gold-bright);
+      outline-offset: 4px;
+    }
+
+    .starter-button-secondary {
+      background: rgba(255, 255, 255, 0.045);
+      border-color: rgba(247, 245, 239, 0.2);
+      color: var(--jm-white);
+    }
+
+    .starter-main {
+      background:
+        linear-gradient(180deg, rgba(196, 154, 74, 0.07), transparent 18rem),
+        var(--jm-black);
+    }
+
+    .starter-hero,
+    .starter-section {
+      padding: clamp(34px, 5vw, 58px) clamp(16px, 5vw, 42px);
+      border-bottom: 1px solid var(--jm-line);
+    }
+
+    .starter-hero-inner,
+    .starter-section-inner,
+    .starter-final {
+      width: min(var(--jm-max), 100%);
+      margin: 0 auto;
+    }
+
+    .starter-hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+      gap: clamp(22px, 4vw, 44px);
+      align-items: center;
+    }
+
+    .starter-eyebrow {
+      margin: 0 0 10px;
+      color: var(--jm-gold);
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .starter-copy h1 {
+      width: min(680px, 100%);
+      margin: 0 0 16px;
+      color: var(--jm-white);
+      font-size: clamp(2.05rem, 4.2vw, 3.55rem);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .starter-copy > p {
+      width: min(620px, 100%);
+      margin: 0;
+      color: var(--jm-muted);
+      font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+      line-height: 1.6;
+    }
+
+    .starter-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .starter-price-panel {
+      position: relative;
+      display: grid;
+      gap: 12px;
+      min-width: 0;
+      padding: clamp(18px, 2.6vw, 24px);
+      overflow: hidden;
+      border: 1px solid rgba(196, 154, 74, 0.36);
+      border-radius: var(--jm-radius);
+      background:
+        linear-gradient(180deg, rgba(196, 154, 74, 0.15), rgba(255, 255, 255, 0.035)),
+        rgba(13, 13, 13, 0.96);
+      box-shadow: var(--jm-shadow);
+    }
+
+    .starter-price-panel::before {
+      position: absolute;
+      inset: 0 0 auto;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(196, 154, 74, 0.78), transparent);
+      content: "";
+    }
+
+    .starter-price {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .starter-price strong {
+      color: var(--jm-white);
+      font-size: clamp(2.35rem, 4.4vw, 3.35rem);
+      line-height: 0.95;
+      letter-spacing: 0;
+    }
+
+    .starter-price span {
+      color: var(--jm-muted);
+      font-size: 0.92rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .starter-price-photo {
+      position: relative;
+      min-height: 180px;
+      margin: 4px 0 2px;
+      overflow: hidden;
+      border: 1px solid rgba(247, 245, 239, 0.12);
+      border-radius: var(--jm-radius);
+      background: #0a0a0a;
+    }
+
+    .starter-price-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      object-fit: cover;
+      object-position: center center;
+      filter: saturate(0.9) contrast(1.05) brightness(0.78);
+    }
+
+    .starter-price-photo::after {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(5, 5, 5, 0.02), rgba(5, 5, 5, 0.54)),
+        linear-gradient(90deg, rgba(5, 5, 5, 0.22), transparent 58%);
+      content: "";
+      pointer-events: none;
+    }
+
+    .starter-proof-list,
+    .starter-detail-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .starter-proof-list li,
+    .starter-detail-list li {
+      position: relative;
+      padding-left: 20px;
+      color: var(--jm-muted);
+      font-size: 0.94rem;
+      line-height: 1.52;
+    }
+
+    .starter-proof-list li::before,
+    .starter-detail-list li::before {
+      position: absolute;
+      top: 0.72em;
+      left: 0;
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--jm-gold);
+      content: "";
+    }
+
+    .starter-section-heading {
+      width: min(780px, 100%);
+      margin-bottom: 24px;
+    }
+
+    .starter-section-heading h2,
+    .starter-detail-panel h2,
+    .starter-final h2 {
+      margin: 0 0 12px;
+      color: var(--jm-white);
+      font-size: clamp(1.55rem, 3vw, 2.45rem);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .starter-section-heading p,
+    .starter-detail-panel p,
+    .starter-final p {
+      margin: 0;
+      color: var(--jm-muted);
+      font-size: 0.98rem;
+      line-height: 1.62;
+    }
+
+    .starter-benefit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .starter-benefit-card,
+    .starter-detail-panel {
+      min-width: 0;
+      border: 1px solid rgba(247, 245, 239, 0.12);
+      border-radius: var(--jm-radius);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.024)),
+        rgba(14, 14, 14, 0.94);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+    }
+
+    .starter-benefit-card {
+      padding: 18px;
+    }
+
+    .starter-benefit-card h3 {
+      margin: 0 0 10px;
+      color: var(--jm-white);
+      font-size: 1.02rem;
+      line-height: 1.22;
+    }
+
+    .starter-benefit-card p {
+      margin: 0;
+      color: var(--jm-muted);
+      font-size: 0.92rem;
+      line-height: 1.58;
+    }
+
+    .starter-breakdown {
+      display: grid;
+      gap: 14px;
+    }
+
+    .starter-detail-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(240px, 0.75fr);
+      gap: clamp(18px, 3vw, 32px);
+      align-items: center;
+      padding: clamp(22px, 4vw, 34px);
+    }
+
+    .starter-detail-panel:nth-child(even) .starter-detail-visual {
+      order: -1;
+    }
+
+    .starter-detail-copy {
+      min-width: 0;
+    }
+
+    .starter-detail-list {
+      margin-top: 18px;
+    }
+
+    .starter-detail-visual {
+      position: relative;
+      min-height: 210px;
+      overflow: hidden;
+      border: 1px solid rgba(247, 245, 239, 0.12);
+      border-radius: var(--jm-radius);
+      background:
+        linear-gradient(135deg, rgba(196, 154, 74, 0.18), transparent 42%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+        #0a0a0a;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+    }
+
+    .starter-detail-visual img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      object-fit: cover;
+      object-position: center center;
+      filter: saturate(0.88) contrast(1.05) brightness(0.74);
+    }
+
+    .starter-detail-visual::before {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(5, 5, 5, 0.02), rgba(5, 5, 5, 0.62)),
+        linear-gradient(90deg, rgba(5, 5, 5, 0.24), transparent 58%);
+      content: "";
+      pointer-events: none;
+    }
+
+    .starter-detail-visual figcaption {
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+      left: 20px;
+      z-index: 1;
+      margin: 0;
+      color: rgba(247, 245, 239, 0.88);
+      font-size: clamp(1.05rem, 2vw, 1.45rem);
+      font-weight: 900;
+      line-height: 1.05;
+      text-transform: uppercase;
+    }
+
+    .starter-metric-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .starter-metric {
+      padding: 15px;
+      border: 1px solid rgba(196, 154, 74, 0.28);
+      border-radius: var(--jm-radius);
+      background: rgba(196, 154, 74, 0.08);
+    }
+
+    .starter-metric strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--jm-white);
+      font-size: 0.94rem;
+      line-height: 1.25;
+    }
+
+    .starter-metric span {
+      color: var(--jm-muted);
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
+    .starter-final {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 36px;
+      margin-bottom: 42px;
+      padding: clamp(20px, 3.4vw, 30px);
+      border: 1px solid rgba(196, 154, 74, 0.32);
+      border-radius: var(--jm-radius);
+      background:
+        linear-gradient(135deg, rgba(196, 154, 74, 0.16), rgba(247, 245, 239, 0.035)),
+        #0d0d0d;
+      box-shadow: var(--jm-shadow);
+    }
+
+    .starter-final p {
+      width: min(650px, 100%);
+    }
+
+    @media (max-width: 980px) {
+      .starter-hero-inner,
+      .starter-benefit-grid,
+      .starter-detail-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .starter-detail-panel:nth-child(even) .starter-detail-visual {
+        order: 0;
+      }
+
+      .starter-final {
+        align-items: stretch;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .starter-header {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .starter-button,
+      .starter-actions {
+        width: 100%;
+      }
+
+      .starter-actions {
+        display: grid;
+      }
+
+      .starter-hero,
+      .starter-section {
+        padding-right: 14px;
+        padding-left: 14px;
+      }
+
+      .starter-copy h1 {
+        font-size: 2.35rem;
+      }
+
+      .starter-price-panel,
+      .starter-benefit-card,
+      .starter-detail-panel {
+        padding: 20px;
+      }
+
+      .starter-detail-visual {
+        min-height: 260px;
+      }
+
+      .starter-price-photo {
+        min-height: 220px;
+      }
+
+      .starter-metric-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="starter-page">
+    <header class="starter-header" aria-label="Starter Program header">
+      <a class="starter-brand" href="#top" aria-label="JM Training Starter Program">
+        <span class="starter-brand-mark" aria-hidden="true">JM</span>
+        <span class="starter-brand-text">
+          <strong>JM Training</strong>
+          <small>Starter Program membership</small>
+        </span>
+      </a>
+
+      <nav class="starter-nav" aria-label="Page sections">
+        <a href="#benefits">Benefits</a>
+        <a href="#training-path">Training Path</a>
+        <a href="#community">Community</a>
+      </nav>
+
+    </header>
+
+    <main id="top" class="starter-main">
+      <section class="starter-hero" aria-labelledby="starter-title">
+        <div class="starter-hero-inner">
+          <div class="starter-copy">
+            <p class="starter-eyebrow">JM Training Membership</p>
+            <h1 id="starter-title">The Starter Program</h1>
+            <p>
+              This is the first step into a steady training path. Starter helps you build skill, judgment, and confidence
+              in a way that supports your personal safety, your family security, and the discipline you carry into daily life.
+            </p>
+            <div class="starter-actions" aria-label="Starter Program actions">
+              <a class="starter-button starter-button-secondary" href="#benefits">
+                View Benefits
+              </a>
+            </div>
+          </div>
+
+          <aside class="starter-price-panel" aria-label="Starter Program pricing summary">
+            <p class="starter-eyebrow">Starter Program</p>
+            <div class="starter-price">
+              <strong>$62.99</strong>
+              <span>/mo</span>
+            </div>
+            <figure class="starter-price-photo">
+              <img
+                src="https://assets.cdn.filesafe.space/NLP99XIWA38PIwtNHnlQ/media/6a07f44dea36308bcf7e8a42.jpeg"
+                alt="JM Training instructor coaching a student through handgun fundamentals on an indoor range."
+              >
+            </figure>
+            <ul class="starter-proof-list">
+              <li>A structured path for responsible personal protection</li>
+              <li>Online education you can work through at your pace</li>
+              <li>Community, events, legal seminars, and USCCA membership</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section id="benefits" class="starter-section" aria-labelledby="starter-benefits-title">
+        <div class="starter-section-inner">
+          <div class="starter-section-heading">
+            <p class="starter-eyebrow">Membership details</p>
+            <h2 id="starter-benefits-title">Everything included in Starter</h2>
+            <p>
+              Starter is built to make the beginning feel clear and manageable. You are not expected to have everything
+              figured out before you start. The program gives you direction, support, and a place to keep improving.
+            </p>
+          </div>
+
+          <div class="starter-benefit-grid">
+            <article class="starter-benefit-card">
+              <h3>Defensive Shooting University Online Access</h3>
+              <p>Study the program material, understand the training path, and prepare for live instruction with more confidence.</p>
+            </article>
+
+            <article class="starter-benefit-card">
+              <h3>Telegram Group Chat Access</h3>
+              <p>Stay connected with the JM Training community, ask questions, and keep training on your mind between events.</p>
+            </article>
+
+            <article class="starter-benefit-card">
+              <h3>At-Your-Own-Pace Roadmap</h3>
+              <p>Follow a structured advancement roadmap without being rushed into standards you are not ready for yet.</p>
+            </article>
+
+            <article class="starter-benefit-card">
+              <h3>Group Training Events</h3>
+              <p>Attend group training events in Frankfort that reinforce safety, fundamentals, and responsible progression.</p>
+            </article>
+
+            <article class="starter-benefit-card">
+              <h3>Competition Nights</h3>
+              <p>Participate in competition nights in Bourbonnais to test skills, manage pressure, and learn from feedback.</p>
+            </article>
+
+            <article class="starter-benefit-card">
+              <h3>Monthly Gun Cleaning and Networking</h3>
+              <p>Maintain equipment, ask practical questions, and stay connected through a recurring monthly member event.</p>
+            </article>
+
+            <article class="starter-benefit-card">
+              <h3>Legal and Scenario Training</h3>
+              <p>Access legal seminars and scenario training that connect defensive skill with judgment, restraint, and responsibility.</p>
+            </article>
+
+            <article class="starter-benefit-card">
+              <h3>Try Guns and Gear Before Buying</h3>
+              <p>Get hands-on exposure to different guns and gear before spending money on equipment that may not fit your needs.</p>
+            </article>
+
+            <article class="starter-benefit-card">
+              <h3>Free USCCA Membership</h3>
+              <p>Starter members receive a USCCA membership as part of a broader responsibility and preparedness framework.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="training-path" class="starter-section" aria-label="Starter Program training path">
+        <div class="starter-section-inner starter-breakdown">
+          <article class="starter-detail-panel">
+            <div class="starter-detail-copy">
+              <p class="starter-eyebrow">Best fit</p>
+              <h2>For students ready to become more capable, one step at a time</h2>
+              <p>
+                Starter is the right entry point if you want to improve without feeling overwhelmed. It gives you a clear
+                path, honest standards, and a supportive environment for developing real confidence.
+              </p>
+              <ul class="starter-detail-list">
+                <li>New or returning students who want a clear place to begin</li>
+                <li>Members who want support, accountability, and recurring events</li>
+                <li>Students building consistency around family, work, and daily life</li>
+              </ul>
+            </div>
+            <figure class="starter-detail-visual is-roadmap">
+              <img
+                src="https://assets.cdn.filesafe.space/NLP99XIWA38PIwtNHnlQ/media/6a07f44d0a69f1e7668709b9.jpeg"
+                alt="JM Training student marking a target after practice."
+              >
+              <figcaption>Guided first steps</figcaption>
+            </figure>
+          </article>
+
+          <article id="community" class="starter-detail-panel">
+            <div class="starter-detail-copy">
+              <p class="starter-eyebrow">Training rhythm</p>
+              <h2>Build confidence that carries beyond the range</h2>
+              <p>
+                The work starts with firearms training, but the effect is broader. Better preparation, stronger attention,
+                calmer decision-making, and more personal discipline can carry into how you protect, lead, and live.
+              </p>
+              <ul class="starter-detail-list">
+                <li>Online study before live training</li>
+                <li>Recurring community and practical learning touchpoints</li>
+                <li>Progression based on readiness, confidence, and performance</li>
+              </ul>
+            </div>
+            <figure class="starter-detail-visual is-community">
+              <img
+                src="https://assets.cdn.filesafe.space/NLP99XIWA38PIwtNHnlQ/media/6a07f44d2e98e28fa123694a.jpeg"
+                alt="JM Training student and instructor reviewing progress during range training."
+              >
+              <figcaption>Measured progress</figcaption>
+            </figure>
+          </article>
+
+          <div class="starter-metric-row" aria-label="Starter Program value points">
+            <div class="starter-metric">
+              <strong>Flexible entry point</strong>
+              <span>Begin improving without feeling pressured into a higher-access tier.</span>
+            </div>
+            <div class="starter-metric">
+              <strong>Purposeful progression</strong>
+              <span>Know what to study, what to practice, and what standard comes next.</span>
+            </div>
+            <div class="starter-metric">
+              <strong>Steady support</strong>
+              <span>Stay connected to instructors and members while you build the habit.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="starter-final" aria-labelledby="starter-final-title">
+        <div>
+          <p class="starter-eyebrow">Next step</p>
+          <h2 id="starter-final-title">Begin the process with a clear first step.</h2>
+          <p>
+            Submit the Starter request when you are ready to take training seriously, improve your ability to protect what
+            matters, and begin building habits that carry into every part of life.
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
