@@ -111,6 +111,11 @@ if ('pro' === $requested_membership) {
 	exit;
 }
 
+if ('dsu' === $requested_membership) {
+	wp_redirect(esc_url_raw('https://api.cavucrm.com/widget/form/rxs8Ko3LXRYXhC6jdZ2p'));
+	exit;
+}
+
 $application_theme    = $membership_application_default_theme;
 
 if ($has_membership_param) {
