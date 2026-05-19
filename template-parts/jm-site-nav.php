@@ -8,7 +8,7 @@
 		<summary>IL CCL</summary>
 		<div class="nav-dropdown-menu">
 			<a href="<?php echo esc_url(home_url('/16-hour-illinois-ccl/')); ?>">16-Hour Illinois CCL</a>
-			<a href="<?php echo esc_url(home_url('/3-hour-renewal/')); ?>">3-Hour Renewal</a>
+			<a href="<?php echo esc_url(home_url('/register-for-3-hour-il-conceal-carry-renewal/')); ?>">3-Hour Renewal</a>
 		</div>
 	</details>
 
