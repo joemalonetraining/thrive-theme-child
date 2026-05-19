@@ -13,7 +13,7 @@ $membership_tiers = [
 		'name' => 'The Starter Program',
 		'price' => '$62.99',
 		'suffix' => '/mo',
-		'href' => home_url('/membership-application/?membership=starter'),
+		'href' => 'https://api.cavucrm.com/widget/form/gJBjLouVXzI3MZWperI0',
 		'cta' => 'Ask About Starter',
 		'note' => 'The entry point for online education, community, events, legal seminars, and the JM Training advancement roadmap.',
 		'items' => [
@@ -32,7 +32,7 @@ $membership_tiers = [
 		'name' => 'Pro Performance Package',
 		'price' => '$99.99',
 		'suffix' => '/mo',
-		'href' => home_url('/membership-application/?membership=pro'),
+		'href' => 'https://api.cavucrm.com/widget/form/gJBjLouVXzI3MZWperI0',
 		'cta' => 'Ask About Pro',
 		'note' => 'Includes everything in Starter, then adds range access, discounted qualifications, medical training discounts, and schedule priority.',
 		'items' => [
@@ -49,7 +49,7 @@ $membership_tiers = [
 		'name' => 'Defensive Shooting University',
 		'price' => '$199.99',
 		'suffix' => '/mo',
-		'href' => home_url('/membership-application/?membership=dsu'),
+		'href' => 'https://api.cavucrm.com/widget/form/gJBjLouVXzI3MZWperI0',
 		'cta' => 'Ask About DSU',
 		'featured' => true,
 		'note' => 'The full path membership with included qualification courses, included medical blocks, private outdoor range access, and accelerated progression.',
@@ -75,7 +75,7 @@ $membership_tiers = [
 			</span>
 		</a>
 		<?php get_template_part('template-parts/jm-site-nav'); ?>
-		<a class="support-header-cta" href="<?php echo esc_url(home_url('/membership-application/?membership=starter')); ?>">
+		<a class="support-header-cta" href="<?php echo esc_url('https://api.cavucrm.com/widget/form/gJBjLouVXzI3MZWperI0'); ?>">
 			Start With Starter
 		</a>
 	</header>

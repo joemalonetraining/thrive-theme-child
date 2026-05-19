@@ -25,7 +25,7 @@ $jm_rifle_pistol_course = [
 	'hero_placeholder' => '',
 	'show_overview_media' => false,
 	'intro' => 'The most selective JM Training progression level, built around supervised advanced integration, complex scenarios, professional conduct, and disciplined judgment under stress.',
-	'cta_href' => home_url('/membership-application/?course=rifle-pistol-level-5'),
+	'cta_href' => 'https://api.cavucrm.com/widget/form/gJBjLouVXzI3MZWperI0',
 	'overview_href' => home_url('/rifle-pistol-training-overview/'),
 	'detail' => [
 		'Rifle / Pistol Level 5 is reserved for highly capable professionals and deeply committed students who have already demonstrated safe performance, maturity, restraint, and reliable judgment under pressure.',

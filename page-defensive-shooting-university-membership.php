@@ -21,7 +21,7 @@ $jm_membership_tier = [
 	'badge' => 'Full Path',
 	'intro' => 'Defensive Shooting University is the full-path membership for students who want the deepest access, included qualification courses, medical blocks, private range access, and accelerated progression.',
 	'cta_label' => 'Ask About DSU',
-	'cta_href' => home_url('/membership-application/?membership=dsu'),
+	'cta_href' => 'https://api.cavucrm.com/widget/form/gJBjLouVXzI3MZWperI0',
 	'proof_points' => [
 		'Includes everything in Pro Performance',
 		'All qualification courses included, Levels 0-5',

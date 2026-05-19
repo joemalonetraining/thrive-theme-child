@@ -68,7 +68,7 @@ $rifle_pistol_overview_home_url   = function_exists('jm_training_primary_landing
 						between weapon systems, but understanding when and why each tool is appropriate while maintaining safety,
 						accountability, and disciplined decision-making under pressure.
 					</p>
-					<a class="support-button" href="<?php echo esc_url(home_url('/membership-application/?course=rifle-pistol-level-4')); ?>">Learn More / Register</a>
+					<a class="support-button" href="<?php echo esc_url('https://api.cavucrm.com/widget/form/gJBjLouVXzI3MZWperI0'); ?>">Learn More / Register</a>
 				</div>
 			</div>
 		</section>
@@ -86,7 +86,7 @@ $rifle_pistol_overview_home_url   = function_exists('jm_training_primary_landing
 						scenario-driven exercises. The focus is advanced tactics, communication, judgment, and stress-induced
 						decision-making in demanding environments.
 					</p>
-					<a class="support-button" href="<?php echo esc_url(home_url('/membership-application/?course=rifle-pistol-level-5')); ?>">Learn More / Register</a>
+					<a class="support-button" href="<?php echo esc_url('https://api.cavucrm.com/widget/form/gJBjLouVXzI3MZWperI0'); ?>">Learn More / Register</a>
 				</div>
 				<figure class="rifle-pistol-level-five-media">
 					<img
@@ -109,7 +109,7 @@ $rifle_pistol_overview_home_url   = function_exists('jm_training_primary_landing
 					Levels 4 and 5 are selective progression levels for students who can maintain safety, judgment, and performance
 					while the problem becomes more complex.
 				</p>
-				<a class="support-button" href="<?php echo esc_url(home_url('/membership-application/?course=rifle-pistol-level-4')); ?>">Learn More / Register</a>
+				<a class="support-button" href="<?php echo esc_url('https://api.cavucrm.com/widget/form/gJBjLouVXzI3MZWperI0'); ?>">Learn More / Register</a>
 			</div>
 		</section>
 	</main>
