@@ -20,7 +20,7 @@ $jm_membership_tier = [
 	'price_suffix' => '/mo',
 	'intro' => 'The Pro Performance Package adds members-only range access, discounted qualification training, equipment savings, and priority schedule access for students who are ready to train more consistently.',
 	'cta_label' => 'Ask About Pro',
-	'cta_href' => 'https://api.cavucrm.com/widget/form/gJBjLouVXzI3MZWperI0',
+	'cta_href' => 'https://api.cavucrm.com/widget/form/p8QRhzecGMZoegOrIUUL',
 	'proof_points' => [
 		'Includes everything in Starter',
 		'Members-only open range access',
