@@ -24,6 +24,6 @@
 		</div>
 	</details>
 
-	<a href="<?php echo esc_url(home_url('/blog/')); ?>">Blog</a>
+	<a href="<?php echo esc_url(home_url('/free-tips/')); ?>">Blog</a>
 	<a href="<?php echo esc_url(home_url('/about-us/')); ?>">About Us</a>
 </nav>
