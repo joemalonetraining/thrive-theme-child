@@ -34,6 +34,6 @@
 	</details>
 
 	<a href="<?php echo esc_url(home_url('/free-tips/')); ?>">Blog</a>
-	<a href="#">Leaderboard</a>
+	<a href="https://lighthearted-sunshine-7b3213.netlify.app/?view=event-display">Leaderboard</a>
 	<a href="<?php echo esc_url(home_url('/about-us/')); ?>">About Us</a>
 </nav>
