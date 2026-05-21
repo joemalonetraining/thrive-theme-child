@@ -32,21 +32,7 @@ $membership_tier_urls = [
 				<small>Defensive Shooting University</small>
 			</span>
 		</a>
-		<nav class="desktop-nav" aria-label="Program sections">
-			<a href="<?php echo esc_url(home_url('/16-hour-illinois-ccl/')); ?>">IL CCL</a>
-			<a href="<?php echo esc_url(home_url('/calendar/')); ?>">Calendar</a>
-			<a href="<?php echo esc_url(home_url('/memberships/')); ?>">Memberships</a>
-			<details class="nav-dropdown">
-				<summary>Courses</summary>
-				<div class="nav-dropdown-menu">
-					<a href="<?php echo esc_url(home_url('/pistol-training-overview/')); ?>">Pistol</a>
-					<a href="<?php echo esc_url(home_url('/rifle-training-overview/')); ?>">Rifle</a>
-					<a href="<?php echo esc_url(home_url('/rifle-pistol-training-overview/')); ?>">Rifle &amp; Pistol</a>
-				</div>
-			</details>
-			<a href="<?php echo esc_url(home_url('/blog/')); ?>">Blog</a>
-			<a href="<?php echo esc_url(home_url('/about-us/')); ?>">About Us</a>
-		</nav>
+		<?php get_template_part('template-parts/jm-site-nav'); ?>
 		<a class="header-cta" href="mailto:support@joemalonetraining.com?subject=Defensive%20Shooting%20University%20Inquiry">
 			<i data-lucide="send" aria-hidden="true"></i>
 			Apply
