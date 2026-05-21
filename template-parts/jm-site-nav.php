@@ -16,6 +16,15 @@
 	<a href="<?php echo esc_url(home_url('/memberships/')); ?>">Memberships</a>
 
 	<details class="nav-dropdown">
+		<summary>Store</summary>
+		<div class="nav-dropdown-menu">
+			<a href="#">Firearms &amp; Gear</a>
+			<a href="#">Clothing</a>
+			<a href="#">Ammo</a>
+		</div>
+	</details>
+
+	<details class="nav-dropdown">
 		<summary>Courses</summary>
 		<div class="nav-dropdown-menu">
 			<a href="<?php echo esc_url(home_url('/pistol-training-overview/')); ?>">Pistol</a>
@@ -25,5 +34,6 @@
 	</details>
 
 	<a href="<?php echo esc_url(home_url('/free-tips/')); ?>">Blog</a>
+	<a href="#">Leaderboard</a>
 	<a href="<?php echo esc_url(home_url('/about-us/')); ?>">About Us</a>
 </nav>
