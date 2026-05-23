@@ -10,150 +10,186 @@ $jm_calendar_images_uri = get_stylesheet_directory_uri() . '/assets/images';
 $jm_calendar_home_url = function_exists('jm_training_primary_landing_url') ? jm_training_primary_landing_url() : '#top';
 $jm_calendar_csv = <<<'CSV'
 event_id,start_date,end_date,start_time,end_time,all_day,title,location,category,description,status,recurrence_source,color_key,notes
-alsip-ics-001,2026-05-01,2026-05-01,6:00 PM,8:30 PM,False,OPE,Alsip,Alsip Event,,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
-frankfort-ics-002,2026-05-02,2026-05-02,10:00 AM,3:00 PM,False,Lethal U Group Shoot,Frankfort,Frankfort Group Shoot,,Scheduled,Frankfort ICS,Frankfort,Imported from source ICS calendar
-frankfort-ics-003,2026-05-02,2026-05-02,8:00 AM,10:00 AM,False,Holster Draw -Frankfort,Frankfort,Frankfort Event,,Scheduled,Frankfort ICS,Frankfort,Imported from source ICS calendar
-bourbonnais-ics-004,2026-05-05,2026-05-05,12:00 PM,8:00 PM,False,Open Range Members Only,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-005,2026-05-05,2026-05-05,5:00 PM,8:00 PM,False,Gun Clean & Gear Check,Bourbonnais,Bourbonnais Event,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-006,2026-05-06,2026-05-06,12:00 PM,8:00 PM,False,Open Range Members Only,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-007,2026-05-07,2026-05-07,12:00 PM,5:30 PM,False,Open Range Members Only,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-008,2026-05-07,2026-05-07,5:30 PM,8:30 PM,False,Tactical Trauma Medical Care- TQ,Bourbonnais,Bourbonnais Event,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-009,2026-05-08,2026-05-08,12:00 PM,8:00 PM,False,Open Range Members Only,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-010,2026-05-10,2026-05-10,7:30 AM,8:30 AM,False,Closed,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-011,2026-05-12,2026-05-12,12:00 PM,8:00 PM,False,Open Range Members Only,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-alsip-ics-012,2026-05-12,2026-05-12,6:00 PM,8:30 PM,False,OPE EVENT,Alsip,Alsip Event,,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
-bourbonnais-ics-013,2026-05-13,2026-05-13,,,True,BOURBONNAIS CLOSED for PRIVATE TRAINING,Bourbonnais,Closure,Devin Cooper 1-1 Training High end private security,Closed,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-014,2026-05-14,2026-05-14,12:00 PM,4:15 PM,False,Open Range Members Only,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-015,2026-05-15,2026-05-15,12:00 PM,5:15 PM,False,Open Range Members Only,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-016,2026-05-15,2026-05-15,5:30 PM,9:00 PM,False,Handgun Level 0 New Member Orientation,Bourbonnais,Bourbonnais Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-alsip-ics-017,2026-05-15,2026-05-15,6:00 PM,8:30 PM,False,OPE,Alsip,Alsip Event,,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
-bourbonnais-ics-018,2026-05-16,2026-05-16,,,True,Bourbonnais CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-frankfort-ics-019,2026-05-16,2026-05-16,10:00 AM,3:00 PM,False,All LVL Group Shoot,Frankfort,Frankfort Group Shoot,,Scheduled,Frankfort ICS,Frankfort,Imported from source ICS calendar
-frankfort-ics-020,2026-05-16,2026-05-16,8:00 AM,10:00 AM,False,Holster Draw- Frankfort,Frankfort,Frankfort Event,,Scheduled,Frankfort ICS,Frankfort,Imported from source ICS calendar
-bourbonnais-ics-021,2026-05-17,2026-05-17,12:00 PM,8:00 PM,False,Open Range Members Only,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-022,2026-05-18,2026-05-18,,,True,BOURBONNAIS CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-023,2026-05-19,2026-05-19,12:00 PM,8:00 PM,False,Open Range Members Only,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-alsip-ics-024,2026-05-19,2026-05-19,6:00 PM,8:30 PM,False,Should I Shoot,Alsip,Alsip Event,Should I Shoot - Educational seminar at JM Training Alsip classroom.,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
-bourbonnais-ics-025,2026-05-20,2026-05-20,12:00 PM,8:00 PM,False,Open Range Members Only,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-026,2026-05-21,2026-05-21,12:00 PM,8:00 PM,False,Open Range Members Only,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-027,2026-05-22,2026-05-22,12:00 PM,8:00 PM,False,Open Range Members Only,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-alsip-ics-028,2026-05-22,2026-05-22,6:00 PM,8:30 PM,False,OPE,Alsip,Alsip Event,,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
-frankfort-ics-029,2026-05-23,2026-05-23,,,True,ALL RANGES CLOSED FOR MRF SET UP,Frankfort,Closure,,Closed,Frankfort ICS,Frankfort,Imported from source ICS calendar
-bourbonnais-ics-030,2026-05-24,2026-05-24,,,True,CLOSED for CHARITY EVENT,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-frankfort-ics-031,2026-05-24,2026-05-24,,,True,MRF Charity Event,Frankfort,Frankfort Event,,Scheduled,Frankfort ICS,Frankfort,Imported from source ICS calendar
-bourbonnais-ics-032,2026-05-25,2026-05-25,,,True,BOURBONNAIS CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-033,2026-05-26,2026-05-26,12:00 PM,8:00 PM,False,Open Range Members Only,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-034,2026-05-27,2026-05-27,12:00 PM,8:00 PM,False,Open Range Members Only,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-035,2026-05-28,2026-05-28,12:00 PM,8:00 PM,False,Open Range Members Only,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-036,2026-05-29,2026-05-29,12:00 PM,8:00 PM,False,Open Range Members Only,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-alsip-ics-037,2026-05-29,2026-05-29,6:00 PM,8:30 PM,False,OPE,Alsip,Alsip Event,,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
-bourbonnais-ics-038,2026-05-30,2026-05-30,,,True,CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-039,2026-05-31,2026-05-31,10:00 AM,6:00 PM,False,H2 A,Bourbonnais,Bourbonnais Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-040,2026-06-01,2026-06-01,,,True,CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-alsip-ics-041,2026-06-01,2026-06-01,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Alsip Concealed Carry,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from source ICS calendar
-bourbonnais-ics-042,2026-06-02,2026-06-02,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-043,2026-06-02,2026-06-02,5:00 PM,8:00 PM,False,Gun Clean & Gear Check,Bourbonnais,Bourbonnais Event,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-044,2026-06-03,2026-06-03,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-045,2026-06-04,2026-06-04,12:00 PM,5:30 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-046,2026-06-04,2026-06-04,5:30 PM,8:30 PM,False,Tactical Trauma Medical Care- TQ,Bourbonnais,Bourbonnais Event,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-047,2026-06-05,2026-06-05,,,True,CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-alsip-ics-048,2026-06-05,2026-06-05,6:00 PM,8:30 PM,False,OPE,Alsip,Alsip Event,,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
-bourbonnais-ics-049,2026-06-06,2026-06-06,,,True,BOURBONNAIS CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-alsip-ics-050,2026-06-06,2026-06-06,9:00 AM,7:00 PM,False,16-Hour Concealed Carry Course — Day 1,Alsip,Alsip Concealed Carry,Day 1 of 2. Saturday session: 9:00 AM–7:00 PM.,Scheduled,Alsip ICS,Alsip,Imported from source ICS calendar
-alsip-ics-051,2026-06-07,2026-06-07,10:00 AM,4:00 PM,False,16-Hour Concealed Carry Course — Day 2,Alsip,Alsip Concealed Carry,Day 2 of 2. Sunday session: 10:00 AM–4:00 PM.,Scheduled,Alsip ICS,Alsip,Imported from source ICS calendar
-bourbonnais-ics-052,2026-06-07,2026-06-07,10:00 AM,5:00 PM,False,H2B,Bourbonnais,Bourbonnais Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-053,2026-06-08,2026-06-08,,,True,CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-frankfort-ics-054,2026-06-08,2026-06-08,,,True,FRANKFORT CLOSED 1-1 SESSION,Frankfort,Closure,NORM & Monique Hall 1-1,Closed,Frankfort ICS,Frankfort,Imported from source ICS calendar
-bourbonnais-ics-055,2026-06-09,2026-06-09,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-alsip-ics-056,2026-06-09,2026-06-09,6:00 PM,8:30 PM,False,OPE EVENT,Alsip,Alsip Event,,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
-bourbonnais-ics-057,2026-06-10,2026-06-10,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-alsip-ics-058,2026-06-10,2026-06-10,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Alsip Concealed Carry,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from source ICS calendar
-bourbonnais-ics-059,2026-06-11,2026-06-11,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-060,2026-06-12,2026-06-12,12:00 PM,5:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-061,2026-06-12,2026-06-12,5:00 PM,9:30 PM,False,H-0 Orientation/ Fun Night,Bourbonnais,Bourbonnais Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-alsip-ics-062,2026-06-12,2026-06-12,6:00 PM,8:30 PM,False,OPE,Alsip,Alsip Event,,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
-frankfort-ics-063,2026-06-13,2026-06-13,10:00 AM,3:00 PM,False,Lethal U Group Shoot,Frankfort,Frankfort Group Shoot,,Scheduled,Frankfort ICS,Frankfort,Imported from source ICS calendar
-frankfort-ics-064,2026-06-13,2026-06-13,8:00 AM,10:00 AM,False,Holster Draw,Frankfort,Frankfort Event,,Scheduled,Frankfort ICS Recurrence,Frankfort,Imported from source ICS calendar
-bourbonnais-ics-065,2026-06-13,2026-06-13,8:30 AM,12:30 PM,False,R-0A,Bourbonnais,Bourbonnais Event,830-9: safety brief 9-950: grip/holster draw/ shoot 10-1050: stoppages/ reloads 11-1230: Qual,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-066,2026-06-14,2026-06-14,1:30 PM,5:30 PM,False,R-0B,Bourbonnais,Bourbonnais Event,130-220: NPOA 230-320: Distance shooting 330-420: shoot & move 430-520: Qual,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-067,2026-06-15,2026-06-15,,,True,CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-alsip-ics-068,2026-06-15,2026-06-15,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Alsip Concealed Carry,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from source ICS calendar
-bourbonnais-ics-069,2026-06-16,2026-06-16,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-alsip-ics-070,2026-06-16,2026-06-16,6:00 PM,8:30 PM,False,Should I Shoot,Alsip,Alsip Event,Should I Shoot - Educational seminar at JM Training Alsip classroom.,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
-bourbonnais-ics-071,2026-06-17,2026-06-17,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-072,2026-06-18,2026-06-18,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-073,2026-06-18,2026-06-18,6:00 PM,9:00 PM,False,Instructor Development,Bourbonnais,Bourbonnais Event,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-074,2026-06-19,2026-06-19,5:00 PM,9:30 PM,False,Rifle Comp/Fun Night,Bourbonnais,Bourbonnais Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-alsip-ics-075,2026-06-19,2026-06-19,6:00 PM,8:30 PM,False,OPE,Alsip,Alsip Event,,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
-bourbonnais-ics-076,2026-06-20,2026-06-20,,,True,BOURBONNAIS DADS 16 Hr.,Bourbonnais,Bourbonnais Event,Day 1 of 2. Saturday session: 9:00 AM–7:00 PM.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-077,2026-06-21,2026-06-21,,,True,BOURBONNAIS DADS CCL DAY 2,Bourbonnais,Bourbonnais Concealed Carry,Day 2 of 2. Sunday session: 10:00 AM–4:00 PM.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-078,2026-06-22,2026-06-22,,,True,CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-079,2026-06-23,2026-06-23,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-080,2026-06-24,2026-06-24,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-alsip-ics-081,2026-06-24,2026-06-24,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Alsip Concealed Carry,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from source ICS calendar
-bourbonnais-ics-082,2026-06-25,2026-06-25,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-083,2026-06-26,2026-06-26,12:00 PM,5:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-084,2026-06-26,2026-06-26,5:00 PM,9:30 PM,False,HNDGN- 1/2/3 Comp/ Fun Night,Bourbonnais,Bourbonnais Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-alsip-ics-085,2026-06-26,2026-06-26,6:00 PM,8:30 PM,False,OPE,Alsip,Alsip Event,,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
-bourbonnais-ics-086,2026-06-27,2026-06-27,8:00 AM,5:00 PM,False,R-0 A,Bourbonnais,Bourbonnais Event,JM Training R-0. Full 1-day course. 9-hour training block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-087,2026-06-28,2026-06-28,8:00 AM,5:00 PM,False,R-0 B,Bourbonnais,Bourbonnais Event,JM Training R-0. Full 1-day course. 9-hour training block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-088,2026-06-29,2026-06-29,,,True,CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-alsip-ics-089,2026-06-29,2026-06-29,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Alsip Concealed Carry,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from source ICS calendar
-bourbonnais-ics-090,2026-06-30,2026-06-30,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-alsip-ics-091,2026-06-30,2026-06-30,6:00 PM,8:30 PM,False,OPE Event,Alsip,Alsip Event,,Scheduled,Alsip ICS,Alsip,Imported from source ICS calendar
-bourbonnais-ics-092,2026-07-01,2026-07-01,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-093,2026-07-02,2026-07-02,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-094,2026-07-02,2026-07-02,6:00 PM,9:00 PM,False,Instructor Development,Bourbonnais,Bourbonnais Event,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-095,2026-07-03,2026-07-03,,,True,4th of July BBQ,Bourbonnais,Bourbonnais Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-alsip-ics-096,2026-07-03,2026-07-03,6:00 PM,8:30 PM,False,OPE,Alsip,Alsip Event,,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
-bourbonnais-ics-097,2026-07-04,2026-07-04,,,True,CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-098,2026-07-05,2026-07-05,,,True,CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-099,2026-07-06,2026-07-06,,,True,CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-100,2026-07-07,2026-07-07,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-101,2026-07-07,2026-07-07,5:00 PM,8:00 PM,False,Gun Clean & Gear Check,Bourbonnais,Bourbonnais Event,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-102,2026-07-08,2026-07-08,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-alsip-ics-103,2026-07-08,2026-07-08,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Alsip Concealed Carry,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from source ICS calendar
-bourbonnais-ics-104,2026-07-09,2026-07-09,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-105,2026-07-10,2026-07-10,12:00 PM,5:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-106,2026-07-10,2026-07-10,5:00 PM,9:30 PM,False,H-0 Orientation/ Fun Night,Bourbonnais,Bourbonnais Event,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-alsip-ics-107,2026-07-10,2026-07-10,6:00 PM,8:30 PM,False,OPE,Alsip,Alsip Event,,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
-bourbonnais-ics-108,2026-07-11,2026-07-11,8:00 AM,5:00 PM,False,H-2,Bourbonnais,Bourbonnais Event,JM Training H-2. Full 1-day course. 9-hour training block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-109,2026-07-12,2026-07-12,8:00 AM,5:00 PM,False,H-3,Bourbonnais,Bourbonnais Event,JM Training H-3. Full 1-day course. 9-hour training block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-110,2026-07-13,2026-07-13,,,True,CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-alsip-ics-111,2026-07-13,2026-07-13,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Alsip Concealed Carry,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from source ICS calendar
-bourbonnais-ics-112,2026-07-14,2026-07-14,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-alsip-ics-113,2026-07-14,2026-07-14,6:00 PM,8:30 PM,False,OPE EVENT,Alsip,Alsip Event,,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
-bourbonnais-ics-114,2026-07-15,2026-07-15,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-115,2026-07-16,2026-07-16,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-116,2026-07-16,2026-07-16,6:00 PM,9:00 PM,False,Instructor Development,Bourbonnais,Bourbonnais Event,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-117,2026-07-17,2026-07-17,12:00 PM,5:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-118,2026-07-17,2026-07-17,5:00 PM,9:30 PM,False,Rifle/Pistol Comp/ Fun Night,Bourbonnais,Bourbonnais Event,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-alsip-ics-119,2026-07-17,2026-07-17,6:00 PM,8:30 PM,False,OPE,Alsip,Alsip Event,,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
-frankfort-ics-120,2026-07-18,2026-07-18,10:00 AM,3:00 PM,False,LethalU Group Shoot-Bourbonnais,Frankfort,Frankfort Group Shoot,,Scheduled,Frankfort ICS Recurrence,Frankfort,Imported from source ICS calendar
-bourbonnais-ics-121,2026-07-18,2026-07-18,8:00 AM,5:00 PM,False,R-2,Bourbonnais,Bourbonnais Event,JM Training R-2. Full 1-day course. 9-hour training block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-frankfort-ics-122,2026-07-18,2026-07-18,8:00 AM,10:00 AM,False,Holster Draw,Frankfort,Frankfort Event,,Scheduled,Frankfort ICS,Frankfort,Imported from source ICS calendar
-alsip-ics-123,2026-07-18,2026-07-18,9:00 AM,7:00 PM,False,16-Hour Concealed Carry Course — Day 1,Alsip,Alsip Concealed Carry,Day 1 of 2. Saturday session: 9:00 AM–7:00 PM.,Scheduled,Alsip ICS,Alsip,Imported from source ICS calendar
-alsip-ics-124,2026-07-19,2026-07-19,10:00 AM,4:00 PM,False,16-Hour Concealed Carry Course — Day 2,Alsip,Alsip Concealed Carry,Day 2 of 2. Sunday session: 10:00 AM–4:00 PM.,Scheduled,Alsip ICS,Alsip,Imported from source ICS calendar
-bourbonnais-ics-125,2026-07-19,2026-07-19,8:00 AM,5:00 PM,False,R-3,Bourbonnais,Bourbonnais Event,JM Training R-3. Full 1-day course. 9-hour training block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-126,2026-07-20,2026-07-20,,,True,CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-127,2026-07-21,2026-07-21,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-alsip-ics-128,2026-07-21,2026-07-21,6:00 PM,8:30 PM,False,Should I Shoot,Alsip,Alsip Event,Should I Shoot - Educational seminar at JM Training Alsip classroom.,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
-bourbonnais-ics-129,2026-07-22,2026-07-22,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-alsip-ics-130,2026-07-22,2026-07-22,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Alsip Concealed Carry,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from source ICS calendar
-bourbonnais-ics-131,2026-07-23,2026-07-23,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-132,2026-07-24,2026-07-24,12:00 PM,5:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-133,2026-07-24,2026-07-24,5:00 PM,9:30 PM,False,HNDGN- 1/2/3 Comp/ Fun Night,Bourbonnais,Bourbonnais Event,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-alsip-ics-134,2026-07-24,2026-07-24,6:00 PM,8:30 PM,False,OPE,Alsip,Alsip Event,,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
-bourbonnais-ics-135,2026-07-25,2026-07-25,8:00 AM,5:00 PM,False,R/P-4,Bourbonnais,Bourbonnais Event,JM Training R/P-4. Rifle-pistol combined Level 4. Two-day course: Day 1 of 2.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-136,2026-07-26,2026-07-26,8:00 AM,5:00 PM,False,R/P-4,Bourbonnais,Bourbonnais Event,JM Training R/P-4. Rifle-pistol combined Level 4. Two-day course: Day 2 of 2.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-137,2026-07-27,2026-07-27,,,True,CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-alsip-ics-138,2026-07-27,2026-07-27,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Alsip Concealed Carry,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from source ICS calendar
-bourbonnais-ics-139,2026-07-28,2026-07-28,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-140,2026-07-29,2026-07-29,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-141,2026-07-30,2026-07-30,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-142,2026-07-30,2026-07-30,6:00 PM,9:00 PM,False,Instructor Development,Bourbonnais,Bourbonnais Event,,Scheduled,Bourbonnais ICS Recurrence,Bourbonnais,Imported from source ICS calendar
-bourbonnais-ics-143,2026-07-31,2026-07-31,12:00 PM,5:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from source ICS calendar
-alsip-ics-144,2026-07-31,2026-07-31,6:00 PM,8:30 PM,False,OPE,Alsip,Alsip Event,,Scheduled,Alsip ICS Recurrence,Alsip,Imported from source ICS calendar
+frankfort-ics-001,2026-05-23,2026-05-23,,,True,ALL RANGES CLOSED FOR MRF SET UP,Frankfort,Closure,,Closed,Frankfort ICS,Frankfort,Imported from uploaded ICS calendar
+frankfort-ics-002,2026-05-24,2026-05-24,,,True,MRF Charity Event,Frankfort,Frankfort Training,,Scheduled,Frankfort ICS,Frankfort,Imported from uploaded ICS calendar
+bourbonnais-ics-003,2026-05-25,2026-05-25,,,True,BOURBONNAIS CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-004,2026-05-26,2026-05-26,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-005,2026-05-27,2026-05-27,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-006,2026-05-27,2026-05-27,5:00 PM,8:30 PM,False,3hr CCL Class,Alsip,Concealed Carry Class,,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-007,2026-05-28,2026-05-28,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-008,2026-05-29,2026-05-29,12:00 PM,5:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-009,2026-05-29,2026-05-29,5:30 PM,9:30 PM,False,Members Competition,Bourbonnais,Bourbonnais Group Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-010,2026-05-30,2026-05-30,,,True,CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-011,2026-05-30,2026-05-30,9:00 AM,7:00 PM,False,16-Hour Concealed Carry Course — Day 1,Alsip,Concealed Carry Class,Day 1 of 2. Saturday session: 9:00 AM–7:00 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+alsip-ics-012,2026-05-31,2026-05-31,10:00 AM,4:00 PM,False,16-Hour Concealed Carry Course — Day 2,Alsip,Concealed Carry Class,Day 2 of 2. Sunday session: 10:00 AM–4:00 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-013,2026-05-31,2026-05-31,10:00 AM,5:00 PM,False,H1-B,Bourbonnais,Bourbonnais Training,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-014,2026-06-01,2026-06-01,,,True,Bourbonnais CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-015,2026-06-01,2026-06-01,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Concealed Carry Renewal,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-016,2026-06-02,2026-06-02,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-017,2026-06-02,2026-06-02,5:00 PM,8:00 PM,False,Gun Clean & Gear Check,Bourbonnais,Bourbonnais Member Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-018,2026-06-03,2026-06-03,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-019,2026-06-04,2026-06-04,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-020,2026-06-04,2026-06-04,5:30 PM,8:30 PM,False,Tactical Trauma Medical Care- TQ,Bourbonnais,Bourbonnais Training,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-021,2026-06-05,2026-06-05,12:00 PM,5:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-022,2026-06-05,2026-06-05,5:30 PM,9:30 PM,False,Members Competition,Bourbonnais,Bourbonnais Group Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-023,2026-06-06,2026-06-06,,,True,BOURBONNAIS CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-024,2026-06-07,2026-06-07,10:00 AM,5:00 PM,False,R1-A,Bourbonnais,Bourbonnais Training,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+frankfort-ics-025,2026-06-08,2026-06-08,,,True,FRANKFORT CLOSED 1-1 SESSION,Frankfort,Closure,NORM & Monique Hall 1-1,Closed,Frankfort ICS,Frankfort,Imported from uploaded ICS calendar
+bourbonnais-ics-026,2026-06-08,2026-06-08,7:00 AM,6:30 PM,False,Range Closed for Private Training Session,Bourbonnais,Closure,D-Cali,Closed,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-027,2026-06-09,2026-06-09,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-028,2026-06-09,2026-06-09,6:00 PM,8:30 PM,False,OPE EVENT,Alsip,Alsip Training,,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-029,2026-06-10,2026-06-10,12:00 PM,4:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-030,2026-06-10,2026-06-10,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Bourbonnais,Concealed Carry Renewal,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-031,2026-06-11,2026-06-11,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-032,2026-06-12,2026-06-12,12:00 PM,5:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-033,2026-06-12,2026-06-12,5:00 PM,9:30 PM,False,H-0 Orientation/ Fun Night,Bourbonnais,Bourbonnais Group Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-034,2026-06-12,2026-06-12,6:00 PM,8:30 PM,False,OPE,Alsip,Alsip Training,,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+frankfort-ics-035,2026-06-13,2026-06-13,8:00 AM,10:00 AM,False,Holster Draw,Frankfort,Frankfort Training,,Scheduled,Frankfort ICS,Frankfort,Imported from uploaded ICS calendar
+bourbonnais-ics-036,2026-06-13,2026-06-13,9:00 AM,7:00 PM,False,16-Hour Concealed Carry Course — Day 1,Bourbonnais,Concealed Carry Class,Day 1 of 2. Saturday session: 9:00 AM–7:00 PM.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+frankfort-ics-037,2026-06-13,2026-06-13,10:00 AM,3:00 PM,False,Lethal U Group Shoot,Frankfort,Frankfort Group Event,,Scheduled,Frankfort ICS,Frankfort,Imported from uploaded ICS calendar
+bourbonnais-ics-038,2026-06-14,2026-06-14,10:00 AM,4:00 PM,False,16-Hour Concealed Carry Course — Day 2,Bourbonnais,Concealed Carry Class,Day 2 of 2. Sunday session: 10:00 AM–4:00 PM.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-039,2026-06-15,2026-06-15,,,True,Bourbonnais CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-040,2026-06-15,2026-06-15,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Concealed Carry Renewal,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-041,2026-06-16,2026-06-16,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-042,2026-06-16,2026-06-16,6:00 PM,8:30 PM,False,Should I Shoot,Alsip,Alsip Training,Should I Shoot - Educational seminar at JM Training Alsip classroom.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-043,2026-06-17,2026-06-17,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-044,2026-06-18,2026-06-18,12:00 PM,6:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-045,2026-06-18,2026-06-18,6:00 PM,9:00 PM,False,Instructor Development,Bourbonnais,Bourbonnais Training,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-046,2026-06-19,2026-06-19,12:00 PM,5:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-047,2026-06-19,2026-06-19,5:00 PM,9:30 PM,False,Rifle Comp/Fun Night,Bourbonnais,Bourbonnais Group Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-048,2026-06-20,2026-06-20,8:30 AM,12:30 PM,False,H-0A,Bourbonnais,Bourbonnais Training,"830-9: safety brief
+9-950: grip/holster draw/ shoot
+10-1050: stoppages/ reloads
+11-1230: Qual",Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-049,2026-06-21,2026-06-21,1:30 PM,5:30 PM,False,H-0B,Bourbonnais,Bourbonnais Training,"130-220: NPOA
+230-320: Distance shooting
+330-420: shoot & move
+430-520: Qual",Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-050,2026-06-22,2026-06-22,,,True,Bourbonnais CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-051,2026-06-23,2026-06-23,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-052,2026-06-24,2026-06-24,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-053,2026-06-24,2026-06-24,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Concealed Carry Renewal,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-054,2026-06-25,2026-06-25,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-055,2026-06-26,2026-06-26,12:00 PM,5:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-056,2026-06-26,2026-06-26,5:00 PM,9:30 PM,False,HNDGN- 1/2/3 Comp/ Fun Night,Bourbonnais,Bourbonnais Group Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-057,2026-06-27,2026-06-27,8:00 AM,5:00 PM,False,R-0 A,Bourbonnais,Bourbonnais Training,JM Training R-0. Full 1-day course. 9-hour training block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-058,2026-06-27,2026-06-27,9:00 AM,7:00 PM,False,16-Hour Concealed Carry Course — Day 1,Alsip,Concealed Carry Class,Day 1 of 2. Saturday session: 9:00 AM–7:00 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-059,2026-06-28,2026-06-28,8:00 AM,5:00 PM,False,R-0 B,Bourbonnais,Bourbonnais Training,JM Training R-0. Full 1-day course. 9-hour training block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-060,2026-06-28,2026-06-28,10:00 AM,4:00 PM,False,16-Hour Concealed Carry Course — Day 2,Alsip,Concealed Carry Class,Day 2 of 2. Sunday session: 10:00 AM–4:00 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-061,2026-06-29,2026-06-29,,,True,Bourbonnais CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-062,2026-06-29,2026-06-29,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Concealed Carry Renewal,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-063,2026-06-30,2026-06-30,,,True,Mike Sherek OES,Bourbonnais,Bourbonnais Training,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-064,2026-06-30,2026-06-30,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-065,2026-07-01,2026-07-01,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-066,2026-07-02,2026-07-02,12:00 PM,5:45 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-067,2026-07-02,2026-07-02,5:30 PM,8:30 PM,False,Tactical Trauma Medical Care- TQ,Bourbonnais,Bourbonnais Training,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-068,2026-07-02,2026-07-02,6:00 PM,9:00 PM,False,Instructor Development,Bourbonnais,Bourbonnais Training,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-069,2026-07-03,2026-07-03,,,True,4th of July BBQ,Bourbonnais,Bourbonnais Training,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-070,2026-07-03,2026-07-03,11:00 AM,7:00 PM,False,4th of July BBQ,Bourbonnais,Bourbonnais Training,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-071,2026-07-04,2026-07-04,,,True,CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-072,2026-07-05,2026-07-05,,,True,CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-073,2026-07-06,2026-07-06,,,True,Bourbonnais CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-074,2026-07-06,2026-07-06,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Concealed Carry Renewal,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-075,2026-07-07,2026-07-07,12:00 PM,5:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-076,2026-07-07,2026-07-07,5:00 PM,8:00 PM,False,Gun Clean & Gear Check,Bourbonnais,Bourbonnais Member Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-077,2026-07-08,2026-07-08,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-078,2026-07-09,2026-07-09,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-079,2026-07-10,2026-07-10,12:00 PM,5:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-080,2026-07-10,2026-07-10,5:00 PM,9:30 PM,False,H-0 Orientation/ Fun Night,Bourbonnais,Bourbonnais Group Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-081,2026-07-11,2026-07-11,10:00 AM,7:00 PM,False,Grand Opening Event/ Competition,Bourbonnais,Bourbonnais Group Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-082,2026-07-12,2026-07-12,8:00 AM,5:00 PM,False,H1-A,Bourbonnais,Bourbonnais Training,JM Training H-3. Full 1-day course. 9-hour training block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-083,2026-07-13,2026-07-13,,,True,Bourbonnais CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-084,2026-07-14,2026-07-14,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-085,2026-07-15,2026-07-15,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-086,2026-07-15,2026-07-15,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Concealed Carry Renewal,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-087,2026-07-16,2026-07-16,12:00 PM,5:45 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-088,2026-07-16,2026-07-16,6:00 PM,9:00 PM,False,Instructor Development,Bourbonnais,Bourbonnais Training,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-089,2026-07-17,2026-07-17,12:00 PM,5:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-090,2026-07-17,2026-07-17,5:00 PM,9:30 PM,False,Rifle/Pistol Comp/ Fun Night,Bourbonnais,Bourbonnais Group Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-091,2026-07-18,2026-07-18,8:00 AM,5:00 PM,False,H1-B,Bourbonnais,Bourbonnais Training,JM Training R-2. Full 1-day course. 9-hour training block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-092,2026-07-18,2026-07-18,9:00 AM,7:00 PM,False,16-Hour Concealed Carry Course — Day 1,Alsip,Concealed Carry Class,Day 1 of 2. Saturday session: 9:00 AM–7:00 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-093,2026-07-19,2026-07-19,8:00 AM,5:00 PM,False,R1-A,Bourbonnais,Bourbonnais Training,JM Training R-3. Full 1-day course. 9-hour training block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-094,2026-07-19,2026-07-19,10:00 AM,4:00 PM,False,16-Hour Concealed Carry Course — Day 2,Alsip,Concealed Carry Class,Day 2 of 2. Sunday session: 10:00 AM–4:00 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-095,2026-07-20,2026-07-20,,,True,Bourbonnais CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-096,2026-07-20,2026-07-20,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Concealed Carry Renewal,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-097,2026-07-21,2026-07-21,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-098,2026-07-22,2026-07-22,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-099,2026-07-23,2026-07-23,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-100,2026-07-24,2026-07-24,12:00 PM,5:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-101,2026-07-24,2026-07-24,5:00 PM,9:30 PM,False,HNDGN- 1/2/3 Comp/ Fun Night,Bourbonnais,Bourbonnais Group Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-102,2026-07-24,2026-07-24,5:00 PM,9:30 PM,False,HNDGN- 2/3 Comp/ Fun Night,Bourbonnais,Bourbonnais Group Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-103,2026-07-25,2026-07-25,8:00 AM,5:00 PM,False,R1-B,Bourbonnais,Bourbonnais Training,JM Training R/P-4. Rifle-pistol combined Level 4. Two-day course: Day 1 of 2.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-104,2026-07-26,2026-07-26,8:00 AM,5:00 PM,False,H2-A,Bourbonnais,Bourbonnais Training,JM Training R/P-4. Rifle-pistol combined Level 4. Two-day course: Day 2 of 2.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-105,2026-07-27,2026-07-27,,,True,Bourbonnais CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-106,2026-07-28,2026-07-28,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-107,2026-07-29,2026-07-29,12:00 PM,8:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-108,2026-07-29,2026-07-29,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Concealed Carry Renewal,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-109,2026-07-30,2026-07-30,12:00 PM,5:45 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-110,2026-07-30,2026-07-30,6:00 PM,9:00 PM,False,Instructor Development,Bourbonnais,Bourbonnais Training,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-111,2026-07-31,2026-07-31,12:00 PM,5:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-112,2026-07-31,2026-07-31,5:30 PM,9:30 PM,False,Members Competition,Bourbonnais,Bourbonnais Group Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-113,2026-08-01,2026-08-01,8:00 AM,5:00 PM,False,H2-B,Bourbonnais,Bourbonnais Training,JM Training H-0. Full 1-day course. 9-hour training block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+frankfort-ics-114,2026-08-01,2026-08-01,8:00 AM,10:00 AM,False,Holster Draw -Bourbonnais,Frankfort,Frankfort Training,,Scheduled,Frankfort ICS,Frankfort,Imported from uploaded ICS calendar
+alsip-ics-115,2026-08-01,2026-08-01,9:00 AM,7:00 PM,False,16-Hour Concealed Carry Course — Day 1,Alsip,Concealed Carry Class,Day 1 of 2. Saturday session: 9:00 AM–7:00 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-116,2026-08-02,2026-08-02,8:00 AM,5:00 PM,False,R2-A,Bourbonnais,Bourbonnais Training,JM Training H-0. Full 1-day course. 9-hour training block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-117,2026-08-02,2026-08-02,10:00 AM,4:00 PM,False,16-Hour Concealed Carry Course — Day 2,Alsip,Concealed Carry Class,Day 2 of 2. Sunday session: 10:00 AM–4:00 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-118,2026-08-03,2026-08-03,,,True,Bourbonnais CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-119,2026-08-04,2026-08-04,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-120,2026-08-04,2026-08-04,5:00 PM,8:00 PM,False,Gun Clean & Gear Check,Bourbonnais,Bourbonnais Member Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-121,2026-08-05,2026-08-05,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-122,2026-08-05,2026-08-05,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Concealed Carry Renewal,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-123,2026-08-06,2026-08-06,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-124,2026-08-07,2026-08-07,12:00 PM,5:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-125,2026-08-07,2026-08-07,5:30 PM,9:30 PM,False,Members Competition,Bourbonnais,Bourbonnais Group Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+frankfort-ics-126,2026-08-08,2026-08-08,8:00 AM,10:00 AM,False,Holster Draw,Frankfort,Frankfort Training,,Scheduled,Frankfort ICS,Frankfort,Imported from uploaded ICS calendar
+bourbonnais-ics-127,2026-08-08,2026-08-08,8:00 AM,5:00 PM,False,R2-B,Bourbonnais,Bourbonnais Training,JM Training H-1. Full 1-day course. 9-hour training block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+frankfort-ics-128,2026-08-08,2026-08-08,10:00 AM,4:00 PM,False,Group Shoot Event,Frankfort,Frankfort Group Event,,Scheduled,Frankfort ICS,Frankfort,Imported from uploaded ICS calendar
+bourbonnais-ics-129,2026-08-09,2026-08-09,8:00 AM,5:00 PM,False,H3-A,Bourbonnais,Bourbonnais Training,JM Training R-1. Full 1-day course. 9-hour training block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-130,2026-08-10,2026-08-10,,,True,Bourbonnais CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-131,2026-08-10,2026-08-10,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Concealed Carry Renewal,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-132,2026-08-11,2026-08-11,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-133,2026-08-12,2026-08-12,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-134,2026-08-13,2026-08-13,12:00 PM,5:45 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-135,2026-08-13,2026-08-13,6:00 PM,9:00 PM,False,Instructor Development,Bourbonnais,Bourbonnais Training,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-136,2026-08-14,2026-08-14,12:00 PM,5:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-137,2026-08-14,2026-08-14,5:00 PM,9:30 PM,False,H-0 Orientation/ Fun Night,Bourbonnais,Bourbonnais Group Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-138,2026-08-15,2026-08-15,8:00 AM,5:00 PM,False,H3-B,Bourbonnais,Bourbonnais Training,JM Training H-2. Full 1-day course. 9-hour training block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+frankfort-ics-139,2026-08-15,2026-08-15,8:00 AM,10:00 AM,False,Holster Draw- Bourbonnais,Frankfort,Frankfort Training,,Scheduled,Frankfort ICS,Frankfort,Imported from uploaded ICS calendar
+alsip-ics-140,2026-08-15,2026-08-15,9:00 AM,7:00 PM,False,16-Hour Concealed Carry Course — Day 1,Alsip,Concealed Carry Class,Day 1 of 2. Saturday session: 9:00 AM–7:00 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-141,2026-08-16,2026-08-16,8:00 AM,5:00 PM,False,R3-A,Bourbonnais,Bourbonnais Training,JM Training H-3. Full 1-day course. 9-hour training block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-142,2026-08-16,2026-08-16,10:00 AM,4:00 PM,False,16-Hour Concealed Carry Course — Day 2,Alsip,Concealed Carry Class,Day 2 of 2. Sunday session: 10:00 AM–4:00 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-143,2026-08-17,2026-08-17,,,True,Bourbonnais CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-144,2026-08-18,2026-08-18,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-145,2026-08-19,2026-08-19,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-146,2026-08-19,2026-08-19,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Concealed Carry Renewal,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-147,2026-08-20,2026-08-20,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-148,2026-08-21,2026-08-21,12:00 PM,5:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-149,2026-08-21,2026-08-21,5:00 PM,9:30 PM,False,Rifle/Pistol Comp/ Fun Night,Bourbonnais,Bourbonnais Group Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-150,2026-08-22,2026-08-22,8:00 AM,5:00 PM,False,R3-B,Bourbonnais,Bourbonnais Training,JM Training R-2. Full 1-day course. 9-hour training block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-151,2026-08-23,2026-08-23,8:00 AM,5:00 PM,False,R/P 4-A,Bourbonnais,Bourbonnais Training,JM Training R-3. Full 1-day course. 9-hour training block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-152,2026-08-24,2026-08-24,,,True,Bourbonnais CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-153,2026-08-24,2026-08-24,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Concealed Carry Renewal,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-154,2026-08-25,2026-08-25,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-155,2026-08-26,2026-08-26,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-156,2026-08-27,2026-08-27,12:00 PM,6:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-157,2026-08-27,2026-08-27,6:00 PM,9:00 PM,False,Instructor Development,Bourbonnais,Bourbonnais Training,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-158,2026-08-28,2026-08-28,12:00 PM,5:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-159,2026-08-28,2026-08-28,5:00 PM,9:30 PM,False,HNDGN- 1/2/3 Comp/ Fun Night,Bourbonnais,Bourbonnais Group Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-160,2026-08-29,2026-08-29,8:00 AM,5:00 PM,False,R/P 4-B,Bourbonnais,Bourbonnais Training,JM Training R/P-4. Rifle-pistol combined Level 4. Two-day course: Day 1 of 2.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-161,2026-08-29,2026-08-29,9:00 AM,7:00 PM,False,16-Hour Concealed Carry Course — Day 1,Alsip,Concealed Carry Class,Day 1 of 2. Saturday session: 9:00 AM–7:00 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-162,2026-08-30,2026-08-30,8:00 AM,5:00 PM,False,R/P 5-A,Bourbonnais,Bourbonnais Training,JM Training R/P-4. Rifle-pistol combined Level 4. Two-day course: Day 2 of 2.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-163,2026-08-30,2026-08-30,10:00 AM,4:00 PM,False,16-Hour Concealed Carry Course — Day 2,Alsip,Concealed Carry Class,Day 2 of 2. Sunday session: 10:00 AM–4:00 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-164,2026-08-31,2026-08-31,,,True,Bourbonnais CLOSED,Bourbonnais,Closure,,Closed,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-165,2026-09-01,2026-09-01,12:00 PM,5:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-166,2026-09-01,2026-09-01,5:00 PM,8:00 PM,False,Gun Clean & Gear Check,Bourbonnais,Bourbonnais Member Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-167,2026-09-02,2026-09-02,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+alsip-ics-168,2026-09-02,2026-09-02,5:00 PM,8:30 PM,False,Concealed Carry Renewal,Alsip,Concealed Carry Renewal,Renewal class. Scheduled 5:00 PM–8:30 PM.,Scheduled,Alsip ICS,Alsip,Imported from uploaded ICS calendar
+bourbonnais-ics-169,2026-09-03,2026-09-03,12:00 PM,8:00 PM,False,Members-Only Open Range,Bourbonnais,Bourbonnais Open Range,JM Training members-only open range block.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-170,2026-09-04,2026-09-04,12:00 PM,5:00 PM,False,Members Open Range,Bourbonnais,Bourbonnais Open Range,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+bourbonnais-ics-171,2026-09-04,2026-09-04,5:30 PM,9:30 PM,False,Members Competition,Bourbonnais,Bourbonnais Group Event,,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+frankfort-ics-172,2026-09-05,2026-09-05,8:00 AM,10:00 AM,False,Holster Draw,Frankfort,Frankfort Training,,Scheduled,Frankfort ICS,Frankfort,Imported from uploaded ICS calendar
+bourbonnais-ics-173,2026-09-05,2026-09-05,8:00 AM,5:00 PM,False,R/P 5-B,Bourbonnais,Bourbonnais Training,JM Training R/P-5. Rifle-pistol Level 5. Two-day event: Day 1 of 2.,Scheduled,Bourbonnais ICS,Bourbonnais,Imported from uploaded ICS calendar
+frankfort-ics-174,2026-09-05,2026-09-05,10:00 AM,4:00 PM,False,Group Shoot Event,Frankfort,Frankfort Group Event,,Scheduled,Frankfort ICS,Frankfort,Imported from uploaded ICS calendar
 CSV;
 ?>
 
@@ -193,7 +229,7 @@ CSV;
 		<section class="calendar-section" id="training-calendar" aria-labelledby="calendar-title">
 			<div class="calendar-section-inner">
 				<div class="calendar-section-heading">
-					<p class="calendar-eyebrow">May 1-July 31, 2026 standalone calendar</p>
+					<p class="calendar-eyebrow">May 23-September 5, 2026 standalone calendar</p>
 					<h1 id="calendar-title">JM Training Schedule</h1>
 					<p>
 						View scheduled classes, member range availability, special events, closures, and holiday notices across
@@ -264,8 +300,8 @@ CSV;
 	const calendarTooltip = pageRoot.querySelector('[data-calendar-tooltip]');
 	const calendarCsvElement = document.getElementById('jm-calendar-csv-data');
 	const calendarCsv = calendarCsvElement ? JSON.parse(calendarCsvElement.textContent || '""') : '';
-	const calendarStartDate = parseDate('2026-05-01');
-	const calendarEndDate = parseDate('2026-07-31');
+	const calendarStartDate = parseDate('2026-05-23');
+	const calendarEndDate = parseDate('2026-09-05');
 	const browserToday = startOfDay(new Date());
 	const todayKey = formatDate(browserToday);
 	const highlightToday = browserToday >= calendarStartDate && browserToday <= calendarEndDate;
@@ -678,7 +714,7 @@ CSV;
 		const events = buildEventsFromCsv(calendarCsv);
 		const endDate = calendarEndDate;
 
-		const months = [4, 5, 6];
+		const months = [4, 5, 6, 7, 8];
 		root.innerHTML = months.map((monthIndex) => renderMonth(monthIndex, events, endDate)).join('');
 		root.querySelectorAll('.calendar-event').forEach((eventElement) => {
 			eventElement.addEventListener('mouseenter', () => showCalendarTooltip(eventElement));
