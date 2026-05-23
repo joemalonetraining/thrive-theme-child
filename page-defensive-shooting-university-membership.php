@@ -29,6 +29,17 @@ $jm_membership_tier = [
 		'Built for serious students committed to progression.',
 	],
 	'show_mobile_sticky_cta' => true,
+	'landing_layout' => true,
+	'header_nav_items' => [
+		[
+			'label' => 'Benefits',
+			'href' => '#benefits',
+		],
+		[
+			'label' => 'APPLY TO DSU',
+			'href' => '#final',
+		],
+	],
 	'proof_points' => [
 		'Includes everything in Pro Performance',
 		'All qualification courses included, Levels 0-5',
@@ -151,7 +162,19 @@ $jm_membership_tier = [
 	'final_heading' => 'Commit to the full path.',
 	'final_text' => 'Submit the short enrollment application when you are ready for the full JM Training membership with included qualification courses, included medical blocks, private range access, and accelerated progression.',
 ];
-
-get_header();
-get_template_part('template-parts/membership-tier-page', null, ['tier' => $jm_membership_tier]);
-get_footer();
+?>
+<!doctype html>
+<html <?php language_attributes(); ?>>
+<head>
+	<meta charset="<?php bloginfo('charset'); ?>">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<?php wp_head(); ?>
+</head>
+<body <?php body_class('jm-dsu-membership-landing'); ?>>
+<?php if (function_exists('wp_body_open')) : ?>
+	<?php wp_body_open(); ?>
+<?php endif; ?>
+<?php get_template_part('template-parts/membership-tier-page', null, ['tier' => $jm_membership_tier]); ?>
+<?php wp_footer(); ?>
+</body>
+</html>

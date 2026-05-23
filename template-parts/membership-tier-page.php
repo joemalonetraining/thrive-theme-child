@@ -18,6 +18,8 @@ $tier = wp_parse_args(
 		'cta_event' => '',
 		'cta_support_points' => [],
 		'show_mobile_sticky_cta' => false,
+		'landing_layout' => false,
+		'header_nav_items' => [],
 		'overview_href' => home_url('/memberships/'),
 		'proof_points' => [],
 		'hero_background_image' => '',
@@ -41,6 +43,8 @@ $membership_home_url = function_exists('jm_training_primary_landing_url') ? jm_t
 $has_cta = ! empty($tier['cta_label']) && ! empty($tier['cta_href']);
 $has_cta_support = ! empty($tier['cta_support_points']) && is_array($tier['cta_support_points']);
 $show_mobile_sticky_cta = $has_cta && ! empty($tier['show_mobile_sticky_cta']);
+$use_landing_layout = ! empty($tier['landing_layout']);
+$header_nav_items = is_array($tier['header_nav_items']) ? $tier['header_nav_items'] : [];
 $has_hero_background = ! empty($tier['hero_background_image']);
 $hero_background_style = '';
 
@@ -66,16 +70,28 @@ $membership_cta_attributes = function ($location) use ($tier) {
 };
 ?>
 
-<div class="jm-support-page jm-membership-tier-page<?php echo $show_mobile_sticky_cta ? ' has-membership-sticky-cta' : ''; ?>">
-	<header class="support-site-header" aria-label="Primary navigation">
+<div class="jm-support-page jm-membership-tier-page<?php echo $show_mobile_sticky_cta ? ' has-membership-sticky-cta' : ''; ?><?php echo $use_landing_layout ? ' is-landing-layout' : ''; ?>">
+	<header class="support-site-header<?php echo $use_landing_layout ? ' is-landing-header' : ''; ?>" aria-label="Primary navigation">
 		<a class="support-brand" href="<?php echo esc_url($membership_home_url); ?>" aria-label="JM Training home">
-			<img class="support-brand-logo" src="<?php echo esc_url($logo_uri); ?>" alt="JM Training logo">
+			<?php if (! $use_landing_layout) : ?>
+				<img class="support-brand-logo" src="<?php echo esc_url($logo_uri); ?>" alt="JM Training logo">
+			<?php endif; ?>
 			<span>
 				<strong>JM Training</strong>
 				<small>Membership program</small>
 			</span>
 		</a>
-		<?php get_template_part('template-parts/jm-site-nav'); ?>
+		<?php if (! empty($header_nav_items)) : ?>
+			<nav class="desktop-nav jm-site-nav membership-anchor-nav" aria-label="Membership page sections">
+				<?php foreach ($header_nav_items as $nav_item) : ?>
+					<a href="<?php echo esc_url($nav_item['href'] ?? '#'); ?>">
+						<?php echo esc_html($nav_item['label'] ?? ''); ?>
+					</a>
+				<?php endforeach; ?>
+			</nav>
+		<?php else : ?>
+			<?php get_template_part('template-parts/jm-site-nav'); ?>
+		<?php endif; ?>
 		<?php if ($has_cta) : ?>
 			<a class="support-header-cta" href="<?php echo esc_url($tier['cta_href']); ?>"<?php echo $membership_cta_attributes('header'); ?>>
 				<?php echo esc_html($tier['cta_label']); ?>
@@ -185,7 +201,7 @@ $membership_cta_attributes = function ($location) use ($tier) {
 			<?php endif; ?>
 		<?php endif; ?>
 
-		<section class="membership-tier-section" aria-labelledby="membership-benefits-title">
+		<section class="membership-tier-section" id="benefits" aria-labelledby="membership-benefits-title">
 			<div class="membership-tier-section-inner">
 				<div class="membership-section-heading">
 					<p class="support-eyebrow">Membership details</p>
@@ -344,7 +360,7 @@ $membership_cta_attributes = function ($location) use ($tier) {
 			</section>
 		<?php endif; ?>
 
-		<section class="membership-final-cta" aria-labelledby="membership-final-title">
+		<section class="membership-final-cta" id="final" aria-labelledby="membership-final-title">
 			<div>
 				<p class="support-eyebrow">Next step</p>
 				<h2 id="membership-final-title"><?php echo esc_html($tier['final_heading']); ?></h2>

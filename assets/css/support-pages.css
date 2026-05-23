@@ -144,6 +144,11 @@
     var(--support-black);
 }
 
+body.jm-dsu-membership-landing {
+  margin: 0;
+  background: var(--support-black, #050505);
+}
+
 .jm-support-page .support-hero,
 .jm-support-page .support-section {
   padding: clamp(72px, 10vw, 124px) clamp(20px, 6vw, 80px);
@@ -1830,6 +1835,132 @@
   text-transform: uppercase;
 }
 
+.jm-support-page.jm-membership-tier-page.is-landing-layout {
+  width: 100%;
+}
+
+.jm-support-page.jm-membership-tier-page.is-landing-layout .support-site-header.is-landing-header {
+  position: fixed;
+  right: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: minmax(170px, 1fr) auto minmax(270px, 1fr);
+  gap: 24px;
+  padding: 14px clamp(28px, 4vw, 72px);
+}
+
+.jm-support-page.jm-membership-tier-page.is-landing-layout .support-brand {
+  justify-self: start;
+}
+
+.jm-support-page.jm-membership-tier-page.is-landing-layout .support-brand strong {
+  font-size: 1rem;
+  letter-spacing: 0;
+}
+
+.jm-support-page.jm-membership-tier-page.is-landing-layout .membership-anchor-nav {
+  justify-self: center;
+  gap: 28px;
+  text-transform: none;
+}
+
+.jm-support-page.jm-membership-tier-page.is-landing-layout .membership-anchor-nav a {
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.jm-support-page.jm-membership-tier-page.is-landing-layout .support-header-cta {
+  justify-self: end;
+}
+
+.jm-support-page.jm-membership-tier-page.is-landing-layout .membership-tier-hero {
+  padding: 78px clamp(28px, 5vw, 96px) 88px;
+}
+
+.jm-support-page.jm-membership-tier-page.is-landing-layout .membership-tier-hero.has-hero-background {
+  min-height: calc(100svh - 72px);
+}
+
+.jm-support-page.jm-membership-tier-page.is-landing-layout .membership-tier-hero-inner,
+.jm-support-page.jm-membership-tier-page.is-landing-layout .membership-tier-hero.has-hero-background .membership-tier-hero-inner {
+  width: min(1680px, 100%);
+  min-height: min(680px, calc(100svh - 238px));
+  grid-template-columns: minmax(620px, 1.12fr) minmax(430px, 500px);
+  gap: clamp(76px, 8vw, 180px);
+  align-items: center;
+}
+
+.jm-support-page.jm-membership-tier-page.is-landing-layout .membership-tier-copy {
+  max-width: 1020px;
+}
+
+.jm-support-page.jm-membership-tier-page.is-landing-layout .membership-tier-copy h1 {
+  width: min(1040px, 100%);
+  margin-bottom: 24px;
+  font-size: 7.6rem;
+  line-height: 0.88;
+}
+
+.jm-support-page.jm-membership-tier-page.is-landing-layout .membership-tier-copy p:not(.support-eyebrow) {
+  width: min(800px, 100%);
+}
+
+.jm-support-page.jm-membership-tier-page.is-landing-layout .membership-tier-actions {
+  gap: 16px;
+  margin-top: 34px;
+}
+
+.jm-support-page.jm-membership-tier-page.is-landing-layout .membership-cta-stack {
+  min-width: min(100%, 360px);
+}
+
+.jm-support-page.jm-membership-tier-page.is-landing-layout .membership-price-panel {
+  width: min(100%, 500px);
+  min-height: 410px;
+  justify-self: end;
+  align-content: center;
+  gap: 16px;
+  padding: 38px;
+}
+
+.jm-support-page.jm-membership-tier-page.is-landing-layout .membership-price-panel > strong {
+  font-size: 6.4rem;
+}
+
+@media (min-width: 1700px) {
+  .jm-support-page.jm-membership-tier-page.is-landing-layout .membership-tier-hero-inner,
+  .jm-support-page.jm-membership-tier-page.is-landing-layout .membership-tier-hero.has-hero-background .membership-tier-hero-inner {
+    width: min(1760px, 100%);
+    grid-template-columns: minmax(720px, 1.16fr) minmax(480px, 540px);
+  }
+
+  .jm-support-page.jm-membership-tier-page.is-landing-layout .membership-tier-copy h1 {
+    font-size: 8.6rem;
+  }
+
+  .jm-support-page.jm-membership-tier-page.is-landing-layout .membership-price-panel {
+    width: min(100%, 540px);
+    min-height: 440px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .jm-support-page.jm-membership-tier-page.is-landing-layout .membership-tier-hero-inner,
+  .jm-support-page.jm-membership-tier-page.is-landing-layout .membership-tier-hero.has-hero-background .membership-tier-hero-inner {
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 430px);
+    gap: 54px;
+  }
+
+  .jm-support-page.jm-membership-tier-page.is-landing-layout .membership-tier-copy h1 {
+    font-size: 6.2rem;
+  }
+
+  .jm-support-page.jm-membership-tier-page.is-landing-layout .membership-price-panel {
+    padding: 30px;
+  }
+}
+
 .jm-support-page.jm-membership-tier-page .membership-section-heading {
   width: min(780px, 100%);
   margin-bottom: 30px;
@@ -2257,6 +2388,17 @@
     flex-direction: column;
   }
 
+  .jm-support-page.jm-membership-tier-page.is-landing-layout .support-site-header.is-landing-header {
+    grid-template-columns: 1fr;
+    justify-items: start;
+    gap: 12px;
+  }
+
+  .jm-support-page.jm-membership-tier-page.is-landing-layout .membership-anchor-nav,
+  .jm-support-page.jm-membership-tier-page.is-landing-layout .support-header-cta {
+    justify-self: start;
+  }
+
   .jm-support-page .desktop-nav {
     flex-wrap: wrap;
     gap: 14px;
@@ -2282,6 +2424,29 @@
 
   .jm-support-page.jm-membership-tier-page .membership-detail-panel.has-media.is-reversed .membership-detail-copy {
     order: 0;
+  }
+
+  .jm-support-page.jm-membership-tier-page.is-landing-layout .membership-tier-hero {
+    min-height: auto;
+    padding-top: 80px;
+    padding-bottom: 72px;
+  }
+
+  .jm-support-page.jm-membership-tier-page.is-landing-layout .membership-tier-hero-inner,
+  .jm-support-page.jm-membership-tier-page.is-landing-layout .membership-tier-hero.has-hero-background .membership-tier-hero-inner {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .jm-support-page.jm-membership-tier-page.is-landing-layout .membership-tier-copy h1 {
+    font-size: 4.6rem;
+  }
+
+  .jm-support-page.jm-membership-tier-page.is-landing-layout .membership-price-panel {
+    width: 100%;
+    min-height: 0;
+    justify-self: stretch;
   }
 
   .jm-support-page.jm-membership-tier-page .membership-tier-media-grid {
@@ -2568,6 +2733,14 @@
   }
 
   .jm-support-page.jm-membership-tier-page .membership-tier-actions {
+    gap: 16px;
+  }
+
+  .jm-support-page.jm-membership-tier-page.is-landing-layout .membership-tier-copy h1 {
+    font-size: 3.45rem;
+  }
+
+  .jm-support-page.jm-membership-tier-page.is-landing-layout .membership-anchor-nav {
     gap: 16px;
   }
 
