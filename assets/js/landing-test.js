@@ -32,6 +32,28 @@
     node.replaceWith(svg);
   });
 
+  root.addEventListener("click", (event) => {
+    const link = event.target.closest("[data-analytics-event]");
+
+    if (!link) return;
+
+    const eventName = link.dataset.analyticsEvent;
+    const eventPayload = {
+      link_url: link.href,
+      link_text: link.textContent.trim(),
+      cta_location: link.dataset.analyticsLocation || "",
+      cta_label: link.dataset.analyticsLabel || link.textContent.trim()
+    };
+
+    if (typeof window.gtag === "function") {
+      window.gtag("event", eventName, eventPayload);
+      return;
+    }
+
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: eventName, ...eventPayload });
+  });
+
   const stickyCta = root.querySelector(".mobile-sticky-cta");
   const hero = root.querySelector(".program-hero");
   const finalCta = root.querySelector(".cta-section");

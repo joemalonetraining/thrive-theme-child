@@ -241,7 +241,7 @@ $membership_tier_urls = [
 							<li>5–15% off firearms, ammo, and store items</li>
 							<li>Accelerated progression through the training pipeline</li>
 						</ul>
-						<a class="segment-link" href="<?php echo esc_url($membership_tier_urls['dsu']); ?>">
+						<a class="segment-link" href="<?php echo esc_url($membership_tier_urls['dsu']); ?>" data-analytics-event="dsu_details_view" data-analytics-location="membership_tiers" data-analytics-label="View DSU Details">
 							View DSU Details
 							<i data-lucide="send" aria-hidden="true"></i>
 						</a>

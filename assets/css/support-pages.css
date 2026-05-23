@@ -225,7 +225,8 @@
 .jm-support-page .nav-dropdown summary:focus-visible,
 .jm-support-page .nav-dropdown-menu a:focus-visible,
 .jm-support-page .support-button:focus-visible,
-.jm-support-page .support-header-cta:focus-visible {
+.jm-support-page .support-header-cta:focus-visible,
+.jm-support-page .membership-mobile-sticky-cta:focus-visible {
   outline: 2px solid rgba(196, 154, 74, 0.92);
   outline-offset: 4px;
 }
@@ -1539,6 +1540,35 @@
   border-bottom: 1px solid var(--support-line);
 }
 
+.jm-support-page.jm-membership-tier-page .membership-tier-hero.has-hero-background {
+  position: relative;
+  min-height: clamp(640px, 84vh, 820px);
+  overflow: hidden;
+  background: var(--support-black);
+  isolation: isolate;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-tier-hero.has-hero-background::before,
+.jm-support-page.jm-membership-tier-page .membership-tier-hero.has-hero-background::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  content: "";
+}
+
+.jm-support-page.jm-membership-tier-page .membership-tier-hero.has-hero-background::before {
+  background-image: var(--membership-hero-background);
+  background-position: var(--membership-hero-position, center center);
+  background-size: cover;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-tier-hero.has-hero-background::after {
+  background:
+    linear-gradient(90deg, rgba(4, 4, 4, 0.92) 0%, rgba(4, 4, 4, 0.76) 44%, rgba(4, 4, 4, 0.44) 72%, rgba(4, 4, 4, 0.7) 100%),
+    linear-gradient(180deg, rgba(4, 4, 4, 0.3) 0%, rgba(4, 4, 4, 0.12) 42%, rgba(4, 4, 4, 0.9) 100%);
+}
+
 .jm-support-page.jm-memberships-page .memberships-hero-inner,
 .jm-support-page.jm-memberships-page .memberships-tier-grid,
 .jm-support-page.jm-membership-tier-page .membership-tier-hero-inner,
@@ -1700,10 +1730,17 @@
 }
 
 .jm-support-page.jm-membership-tier-page .membership-tier-hero-inner {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
   gap: clamp(28px, 5vw, 70px);
   align-items: end;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-tier-hero.has-hero-background .membership-tier-hero-inner {
+  min-height: clamp(520px, 68vh, 660px);
+  align-items: center;
 }
 
 .jm-support-page.jm-membership-tier-page .membership-tier-copy {
@@ -1714,7 +1751,56 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+  align-items: flex-start;
   margin-top: 28px;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-cta-stack {
+  display: grid;
+  gap: 12px;
+  min-width: min(100%, 320px);
+}
+
+.jm-support-page.jm-membership-tier-page .support-button.membership-primary-cta {
+  border-color: rgba(196, 154, 74, 0.84);
+  background: var(--support-gold);
+  color: var(--support-black);
+  box-shadow: 0 14px 34px rgba(196, 154, 74, 0.22);
+}
+
+.jm-support-page.jm-membership-tier-page .support-button-secondary.membership-secondary-cta {
+  min-height: 40px;
+  border-color: rgba(247, 245, 239, 0.14);
+  background: transparent;
+  color: var(--support-muted);
+  font-weight: 750;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-cta-proof {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  color: var(--support-muted);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  list-style: none;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-cta-proof li {
+  position: relative;
+  padding-left: 17px;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-cta-proof li::before {
+  position: absolute;
+  top: 0.62em;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--support-gold);
+  content: "";
 }
 
 .jm-support-page.jm-membership-tier-page .membership-price-panel {
@@ -1900,11 +1986,39 @@
 
 .jm-support-page.jm-membership-tier-page .membership-benefit-grid p,
 .jm-support-page.jm-membership-tier-page .membership-detail-panel p,
+.jm-support-page.jm-membership-tier-page .membership-section-cta p,
 .jm-support-page.jm-membership-tier-page .membership-final-cta p {
   margin: 0;
   color: var(--support-muted);
   font-size: 1rem;
   line-height: 1.68;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-section-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  margin-top: 26px;
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid rgba(196, 154, 74, 0.28);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(196, 154, 74, 0.13), rgba(247, 245, 239, 0.03)),
+    rgba(12, 12, 12, 0.94);
+}
+
+.jm-support-page.jm-membership-tier-page .membership-section-cta > div {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.jm-support-page.jm-membership-tier-page .membership-section-cta h3 {
+  margin: 0;
+  color: var(--support-white);
+  font-size: clamp(1.45rem, 2.5vw, 2.2rem);
+  line-height: 1.05;
 }
 
 .jm-support-page.jm-membership-tier-page .membership-tier-breakdown .membership-tier-section-inner {
@@ -1957,6 +2071,15 @@
 
 .jm-support-page.jm-membership-tier-page .membership-final-cta p {
   width: min(650px, 100%);
+}
+
+.jm-support-page.jm-membership-tier-page .membership-final-cta-stack {
+  flex: 0 0 auto;
+  width: min(380px, 100%);
+}
+
+.jm-support-page.jm-membership-tier-page .membership-mobile-sticky-cta {
+  display: none;
 }
 
 .jm-support-page.jm-membership-application-page .membership-application-hero {
@@ -2185,6 +2308,35 @@
     flex-direction: column;
   }
 
+  .jm-support-page.jm-membership-tier-page .membership-section-cta {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .jm-support-page.jm-membership-tier-page.has-membership-sticky-cta {
+    padding-bottom: 86px;
+  }
+
+  .jm-support-page.jm-membership-tier-page .membership-mobile-sticky-cta {
+    position: fixed;
+    right: 14px;
+    bottom: max(14px, env(safe-area-inset-bottom));
+    left: 14px;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 16px;
+    border: 1px solid rgba(196, 154, 74, 0.86);
+    border-radius: 8px;
+    background: var(--support-gold);
+    color: var(--support-black);
+    font-weight: 900;
+    text-align: center;
+    box-shadow: 0 14px 38px rgba(0, 0, 0, 0.46);
+  }
+
   .jm-support-page.jm-membership-application-page .membership-application-hero {
     min-height: auto;
     padding-top: 96px;
@@ -2407,9 +2559,19 @@
   }
 
   .jm-support-page.jm-membership-tier-page .membership-tier-actions,
+  .jm-support-page.jm-membership-tier-page .support-header-cta,
   .jm-support-page.jm-membership-tier-page .membership-tier-actions .support-button,
+  .jm-support-page.jm-membership-tier-page .membership-section-cta .support-button,
   .jm-support-page.jm-membership-tier-page .membership-final-cta .support-button,
   .jm-support-page.jm-memberships-page .memberships-tier-card .support-button {
+    width: 100%;
+  }
+
+  .jm-support-page.jm-membership-tier-page .membership-tier-actions {
+    gap: 16px;
+  }
+
+  .jm-support-page.jm-membership-tier-page .membership-cta-stack {
     width: 100%;
   }
 

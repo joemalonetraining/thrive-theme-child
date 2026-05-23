@@ -13,15 +13,22 @@ $tier = wp_parse_args(
 		'price_suffix' => '/mo',
 		'badge' => '',
 		'intro' => '',
-		'cta_label' => 'Ask About This Membership',
-		'cta_href' => 'https://api.cavucrm.com/widget/form/gJBjLouVXzI3MZWperI0',
+		'cta_label' => '',
+		'cta_href' => '',
+		'cta_event' => '',
+		'cta_support_points' => [],
+		'show_mobile_sticky_cta' => false,
 		'overview_href' => home_url('/memberships/'),
 		'proof_points' => [],
+		'hero_background_image' => '',
+		'hero_background_position' => 'center center',
 		'feature_media_heading' => '',
 		'feature_media_intro' => '',
 		'feature_media' => [],
 		'benefits_heading' => 'Included in this membership',
 		'benefits' => [],
+		'benefits_cta_heading' => '',
+		'benefits_cta_text' => '',
 		'sections' => [],
 		'final_heading' => 'Ready to talk through the right membership?',
 		'final_text' => 'Send a quick note and JM Training will help you choose the membership tier that matches your current training needs.',
@@ -31,9 +38,35 @@ $tier = wp_parse_args(
 $logo_uri = get_stylesheet_directory_uri() . '/assets/images/jm-logo.png';
 $image_base_uri = get_stylesheet_directory_uri() . '/assets/images';
 $membership_home_url = function_exists('jm_training_primary_landing_url') ? jm_training_primary_landing_url() : home_url('/');
+$has_cta = ! empty($tier['cta_label']) && ! empty($tier['cta_href']);
+$has_cta_support = ! empty($tier['cta_support_points']) && is_array($tier['cta_support_points']);
+$show_mobile_sticky_cta = $has_cta && ! empty($tier['show_mobile_sticky_cta']);
+$has_hero_background = ! empty($tier['hero_background_image']);
+$hero_background_style = '';
+
+if ($has_hero_background) {
+	$hero_background_style = sprintf(
+		' style="--membership-hero-background: url(%s); --membership-hero-position: %s;"',
+		esc_url($image_base_uri . '/' . ltrim($tier['hero_background_image'], '/')),
+		esc_attr($tier['hero_background_position'])
+	);
+}
+
+$membership_cta_attributes = function ($location) use ($tier) {
+	if (empty($tier['cta_event'])) {
+		return '';
+	}
+
+	return sprintf(
+		' data-analytics-event="%s" data-analytics-location="%s" data-analytics-label="%s"',
+		esc_attr($tier['cta_event']),
+		esc_attr($location),
+		esc_attr($tier['cta_label'] ?? '')
+	);
+};
 ?>
 
-<div class="jm-support-page jm-membership-tier-page">
+<div class="jm-support-page jm-membership-tier-page<?php echo $show_mobile_sticky_cta ? ' has-membership-sticky-cta' : ''; ?>">
 	<header class="support-site-header" aria-label="Primary navigation">
 		<a class="support-brand" href="<?php echo esc_url($membership_home_url); ?>" aria-label="JM Training home">
 			<img class="support-brand-logo" src="<?php echo esc_url($logo_uri); ?>" alt="JM Training logo">
@@ -43,13 +76,15 @@ $membership_home_url = function_exists('jm_training_primary_landing_url') ? jm_t
 			</span>
 		</a>
 		<?php get_template_part('template-parts/jm-site-nav'); ?>
-		<a class="support-header-cta" href="<?php echo esc_url($tier['cta_href']); ?>">
-			<?php echo esc_html($tier['cta_label']); ?>
-		</a>
+		<?php if ($has_cta) : ?>
+			<a class="support-header-cta" href="<?php echo esc_url($tier['cta_href']); ?>"<?php echo $membership_cta_attributes('header'); ?>>
+				<?php echo esc_html($tier['cta_label']); ?>
+			</a>
+		<?php endif; ?>
 	</header>
 
 	<main class="membership-tier-main">
-		<section class="membership-tier-hero" aria-labelledby="membership-tier-title">
+		<section class="membership-tier-hero<?php echo $has_hero_background ? ' has-hero-background' : ''; ?>" aria-labelledby="membership-tier-title"<?php echo $hero_background_style; ?>>
 			<div class="membership-tier-hero-inner">
 				<div class="membership-tier-copy">
 					<p class="support-eyebrow"><?php echo esc_html($tier['eyebrow']); ?></p>
@@ -58,10 +93,21 @@ $membership_home_url = function_exists('jm_training_primary_landing_url') ? jm_t
 						<p><?php echo esc_html($tier['intro']); ?></p>
 					<?php endif; ?>
 					<div class="membership-tier-actions">
-						<a class="support-button" href="<?php echo esc_url($tier['cta_href']); ?>">
-							<?php echo esc_html($tier['cta_label']); ?>
-						</a>
-						<a class="support-button support-button-secondary" href="<?php echo esc_url($tier['overview_href']); ?>">
+						<?php if ($has_cta) : ?>
+							<div class="membership-cta-stack">
+								<a class="support-button membership-primary-cta" href="<?php echo esc_url($tier['cta_href']); ?>"<?php echo $membership_cta_attributes('hero'); ?>>
+									<?php echo esc_html($tier['cta_label']); ?>
+								</a>
+								<?php if ($has_cta_support) : ?>
+									<ul class="membership-cta-proof" aria-label="Enrollment details">
+										<?php foreach ($tier['cta_support_points'] as $support_point) : ?>
+											<li><?php echo esc_html($support_point); ?></li>
+										<?php endforeach; ?>
+									</ul>
+								<?php endif; ?>
+							</div>
+						<?php endif; ?>
+						<a class="support-button support-button-secondary membership-secondary-cta" href="<?php echo esc_url($tier['overview_href']); ?>">
 							Compare Memberships
 						</a>
 					</div>
@@ -153,6 +199,28 @@ $membership_home_url = function_exists('jm_training_primary_landing_url') ? jm_t
 								<p><?php echo esc_html($benefit['text'] ?? ''); ?></p>
 							</article>
 						<?php endforeach; ?>
+					</div>
+				<?php endif; ?>
+				<?php if ($has_cta && (! empty($tier['benefits_cta_heading']) || ! empty($tier['benefits_cta_text']))) : ?>
+					<div class="membership-section-cta" aria-label="Enrollment application">
+						<div>
+							<?php if (! empty($tier['benefits_cta_heading'])) : ?>
+								<h3><?php echo esc_html($tier['benefits_cta_heading']); ?></h3>
+							<?php endif; ?>
+							<?php if (! empty($tier['benefits_cta_text'])) : ?>
+								<p><?php echo esc_html($tier['benefits_cta_text']); ?></p>
+							<?php endif; ?>
+							<?php if ($has_cta_support) : ?>
+								<ul class="membership-cta-proof" aria-label="Enrollment details">
+									<?php foreach ($tier['cta_support_points'] as $support_point) : ?>
+										<li><?php echo esc_html($support_point); ?></li>
+									<?php endforeach; ?>
+								</ul>
+							<?php endif; ?>
+						</div>
+						<a class="support-button membership-primary-cta" href="<?php echo esc_url($tier['cta_href']); ?>"<?php echo $membership_cta_attributes('benefits'); ?>>
+							<?php echo esc_html($tier['cta_label']); ?>
+						</a>
 					</div>
 				<?php endif; ?>
 			</div>
@@ -282,9 +350,61 @@ $membership_home_url = function_exists('jm_training_primary_landing_url') ? jm_t
 				<h2 id="membership-final-title"><?php echo esc_html($tier['final_heading']); ?></h2>
 				<p><?php echo esc_html($tier['final_text']); ?></p>
 			</div>
-			<a class="support-button" href="<?php echo esc_url($tier['cta_href']); ?>">
-				<?php echo esc_html($tier['cta_label']); ?>
-			</a>
+			<?php if ($has_cta) : ?>
+				<div class="membership-cta-stack membership-final-cta-stack">
+					<a class="support-button membership-primary-cta" href="<?php echo esc_url($tier['cta_href']); ?>"<?php echo $membership_cta_attributes('final'); ?>>
+						<?php echo esc_html($tier['cta_label']); ?>
+					</a>
+					<?php if ($has_cta_support) : ?>
+						<ul class="membership-cta-proof" aria-label="Enrollment details">
+							<?php foreach ($tier['cta_support_points'] as $support_point) : ?>
+								<li><?php echo esc_html($support_point); ?></li>
+							<?php endforeach; ?>
+						</ul>
+					<?php endif; ?>
+				</div>
+			<?php endif; ?>
 		</section>
 	</main>
+	<?php if ($show_mobile_sticky_cta) : ?>
+		<a class="membership-mobile-sticky-cta" href="<?php echo esc_url($tier['cta_href']); ?>" aria-label="<?php echo esc_attr($tier['cta_label']); ?>"<?php echo $membership_cta_attributes('mobile_sticky'); ?>>
+			<?php echo esc_html($tier['cta_label']); ?>
+		</a>
+	<?php endif; ?>
 </div>
+
+<?php if ($has_cta && ! empty($tier['cta_event'])) : ?>
+	<script>
+	(() => {
+		const root = document.querySelector('.jm-membership-tier-page');
+
+		if (!root) {
+			return;
+		}
+
+		root.addEventListener('click', (event) => {
+			const link = event.target.closest('[data-analytics-event]');
+
+			if (!link) {
+				return;
+			}
+
+			const eventName = link.dataset.analyticsEvent;
+			const eventPayload = {
+				link_url: link.href,
+				link_text: link.textContent.trim(),
+				cta_location: link.dataset.analyticsLocation || '',
+				cta_label: link.dataset.analyticsLabel || link.textContent.trim(),
+			};
+
+			if (typeof window.gtag === 'function') {
+				window.gtag('event', eventName, eventPayload);
+				return;
+			}
+
+			window.dataLayer = window.dataLayer || [];
+			window.dataLayer.push({ event: eventName, ...eventPayload });
+		});
+	})();
+	</script>
+<?php endif; ?>

@@ -20,13 +20,22 @@ $jm_membership_tier = [
 	'price_suffix' => '/mo',
 	'badge' => 'Full Path',
 	'intro' => 'Defensive Shooting University is the full-path membership for students who want the deepest access, included qualification courses, medical blocks, private range access, and accelerated progression.',
-	'cta_label' => 'Ask About DSU',
+	'cta_label' => 'Enrollment Currently Open — Apply Here',
 	'cta_href' => 'https://api.cavucrm.com/widget/form/rxs8Ko3LXRYXhC6jdZ2p',
+	'cta_event' => 'dsu_apply_click',
+	'cta_support_points' => [
+		'Application takes less than 2 minutes.',
+		'Immediate enrollment review.',
+		'Built for serious students committed to progression.',
+	],
+	'show_mobile_sticky_cta' => true,
 	'proof_points' => [
 		'Includes everything in Pro Performance',
 		'All qualification courses included, Levels 0-5',
 		'Medical blocks, private range access, and accelerated progression',
 	],
+	'hero_background_image' => 'dsu-low-light-hero.png',
+	'hero_background_position' => 'center center',
 	'feature_media_heading' => 'The full path is built around applied performance.',
 	'feature_media_intro' => 'DSU members are not just buying range time. The program puts students into live skill work, structured coaching, movement, light, decision-making, rifle integration, and pressure that has to be managed with discipline.',
 	'feature_media' => [
@@ -63,6 +72,8 @@ $jm_membership_tier = [
 			'text' => 'The membership is built for faster movement through the training pipeline while preserving standards and accountability.',
 		],
 	],
+	'benefits_cta_heading' => 'Ready to start the full path?',
+	'benefits_cta_text' => 'Apply now if you are ready for included qualification courses, medical blocks, private range access, and accountable progression.',
 	'sections' => [
 		[
 			'eyebrow' => 'Best fit',
@@ -72,6 +83,14 @@ $jm_membership_tier = [
 				'Students committed to working through Levels 0-5',
 				'Members who want medical training included, not discounted',
 				'People who want private outdoor range access in Frankfort',
+			],
+			'media' => [
+				'image' => 'dsu-coached-pistol-range.png',
+				'width' => '4194',
+				'height' => '2470',
+				'alt' => 'JM Training instructor coaching a Defensive Shooting University student during indoor pistol work',
+				'caption' => 'Coached reps, movement, and accountable decision-making.',
+				'position' => '46% center',
 			],
 		],
 		[
@@ -130,7 +149,7 @@ $jm_membership_tier = [
 		],
 	],
 	'final_heading' => 'Commit to the full path.',
-	'final_text' => 'Ask about DSU if you want the full JM Training membership with included qualification courses, included medical blocks, private range access, and accelerated progression.',
+	'final_text' => 'Submit the short enrollment application when you are ready for the full JM Training membership with included qualification courses, included medical blocks, private range access, and accelerated progression.',
 ];
 
 get_header();
