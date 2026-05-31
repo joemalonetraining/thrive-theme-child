@@ -107,16 +107,26 @@ function setupSheets() {
 
   const shifts = sheet_(TABS.SHIFTS);
   if (shifts.getLastRow() === 0) {
-    shifts.getRange(1, 1, 1, 8).setValues([[
-      'ID', 'Title', 'Start', 'End', 'Duty', 'Claimed By', 'Event ID', 'Notified',
+    shifts.getRange(1, 1, 1, 9).setValues([[
+      'ID', 'Title', 'Date', 'Start Time', 'End Time', 'Duty', 'Claimed By', 'Event ID', 'Notified',
     ]]);
+    // One sample row so the date/time format is obvious.
+    const d = new Date();
+    d.setDate(d.getDate() + 14);
+    d.setHours(0, 0, 0, 0);
+    shifts.getRange(2, 1, 1, 6).setValues([[
+      'S' + Date.now(), 'Sample Training Event', d,
+      new Date(1899, 11, 30, 9, 0), new Date(1899, 11, 30, 17, 0), 'Lead Instruction',
+    ]]);
+    shifts.getRange(2, 3).setNumberFormat('M/d/yyyy');         // Date
+    shifts.getRange(2, 4, 1, 2).setNumberFormat('h:mm am/pm'); // Start/End Time
     shifts.setFrozenRows(1);
   }
 
   SpreadsheetApp.getUi().alert(
     'Tabs are ready.\n\n' +
     '1) Fill in the Employees, Duties and Pay Rates tabs.\n' +
-    '2) Add shifts as rows in the Shifts tab (Title, Start, End, Duty).\n' +
+    '2) Add shifts as rows in the Shifts tab (Title, Date, Start Time, End Time, Duty).\n' +
     '3) Deploy ▸ New deployment ▸ Web app to get the clock-in link.'
   );
 }
@@ -159,19 +169,20 @@ function getBootstrapData() {
   const now = new Date();
   const horizon = new Date(now.getTime() + 60 * 86400000);
   const shifts = readRows_(TABS.SHIFTS)
-    .filter(function (r) {
-      return r['Start'] instanceof Date && r['Start'] >= now && r['Start'] <= horizon;
-    })
-    .sort(function (a, b) { return a['Start'] - b['Start']; })
     .map(function (r) {
+      const start = combineDateTime_(r['Date'], r['Start Time']);
+      const end = combineDateTime_(r['Date'], r['End Time']);
       return {
         id: r['ID'],
         title: r['Title'],
         duty: r['Duty'],
-        when: formatRange_(r['Start'], r['End']),
+        start: start,
+        when: formatRange_(start, end),
         claimedBy: r['Claimed By'] || '',
       };
-    });
+    })
+    .filter(function (s) { return s.start && s.start >= now && s.start <= horizon; })
+    .sort(function (a, b) { return a.start - b.start; });
 
   return { employees: employees, duties: duties, openByName: openByName, shifts: shifts };
 }
@@ -220,8 +231,10 @@ function claimShift(shiftId, name) {
     if (data[i][col['Claimed By']]) {
       throw new Error('That shift was just claimed by ' + data[i][col['Claimed By']] + '.');
     }
-    const start = data[i][col['Start']];
-    const end = data[i][col['End']] || new Date(start.getTime() + 3600000);
+    const start = combineDateTime_(data[i][col['Date']], data[i][col['Start Time']]);
+    if (!start) throw new Error('That shift is missing a date or start time.');
+    const end = combineDateTime_(data[i][col['Date']], data[i][col['End Time']]) ||
+      new Date(start.getTime() + 3600000);
     const title = data[i][col['Title']];
     const duty = data[i][col['Duty']];
 
@@ -256,11 +269,12 @@ function checkUnclaimedShifts() {
   const newlyDue = [];
 
   for (var i = 1; i < data.length; i++) {
-    const start = data[i][col['Start']];
+    const start = combineDateTime_(data[i][col['Date']], data[i][col['Start Time']]);
+    const end = combineDateTime_(data[i][col['Date']], data[i][col['End Time']]);
     const claimed = data[i][col['Claimed By']];
     const notified = data[i][col['Notified']];
-    if (start instanceof Date && start >= now && start <= cutoff && !claimed && notified !== true) {
-      newlyDue.push({ row: i + 1, title: data[i][col['Title']], when: formatRange_(start, data[i][col['End']]) });
+    if (start && start >= now && start <= cutoff && !claimed && notified !== true) {
+      newlyDue.push({ row: i + 1, title: data[i][col['Title']], when: formatRange_(start, end) });
     }
   }
   if (!newlyDue.length) return;
@@ -351,6 +365,20 @@ function createShiftEvent_(title, duty, name, start, end) {
 function employeeEmail_(name) {
   const r = readRows_(TABS.EMPLOYEES).filter(function (x) { return x['Name'] === name; })[0];
   return r ? r['Email'] : '';
+}
+
+/**
+ * Combines a Date-cell (the event day) with a Time-cell (start or end time)
+ * into a single Date. Google Sheets returns a date cell as midnight of that
+ * day and a time cell as that time on 1899-12-30, so we splice them together.
+ */
+function combineDateTime_(dateVal, timeVal) {
+  if (!(dateVal instanceof Date)) return null;
+  const d = new Date(dateVal.getTime());
+  if (timeVal instanceof Date) {
+    d.setHours(timeVal.getHours(), timeVal.getMinutes(), 0, 0);
+  }
+  return d;
 }
 
 function formatTime_(d) {

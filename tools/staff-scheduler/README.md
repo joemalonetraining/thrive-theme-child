@@ -30,7 +30,7 @@ shift still unclaimed 7 days out.
 | **Duties** | Duty, Default Rate | The duties employees can choose + fallback rate |
 | **Pay Rates** | Employee, Duty, Rate | Per-person overrides (optional) |
 | **Time Entries** | ID, Name, Duty, Clock In, Clock Out, Hours, Rate, Pay, Status, Note | The time log — edit freely |
-| **Shifts** | ID, Title, Start, End, Duty, Claimed By, Event ID, Notified | Add shifts as rows; claiming/alerts update them |
+| **Shifts** | ID, Title, Date, Start Time, End Time, Duty, Claimed By, Event ID, Notified | Add training events as rows; claiming/alerts update them |
 
 ## One-time setup (about 10 minutes)
 
