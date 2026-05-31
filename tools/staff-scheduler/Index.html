@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <style>
+    :root { --ink:#111; --muted:#666; --line:#e3e3e3; --accent:#b11116; --ok:#1a7f37; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      margin: 0; background: #f5f5f5; color: var(--ink);
+    }
+    .wrap { max-width: 480px; margin: 0 auto; padding: 20px 16px 48px; }
+    .logo { display: block; max-width: 180px; margin: 12px auto 4px; }
+    h1 { font-size: 18px; text-align: center; font-weight: 600; margin: 4px 0 18px; }
+    .card { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+    .tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+    .tab { flex: 1; padding: 10px; text-align: center; border: 1px solid var(--line);
+      border-radius: 10px; background: #fff; cursor: pointer; font-weight: 600; }
+    .tab.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+    label { display: block; font-size: 13px; color: var(--muted); margin: 12px 0 4px; }
+    select { width: 100%; padding: 12px; font-size: 16px; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+    button { width: 100%; padding: 14px; font-size: 16px; font-weight: 700; border: 0;
+      border-radius: 10px; cursor: pointer; margin-top: 14px; color: #fff; }
+    .btn-in { background: var(--ok); }
+    .btn-out { background: var(--accent); }
+    .btn-claim { background: var(--ink); margin-top: 8px; padding: 10px; font-size: 14px; }
+    .status { text-align: center; padding: 10px; border-radius: 10px; font-size: 14px; margin-top: 12px; min-height: 20px; }
+    .status.ok { background: #e7f6ec; color: var(--ok); }
+    .status.err { background: #fdeaea; color: var(--accent); }
+    .shift { border: 1px solid var(--line); border-radius: 10px; padding: 12px; margin-bottom: 10px; }
+    .shift .t { font-weight: 600; }
+    .shift .w { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .claimed { font-size: 13px; color: var(--ok); margin-top: 6px; }
+    .hidden { display: none; }
+    .muted { color: var(--muted); font-size: 13px; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <img class="logo" src="<?= logoUrl ?>" alt="<?= businessName ?>"
+         onerror="this.style.display='none'">
+    <h1><?= businessName ?> — Time Clock</h1>
+
+    <div class="tabs">
+      <div class="tab active" id="tab-clock" onclick="showView('clock')">Clock In / Out</div>
+      <div class="tab" id="tab-shifts" onclick="showView('shifts')">Shifts</div>
+    </div>
+
+    <!-- CLOCK VIEW -->
+    <div id="view-clock" class="card">
+      <label for="emp">Your name</label>
+      <select id="emp" onchange="refreshClockState()"></select>
+
+      <div id="dutyWrap">
+        <label for="duty">Duty you're performing</label>
+        <select id="duty"></select>
+      </div>
+
+      <div id="clockButtons"></div>
+      <div id="clockStatus" class="status"></div>
+    </div>
+
+    <!-- SHIFTS VIEW -->
+    <div id="view-shifts" class="card hidden">
+      <label for="emp2">Claim as</label>
+      <select id="emp2"></select>
+      <div id="shiftList" style="margin-top:14px;"></div>
+      <div id="shiftStatus" class="status"></div>
+    </div>
+  </div>
+
+  <script>
+    var DATA = { employees: [], duties: [], openByName: {}, shifts: [] };
+
+    function showView(v) {
+      document.getElementById('view-clock').classList.toggle('hidden', v !== 'clock');
+      document.getElementById('view-shifts').classList.toggle('hidden', v !== 'shifts');
+      document.getElementById('tab-clock').classList.toggle('active', v === 'clock');
+      document.getElementById('tab-shifts').classList.toggle('active', v === 'shifts');
+    }
+
+    function fill(sel, items, placeholder) {
+      sel.innerHTML = '';
+      var o = document.createElement('option');
+      o.value = ''; o.textContent = placeholder; sel.appendChild(o);
+      items.forEach(function (it) {
+        var opt = document.createElement('option');
+        opt.value = it; opt.textContent = it; sel.appendChild(opt);
+      });
+    }
+
+    function load() {
+      google.script.run.withSuccessHandler(function (d) {
+        DATA = d;
+        fill(document.getElementById('emp'), d.employees, '— select your name —');
+        fill(document.getElementById('emp2'), d.employees, '— select your name —');
+        fill(document.getElementById('duty'), d.duties, '— select duty —');
+        renderShifts();
+      }).withFailureHandler(function (e) {
+        setStatus('clockStatus', e.message, false);
+      }).getBootstrapData();
+    }
+
+    function refreshClockState() {
+      var name = document.getElementById('emp').value;
+      var open = DATA.openByName[name];
+      var btns = document.getElementById('clockButtons');
+      var dutyWrap = document.getElementById('dutyWrap');
+      setStatus('clockStatus', '', null);
+
+      if (!name) { btns.innerHTML = ''; dutyWrap.classList.remove('hidden'); return; }
+
+      if (open) {
+        dutyWrap.classList.add('hidden');
+        btns.innerHTML =
+          '<button class="btn-out" onclick="doClockOut()">Clock Out</button>';
+        setStatus('clockStatus', 'Clocked in for ' + open.duty + ' since ' + open.since + '.', true);
+      } else {
+        dutyWrap.classList.remove('hidden');
+        btns.innerHTML =
+          '<button class="btn-in" onclick="doClockIn()">Clock In</button>';
+      }
+    }
+
+    function busy(on) {
+      document.querySelectorAll('button').forEach(function (b) { b.disabled = on; });
+    }
+
+    function doClockIn() {
+      var name = document.getElementById('emp').value;
+      var duty = document.getElementById('duty').value;
+      if (!name || !duty) { setStatus('clockStatus', 'Pick your name and a duty.', false); return; }
+      busy(true);
+      google.script.run
+        .withSuccessHandler(function (msg) { busy(false); setStatus('clockStatus', msg, true); load(); })
+        .withFailureHandler(function (e) { busy(false); setStatus('clockStatus', e.message, false); })
+        .clockIn(name, duty);
+    }
+
+    function doClockOut() {
+      var name = document.getElementById('emp').value;
+      busy(true);
+      google.script.run
+        .withSuccessHandler(function (msg) { busy(false); setStatus('clockStatus', msg, true); load(); })
+        .withFailureHandler(function (e) { busy(false); setStatus('clockStatus', e.message, false); })
+        .clockOut(name);
+    }
+
+    function renderShifts() {
+      var list = document.getElementById('shiftList');
+      if (!DATA.shifts.length) { list.innerHTML = '<p class="muted">No upcoming shifts.</p>'; return; }
+      list.innerHTML = '';
+      DATA.shifts.forEach(function (s) {
+        var div = document.createElement('div');
+        div.className = 'shift';
+        var html = '<div class="t">' + s.title + (s.duty ? ' · ' + s.duty : '') + '</div>' +
+                   '<div class="w">' + s.when + '</div>';
+        if (s.claimedBy) {
+          html += '<div class="claimed">Claimed by ' + s.claimedBy + '</div>';
+        } else {
+          html += '<button class="btn-claim" onclick="doClaim(\'' + s.id + '\')">Claim this shift</button>';
+        }
+        div.innerHTML = html;
+        list.appendChild(div);
+      });
+    }
+
+    function doClaim(id) {
+      var name = document.getElementById('emp2').value;
+      if (!name) { setStatus('shiftStatus', 'Pick your name first.', false); return; }
+      busy(true);
+      google.script.run
+        .withSuccessHandler(function (msg) { busy(false); setStatus('shiftStatus', msg, true); load(); })
+        .withFailureHandler(function (e) { busy(false); setStatus('shiftStatus', e.message, false); })
+        .claimShift(id, name);
+    }
+
+    function setStatus(id, msg, ok) {
+      var el = document.getElementById(id);
+      el.textContent = msg || '';
+      el.className = 'status' + (msg ? (ok ? ' ok' : ' err') : '');
+    }
+
+    load();
+  </script>
+</body>
+</html>
