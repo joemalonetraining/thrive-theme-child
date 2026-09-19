@@ -264,6 +264,10 @@
 
 		const value = create('span', 'cc-kpi-value', item.display);
 
+		if (item.kpi.type === 'check' || item.kpi.type === 'time') {
+			value.classList.add('is-text');
+		}
+
 		if (item.unit) {
 			value.appendChild(create('small', null, item.unit));
 		}
@@ -347,6 +351,10 @@
 					column.classList.add('is-single');
 				}
 
+				if (el.tiers.childElementCount === 0) {
+					column.classList.add('is-first');
+				}
+
 				const label = settings.tierLabels[tier] || `Tier ${tier + 1}`;
 				column.setAttribute('aria-label', label);
 				column.appendChild(create('p', 'cc-tier-label', label));
@@ -367,6 +375,9 @@
 			});
 	};
 
+	/* Wires descend: from a parent's bottom edge down to a rail between the
+	   rows, along the rail, then down into the child's top edge. The rail is
+	   neutral; the final drop takes the child's status color. */
 	const renderConnectors = (evaluated) => {
 		const svg = el.connectors;
 		svg.replaceChildren();
@@ -384,36 +395,50 @@
 		};
 
 		const namespace = 'http://www.w3.org/2000/svg';
+		const round = (value) => Math.round(value * 10) / 10;
 
 		nodes.forEach((node) => {
+			const to = rectFor(node.id);
+
+			if (!to) {
+				return;
+			}
+
+			const childX = round(to.left + to.width / 2 - bounds.left);
+			const childTop = round(to.top - bounds.top);
+			const status = evaluated.get(node.id).status;
+			let connected = false;
+
 			(node.parents || []).forEach((parentId) => {
 				const from = rectFor(parentId);
-				const to = rectFor(node.id);
 
-				if (!from || !to) {
+				if (!from || from.bottom > to.top) {
 					return;
 				}
 
-				const startX = from.right - bounds.left;
-				const startY = from.top + from.height / 2 - bounds.top;
-				const endX = to.left - bounds.left;
-				const endY = to.top + to.height / 2 - bounds.top;
-				const bend = Math.max(24, (endX - startX) / 2);
+				connected = true;
+				const parentX = round(from.left + from.width / 2 - bounds.left);
+				const parentBottom = round(from.bottom - bounds.top);
+				const railY = round(parentBottom + (childTop - parentBottom) / 2);
 
-				const path = document.createElementNS(namespace, 'path');
-				path.setAttribute(
-					'd',
-					`M ${startX} ${startY} C ${startX + bend} ${startY}, ${endX - bend} ${endY}, ${endX} ${endY}`
-				);
-				path.dataset.status = evaluated.get(node.id).status;
-				svg.appendChild(path);
+				const rail = document.createElementNS(namespace, 'path');
+				rail.setAttribute('d', `M ${parentX} ${parentBottom} V ${railY} H ${childX}`);
+				svg.appendChild(rail);
 
-				const dot = document.createElementNS(namespace, 'circle');
-				dot.setAttribute('cx', String(endX));
-				dot.setAttribute('cy', String(endY));
-				dot.setAttribute('r', '5');
-				svg.appendChild(dot);
+				const drop = document.createElementNS(namespace, 'path');
+				drop.setAttribute('d', `M ${childX} ${railY} V ${childTop}`);
+				drop.dataset.status = status;
+				svg.appendChild(drop);
 			});
+
+			if (connected) {
+				const dot = document.createElementNS(namespace, 'circle');
+				dot.setAttribute('cx', String(childX));
+				dot.setAttribute('cy', String(childTop));
+				dot.setAttribute('r', '6');
+				dot.dataset.status = status;
+				svg.appendChild(dot);
+			}
 		});
 	};
 

@@ -14,9 +14,10 @@
  *     id               Unique slug. Used for connectors and saved values.
  *     title            Big label on the block.
  *     subtitle         Small label under the title.
- *     tier             Row on the diagram: 0 = start, 1, 2, ...
+ *     tier             Row on the diagram, top down: 0 = start, 1, 2, ...
  *     start            true marks the first block in the flow.
- *     parents[]        ids this block flows from (draws connectors).
+ *     parents[]        ids this block flows from (draws the wires). Keep
+ *                      parents on the row directly above so wires never cross.
  *     kpis[]           KPIs owned by the block.
  *       id, label      Unique slug and display label.
  *       type           'higher'  numeric, higher is better
@@ -321,6 +322,45 @@ $jm_command_center = [
 			],
 		],
 		[
+			'id' => 'memberships',
+			'title' => 'Memberships',
+			'subtitle' => 'DSU, Pro, Starter',
+			'tier' => 3,
+			'parents' => ['bourbonnais'],
+			'kpis' => [
+				[
+					'id' => 'new-members',
+					'label' => 'New Members',
+					'type' => 'higher',
+					'unit' => 'this month',
+					'green' => 20,
+					'orange' => 10,
+					'value' => 14,
+					'target' => '20+ per month',
+				],
+				[
+					'id' => 'churn',
+					'label' => 'Cancellations',
+					'type' => 'lower',
+					'unit' => 'this month',
+					'green' => 3,
+					'orange' => 6,
+					'value' => 2,
+					'target' => '3 or fewer',
+				],
+				[
+					'id' => 'past-due',
+					'label' => 'Past-Due Accounts',
+					'type' => 'lower',
+					'unit' => 'accounts',
+					'green' => 2,
+					'orange' => 6,
+					'value' => 7,
+					'target' => '2 or fewer',
+				],
+			],
+		],
+		[
 			'id' => 'sales',
 			'title' => 'Sales',
 			'subtitle' => 'Pipeline & close',
@@ -364,7 +404,7 @@ $jm_command_center = [
 			'title' => 'Marketing',
 			'subtitle' => 'Content & reach',
 			'tier' => 3,
-			'parents' => ['company'],
+			'parents' => ['bourbonnais', 'alsip', 'frankfort'],
 			'kpis' => [
 				[
 					'id' => 'youtube-posts',
@@ -395,45 +435,6 @@ $jm_command_center = [
 					'orange' => 1,
 					'value' => false,
 					'target' => 'Weekly email sent',
-				],
-			],
-		],
-		[
-			'id' => 'memberships',
-			'title' => 'Memberships',
-			'subtitle' => 'DSU, Pro, Starter',
-			'tier' => 3,
-			'parents' => ['bourbonnais'],
-			'kpis' => [
-				[
-					'id' => 'new-members',
-					'label' => 'New Members',
-					'type' => 'higher',
-					'unit' => 'this month',
-					'green' => 20,
-					'orange' => 10,
-					'value' => 14,
-					'target' => '20+ per month',
-				],
-				[
-					'id' => 'churn',
-					'label' => 'Cancellations',
-					'type' => 'lower',
-					'unit' => 'this month',
-					'green' => 3,
-					'orange' => 6,
-					'value' => 2,
-					'target' => '3 or fewer',
-				],
-				[
-					'id' => 'past-due',
-					'label' => 'Past-Due Accounts',
-					'type' => 'lower',
-					'unit' => 'accounts',
-					'green' => 2,
-					'orange' => 6,
-					'value' => 7,
-					'target' => '2 or fewer',
 				],
 			],
 		],
