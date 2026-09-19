@@ -28,6 +28,11 @@
  *   Tap a block to open its departments; tap a department to open its KPIs.
  *   A block with KPIs and no departments opens straight to its KPIs.
  *
+ *   A block or department is colored by the share of its KPIs that are met,
+ *   on a continuous gradient: under 25% dark red, 25% red, 50% orange, 75%
+ *   yellow, all met green, all met and exceeding bright green. Each KPI's
+ *   own color slides along the same gradient by how close it is to target.
+ *
  *   KPI fields:
  *       id, label      Unique slug and display label.
  *       type           'higher'  numeric, higher is better
@@ -611,7 +616,7 @@ get_header();
 		<span class="cc-legend-item">On target</span>
 		<span class="cc-legend-item cc-legend-arrow" aria-hidden="true">&rarr;</span>
 		<span class="cc-legend-item">Exceeding</span>
-		<span class="cc-legend-note">Tap a block to open its departments, then a department to open its KPIs.</span>
+		<span class="cc-legend-note">Blocks color by the share of KPIs met: 25% red, 50% orange, 75% yellow, all met green. Tap a block to open it.</span>
 	</footer>
 
 	<div class="cc-focus" data-cc-focus hidden role="dialog" aria-modal="true" aria-labelledby="cc-focus-title">

@@ -28,7 +28,6 @@
 
 	/* Six grades, worst to best. Every KPI lands on one of these and the
 	   worst grade inside a department or block colors the whole thing. */
-	const LEVELS = ['red-deep', 'red', 'orange', 'yellow', 'green', 'green-bright'];
 	const STATUS_RANK = { 'red-deep': 0, red: 1, orange: 2, yellow: 3, green: 4, 'green-bright': 5 };
 	const STATUS_WORD = {
 		'red-deep': 'Far off target',
@@ -49,6 +48,88 @@
 	const isGood = (level) => STATUS_RANK[level] >= STATUS_RANK.green;
 	/* Summary pills keep three buckets: red, orange (incl. yellow), green. */
 	const bucketOf = (level) => (isGood(level) ? 'green' : STATUS_RANK[level] <= STATUS_RANK.red ? 'red' : 'orange');
+
+	/* Colors are continuous. A KPI's color follows its score; a department
+	   or block's color follows the share of its KPIs that are met. */
+	const LEVEL_RGB = {
+		'red-deep': [142, 20, 20],
+		red: [214, 58, 58],
+		orange: [224, 127, 0],
+		yellow: [201, 154, 0],
+		green: [31, 157, 85],
+		'green-bright': [15, 184, 79],
+	};
+
+	/* KPI score axis: 0 = clearly off, 1 = target met, 1.2 = exceeding. */
+	const KPI_STOPS = [
+		[-0.5, 'red-deep'],
+		[0, 'red'],
+		[0.33, 'orange'],
+		[0.66, 'yellow'],
+		[1, 'green'],
+		[1.2, 'green-bright'],
+	];
+
+	/* Rollup axis: share of KPIs met. 25% red, 50% orange, 75% yellow, all
+	   met green, all met and exceeding bright green. */
+	const ROLLUP_STOPS = [
+		[0, 'red-deep'],
+		[0.25, 'red'],
+		[0.5, 'orange'],
+		[0.75, 'yellow'],
+		[1, 'green'],
+		[1.2, 'green-bright'],
+	];
+
+	const blend = (stops, x) => {
+		if (Number.isNaN(x)) {
+			x = 0.5;
+		}
+
+		if (x <= stops[0][0]) {
+			return LEVEL_RGB[stops[0][1]];
+		}
+
+		for (let i = 1; i < stops.length; i += 1) {
+			const [x1, level1] = stops[i];
+
+			if (x <= x1) {
+				const [x0, level0] = stops[i - 1];
+				const t = (x - x0) / (x1 - x0);
+				const a = LEVEL_RGB[level0];
+				const b = LEVEL_RGB[level1];
+				return [0, 1, 2].map((k) => Math.round(a[k] + (b[k] - a[k]) * t));
+			}
+		}
+
+		return LEVEL_RGB[stops[stops.length - 1][1]];
+	};
+
+	const paintOf = (stops, x) => {
+		const [r, g, b] = blend(stops, x);
+		return { color: `rgb(${r}, ${g}, ${b})`, soft: `rgba(${r}, ${g}, ${b}, 0.12)` };
+	};
+
+	const applyPaint = (element, paint) => {
+		element.style.setProperty('--cc-status', paint.color);
+		element.style.setProperty('--cc-status-soft', paint.soft);
+	};
+
+	const levelFromRatio = (ratio, exceeding) => {
+		if (ratio >= 1) {
+			return exceeding ? 'green-bright' : 'green';
+		}
+
+		if (ratio >= 0.75) {
+			return 'yellow';
+		}
+
+		if (ratio >= 0.5) {
+			return 'orange';
+		}
+
+		return ratio >= 0.25 ? 'red' : 'red-deep';
+	};
 
 	const el = {
 		tiers: root.querySelector('[data-cc-tiers]'),
@@ -184,11 +265,13 @@
 		return higherIsBetter ? (value - off) / (target - off) : (off - value) / (off - target);
 	};
 
-	const scoreKpi = (kpi, value, goal) => {
+	/* Numeric score for a KPI. 1 = target met, 0 = clearly off threshold,
+	   below 0 worse than that, 1.2+ exceeding in a good way. */
+	const kpiScore = (kpi, value, goal) => {
 		const type = kpi.type || 'higher';
 
 		if (type === 'check') {
-			return toBoolean(value) ? 'green' : 'red';
+			return toBoolean(value) ? 1 : 0;
 		}
 
 		if (type === 'macro') {
@@ -196,45 +279,49 @@
 			const target = Number(goal);
 
 			if (isBlank(value) || Number.isNaN(grams) || Number.isNaN(target) || target <= 0) {
-				return 'red';
+				return 0;
 			}
 
 			if (kpi.direction === 'under') {
 				/* Stay under the limit: green below it, comfortably under is
 				   bright, and the further over the darker the red. */
 				if (grams <= target * 0.9) {
-					return 'green-bright';
+					return 1.2;
 				}
 
 				if (grams <= target) {
-					return 'green';
+					return 1 + ((target - grams) / (target * 0.1)) * 0.2;
 				}
 
-				return levelFromScore(rangeScore(grams, target, target * 1.5, false));
+				return rangeScore(grams, target, target * 1.5, false);
 			}
 
 			/* Match or beat the goal: grade from half the goal up to it. */
-			return levelFromScore(rangeScore(grams, target, target * 0.5, true));
+			return rangeScore(grams, target, target * 0.5, true);
 		}
 
 		if (type === 'time') {
 			const minutes = timeToMinutes(value);
 
 			if (Number.isNaN(minutes)) {
-				return 'orange';
+				return 0.5;
 			}
 
-			return levelFromScore(rangeScore(minutes, timeToMinutes(kpi.green), timeToMinutes(kpi.orange), false));
+			return rangeScore(minutes, timeToMinutes(kpi.green), timeToMinutes(kpi.orange), false);
 		}
 
 		const number = Number(value);
 
 		if (isBlank(value) || Number.isNaN(number)) {
-			return 'orange';
+			return 0.5;
 		}
 
-		return levelFromScore(rangeScore(number, Number(kpi.green), Number(kpi.orange), type !== 'lower'));
+		return rangeScore(number, Number(kpi.green), Number(kpi.orange), type !== 'lower');
 	};
+
+	const clampScore = (score) => Math.max(-1, Math.min(1.5, Number.isNaN(score) ? 0.5 : score));
+
+	const scoreKpi = (kpi, value, goal) => levelFromScore(clampScore(kpiScore(kpi, value, goal)));
 
 	const formatTime = (value) => {
 		const minutes = timeToMinutes(value);
@@ -291,20 +378,31 @@
 		return kpi.unit || '';
 	};
 
-	const worstOf = (statuses) => {
-		if (statuses.length === 0) {
-			return 'green';
-		}
-
-		return statuses.reduce((worst, level) => (STATUS_RANK[level] < STATUS_RANK[worst] ? level : worst), statuses[0]);
-	};
-
 	const countStatuses = (items) => {
 		const counts = { red: 0, orange: 0, green: 0 };
 		items.forEach((item) => {
 			counts[bucketOf(item.status)] += 1;
 		});
 		return counts;
+	};
+
+	/* Rollup for a department or block: the share of KPIs met sets the color.
+	   All met and exceeding on average lifts it toward bright green. */
+	const rollup = (kpis) => {
+		const total = kpis.length;
+		const met = kpis.filter((item) => isGood(item.status)).length;
+		const ratio = total === 0 ? 1 : met / total;
+		const average = total === 0 ? 1 : kpis.reduce((sum, item) => sum + item.score, 0) / total;
+		const rollScore = ratio >= 1 ? 1 + Math.max(0, Math.min(0.2, average - 1)) : ratio;
+		const exceeding = ratio >= 1 && rollScore >= 1.2;
+
+		return {
+			met,
+			total,
+			ratio,
+			status: levelFromRatio(ratio, exceeding),
+			paint: paintOf(ROLLUP_STOPS, rollScore),
+		};
 	};
 
 	/* A "group" is one expandable set of KPIs: either a block's own KPIs or
@@ -351,27 +449,32 @@
 					const hasGoal = Object.prototype.hasOwnProperty.call(savedGoals, kpi.id);
 					const value = hasOverride ? saved[kpi.id] : kpi.value;
 					const goal = kpi.type === 'macro' ? (hasGoal ? savedGoals[kpi.id] : kpi.goal) : undefined;
-					const status = scoreKpi(kpi, value, goal);
+					const score = clampScore(kpiScore(kpi, value, goal));
+					const status = levelFromScore(score);
 
 					return {
 						kpi,
 						value,
 						goal,
+						score,
 						status,
+						paint: paintOf(KPI_STOPS, score),
 						display: formatValue(kpi, value, goal),
 						unit: unitFor(kpi, value, goal),
 						overridden: hasOverride || hasGoal,
 					};
 				});
 
-				const evaluatedGroup = {
-					group,
-					nodeId: node.id,
-					kpis,
-					counts: countStatuses(kpis),
-					status: worstOf(kpis.map((item) => item.status)),
-					overridden: kpis.some((item) => item.overridden),
-				};
+				const evaluatedGroup = Object.assign(
+					{
+						group,
+						nodeId: node.id,
+						kpis,
+						counts: countStatuses(kpis),
+						overridden: kpis.some((item) => item.overridden),
+					},
+					rollup(kpis)
+				);
 
 				groupIndex.set(group.key, evaluatedGroup);
 				return evaluatedGroup;
@@ -379,13 +482,15 @@
 
 			const allKpis = groups.flatMap((group) => group.kpis);
 
-			return {
-				node,
-				groups,
-				kpiCount: allKpis.length,
-				counts: countStatuses(allKpis),
-				status: worstOf(allKpis.map((item) => item.status)),
-			};
+			return Object.assign(
+				{
+					node,
+					groups,
+					kpiCount: allKpis.length,
+					counts: countStatuses(allKpis),
+				},
+				rollup(allKpis)
+			);
 		});
 
 		return { nodes: new Map(entries.map((entry) => [entry.node.id, entry])), groups: groupIndex };
@@ -441,6 +546,29 @@
 		return icon;
 	};
 
+	/* "6/9 met" on anything with several KPIs; the plain status word when
+	   there is only one KPI to meet. */
+	const metLabel = (entry) => {
+		if (entry.total <= 1) {
+			return STATUS_WORD[entry.status];
+		}
+
+		const percent = Math.round(entry.ratio * 100);
+		return `${entry.met}/${entry.total} met · ${percent}%${entry.status === 'green-bright' ? ' · Exceeding' : ''}`;
+	};
+
+	const badgeLabel = (entry) => {
+		if (entry.total <= 1) {
+			return STATUS_BADGE[entry.status];
+		}
+
+		if (entry.ratio >= 1) {
+			return STATUS_BADGE[entry.status];
+		}
+
+		return `${entry.met}/${entry.total} met`;
+	};
+
 	const renderCounts = (counts) => {
 		const row = create('span', 'cc-node-counts');
 
@@ -464,6 +592,7 @@
 		const kpiEl = create('div', 'cc-kpi');
 		kpiEl.dataset.status = item.status;
 		kpiEl.dataset.kpi = item.kpi.id;
+		applyPaint(kpiEl, item.paint);
 
 		kpiEl.appendChild(create('span', 'cc-kpi-label', item.kpi.label));
 		kpiEl.appendChild(create('span', 'cc-kpi-target', item.kpi.target || ''));
@@ -506,10 +635,11 @@
 		const panel = create('div', 'cc-dept-panel');
 		panel.dataset.status = evaluatedGroup.status;
 		panel.dataset.panel = evaluatedGroup.group.key;
+		applyPaint(panel, evaluatedGroup.paint);
 
 		const heading = create('div', 'cc-dept-panel-heading');
 		heading.appendChild(create('span', 'cc-dept-panel-title', evaluatedGroup.group.title));
-		heading.appendChild(create('span', 'cc-dept-panel-status', STATUS_WORD[evaluatedGroup.status]));
+		heading.appendChild(create('span', 'cc-dept-panel-status', metLabel(evaluatedGroup)));
 		panel.appendChild(heading);
 		panel.appendChild(renderKpiGrid(evaluatedGroup));
 		return panel;
@@ -520,6 +650,7 @@
 	const renderDepartment = (evaluatedGroup, tile) => {
 		const open = isOpen(evaluatedGroup.group.key);
 		const dept = create('div', 'cc-dept');
+		applyPaint(dept, evaluatedGroup.paint);
 
 		if (tile) {
 			dept.classList.add('is-tile');
@@ -550,6 +681,7 @@
 			   reads at a glance while the row is closed. */
 			const value = create('span', 'cc-dept-value', single.display);
 			value.dataset.status = single.status;
+			applyPaint(value, single.paint);
 
 			if (single.unit) {
 				value.appendChild(create('small', null, single.unit));
@@ -557,7 +689,7 @@
 
 			status.appendChild(value);
 		} else {
-			status.appendChild(create('span', 'cc-node-badge', STATUS_BADGE[evaluatedGroup.status]));
+			status.appendChild(create('span', 'cc-node-badge', badgeLabel(evaluatedGroup)));
 			status.appendChild(renderCounts(evaluatedGroup.counts));
 			status.appendChild(create('span', 'cc-dept-hint', `${evaluatedGroup.kpis.length} KPIs`));
 		}
@@ -584,6 +716,7 @@
 		block.dataset.status = status;
 		block.dataset.node = node.id;
 		block.dataset.open = String(open);
+		applyPaint(block, entry.paint);
 
 		if (node.start) {
 			block.classList.add('is-start');
@@ -604,7 +737,7 @@
 		toggle.appendChild(titles);
 
 		const statusColumn = create('span', 'cc-node-status');
-		statusColumn.appendChild(create('span', 'cc-node-badge', STATUS_BADGE[status]));
+		statusColumn.appendChild(create('span', 'cc-node-badge', badgeLabel(entry)));
 		statusColumn.appendChild(renderCounts(counts));
 
 		const departmentCount = groups.filter((group) => !group.group.own).length;
@@ -751,6 +884,7 @@
 				const drop = document.createElementNS(namespace, 'path');
 				drop.setAttribute('d', `M ${childX} ${railY} V ${childTop}`);
 				drop.dataset.status = status;
+				applyPaint(drop, state.nodes.get(node.id).paint);
 				svg.appendChild(drop);
 			});
 
@@ -760,6 +894,7 @@
 				dot.setAttribute('cy', String(childTop));
 				dot.setAttribute('r', '6');
 				dot.dataset.status = status;
+				applyPaint(dot, state.nodes.get(node.id).paint);
 				svg.appendChild(dot);
 			}
 		});
@@ -800,6 +935,7 @@
 			button.type = 'button';
 			button.dataset.status = item.status;
 			button.dataset.ccJump = evaluatedGroup.group.key;
+			applyPaint(button, item.paint);
 
 			const value = create('span', 'cc-attention-value', item.display);
 
@@ -960,9 +1096,11 @@
 		}
 
 		const nodeEntry = state.nodes.get(evaluatedGroup.nodeId);
-		el.focus.querySelector('.cc-focus-panel').dataset.status = evaluatedGroup.status;
+		const panel = el.focus.querySelector('.cc-focus-panel');
+		panel.dataset.status = evaluatedGroup.status;
+		applyPaint(panel, evaluatedGroup.paint);
 		el.focusTitle.textContent = evaluatedGroup.group.title;
-		el.focusSubtitle.textContent = `${evaluatedGroup.group.own ? evaluatedGroup.group.subtitle : nodeEntry.node.title} · ${STATUS_WORD[evaluatedGroup.status]}`;
+		el.focusSubtitle.textContent = `${evaluatedGroup.group.own ? evaluatedGroup.group.subtitle : nodeEntry.node.title} · ${metLabel(evaluatedGroup)}`;
 		el.focusSaved.hidden = !evaluatedGroup.overridden;
 		el.focusEdit.textContent = editing ? 'Save' : "Log Today's Numbers";
 		el.focusKpis.replaceChildren();
@@ -971,6 +1109,7 @@
 			const card = create('div', 'cc-focus-kpi');
 			card.dataset.status = item.status;
 			card.dataset.kpi = item.kpi.id;
+			applyPaint(card, item.paint);
 			card.appendChild(create('span', 'cc-focus-kpi-label', item.kpi.label));
 
 			if (editing) {
