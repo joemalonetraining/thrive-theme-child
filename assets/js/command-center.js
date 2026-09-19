@@ -452,9 +452,28 @@
 		return wrap;
 	};
 
-	const renderDepartment = (evaluatedGroup) => {
+	const renderDepartmentPanel = (evaluatedGroup) => {
+		const panel = create('div', 'cc-dept-panel');
+		panel.dataset.status = evaluatedGroup.status;
+		panel.dataset.panel = evaluatedGroup.group.key;
+
+		const heading = create('div', 'cc-dept-panel-heading');
+		heading.appendChild(create('span', 'cc-dept-panel-title', evaluatedGroup.group.title));
+		heading.appendChild(create('span', 'cc-dept-panel-status', STATUS_WORD[evaluatedGroup.status]));
+		panel.appendChild(heading);
+		panel.appendChild(renderKpiGrid(evaluatedGroup));
+		return panel;
+	};
+
+	/* tile = true lays the department out as a tile in a wide block; its KPIs
+	   then render in a panel under the tiles instead of inside the row. */
+	const renderDepartment = (evaluatedGroup, tile) => {
 		const open = isOpen(evaluatedGroup.group.key);
 		const dept = create('div', 'cc-dept');
+
+		if (tile) {
+			dept.classList.add('is-tile');
+		}
 		dept.dataset.status = evaluatedGroup.status;
 		dept.dataset.group = evaluatedGroup.group.key;
 		dept.dataset.open = String(open);
@@ -474,14 +493,30 @@
 		toggle.appendChild(text);
 
 		const status = create('span', 'cc-dept-status');
-		status.appendChild(create('span', 'cc-node-badge', STATUS_BADGE[evaluatedGroup.status]));
-		status.appendChild(renderCounts(evaluatedGroup.counts));
-		status.appendChild(create('span', 'cc-dept-hint', `${evaluatedGroup.kpis.length} KPI${evaluatedGroup.kpis.length === 1 ? '' : 's'}`));
+		const single = evaluatedGroup.kpis.length === 1 ? evaluatedGroup.kpis[0] : null;
+
+		if (single) {
+			/* One KPI: show its value right on the row so the board still
+			   reads at a glance while the row is closed. */
+			const value = create('span', 'cc-dept-value', single.display);
+			value.dataset.status = single.status;
+
+			if (single.unit) {
+				value.appendChild(create('small', null, single.unit));
+			}
+
+			status.appendChild(value);
+		} else {
+			status.appendChild(create('span', 'cc-node-badge', STATUS_BADGE[evaluatedGroup.status]));
+			status.appendChild(renderCounts(evaluatedGroup.counts));
+			status.appendChild(create('span', 'cc-dept-hint', `${evaluatedGroup.kpis.length} KPIs`));
+		}
+
 		status.appendChild(chevron());
 		toggle.appendChild(status);
 		dept.appendChild(toggle);
 
-		if (open) {
+		if (open && !tile) {
 			const body = create('div', 'cc-dept-body');
 			body.appendChild(renderKpiGrid(evaluatedGroup));
 			dept.appendChild(body);
@@ -490,7 +525,7 @@
 		return dept;
 	};
 
-	const renderNode = (entry) => {
+	const renderNode = (entry, wide) => {
 		const { node, groups, counts, status } = entry;
 		const open = isOpen(node.id);
 		const direct = groups.length === 1 && groups[0].group.own;
@@ -542,8 +577,19 @@
 				body.appendChild(renderKpiGrid(groups[0]));
 			} else {
 				const list = create('div', 'cc-depts');
-				groups.forEach((group) => list.appendChild(renderDepartment(group)));
+
+				if (wide) {
+					list.classList.add('is-grid');
+				}
+
+				groups.forEach((group) => list.appendChild(renderDepartment(group, wide)));
 				body.appendChild(list);
+
+				if (wide) {
+					groups
+						.filter((group) => isOpen(group.group.key))
+						.forEach((group) => body.appendChild(renderDepartmentPanel(group)));
+				}
 			}
 
 			block.appendChild(body);
@@ -588,7 +634,7 @@
 
 				const list = create('div', 'cc-tier-nodes');
 				members.forEach((node) => {
-					const nodeEl = renderNode(state.nodes.get(node.id));
+					const nodeEl = renderNode(state.nodes.get(node.id), members.length === 1);
 
 					if (members.length > 1) {
 						nodeEl.classList.add('is-compact');
@@ -844,7 +890,7 @@
 		setOpen(groupKey, true);
 		renderBoard();
 
-		const target = el.tiers.querySelector(`[data-group="${groupKey}"]`) || el.tiers.querySelector(`[data-node="${evaluatedGroup.nodeId}"]`);
+		const target = el.tiers.querySelector(`[data-panel="${groupKey}"]`) || el.tiers.querySelector(`[data-group="${groupKey}"]`) || el.tiers.querySelector(`[data-node="${evaluatedGroup.nodeId}"]`);
 
 		if (target && typeof target.scrollIntoView === 'function') {
 			target.scrollIntoView({ block: 'nearest', behavior: 'smooth' });

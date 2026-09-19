@@ -577,6 +577,90 @@ body:has(.jm-command-center) .entry-content {
   padding: 0 0.75em 0.7em;
 }
 
+/* Wide blocks lay departments out as tiles; an open tile's KPIs appear in a
+   panel under the tiles. */
+.cc-depts.is-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11em, 1fr));
+  gap: 0.5em;
+}
+
+.cc-dept.is-tile .cc-dept-toggle {
+  min-height: 3.6em;
+  padding: 0.5em 0.65em;
+}
+
+.cc-dept.is-tile .cc-dept-hint,
+.cc-dept.is-tile .cc-node-badge {
+  display: none;
+}
+
+.cc-dept.is-tile .cc-dept-text {
+  min-width: 0;
+}
+
+.cc-dept.is-tile .cc-dept-title,
+.cc-dept.is-tile .cc-dept-subtitle {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.cc-dept.is-tile[data-open="true"] {
+  background: var(--cc-gold-soft);
+  border-color: var(--cc-gold);
+  border-left-color: var(--cc-status);
+}
+
+.cc-dept-value {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35em;
+  color: var(--cc-status);
+  font-size: 1.5em;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.cc-dept-value small {
+  color: var(--cc-muted);
+  font-size: 0.42em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cc-dept-panel {
+  margin-top: 0.6em;
+  padding: 0.65em 0.75em 0.7em;
+  border: 1px solid var(--cc-gold);
+  border-left: 0.4em solid var(--cc-status);
+  border-radius: 0.6em;
+  background: var(--cc-card);
+}
+
+.cc-dept-panel-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7em;
+  margin-bottom: 0.5em;
+}
+
+.cc-dept-panel-title {
+  font-size: 1.05em;
+  font-weight: 900;
+}
+
+.cc-dept-panel-status {
+  color: var(--cc-status);
+  font-size: 0.72em;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
 .cc-kpi-actions {
   display: flex;
   align-items: center;
@@ -1139,6 +1223,10 @@ body:has(.jm-command-center) .entry-content {
     padding-left: 16px;
     padding-right: 16px;
     font-size: 15px;
+  }
+
+  .cc-depts.is-grid {
+    grid-template-columns: 1fr;
   }
 
   .cc-node-kpis {
