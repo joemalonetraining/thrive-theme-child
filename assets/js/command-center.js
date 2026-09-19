@@ -500,14 +500,44 @@
 				{
 					node,
 					groups,
+					ownKpis: allKpis,
 					kpiCount: allKpis.length,
+					childCount: 0,
 					counts: countStatuses(allKpis),
 				},
 				rollup(allKpis)
 			);
 		});
 
-		return { nodes: new Map(entries.map((entry) => [entry.node.id, entry])), groups: groupIndex };
+		const byId = new Map(entries.map((entry) => [entry.node.id, entry]));
+
+		/* A block with includeChildren folds every block wired from it (and
+		   theirs, recursively) into its own color and counts. */
+		const descendantsOf = (id, seen = new Set()) => {
+			nodes.forEach((node) => {
+				if ((node.parents || []).includes(id) && !seen.has(node.id)) {
+					seen.add(node.id);
+					descendantsOf(node.id, seen);
+				}
+			});
+			return seen;
+		};
+
+		entries.forEach((entry) => {
+			if (!entry.node.includeChildren) {
+				return;
+			}
+
+			const children = [...descendantsOf(entry.node.id)];
+			const allKpis = entry.ownKpis.concat(children.flatMap((id) => byId.get(id).ownKpis));
+			Object.assign(entry, rollup(allKpis), {
+				kpiCount: allKpis.length,
+				childCount: children.length,
+				counts: countStatuses(allKpis),
+			});
+		});
+
+		return { nodes: byId, groups: groupIndex };
 	};
 
 	/* ------------------------------------------------------------ Open / closed state */
@@ -759,6 +789,10 @@
 
 		if (departmentCount > 0) {
 			hintParts.push(`${departmentCount} department${departmentCount === 1 ? '' : 's'}`);
+		}
+
+		if (entry.childCount > 0) {
+			hintParts.push(`${entry.childCount} location${entry.childCount === 1 ? '' : 's'}`);
 		}
 
 		hintParts.push(`${entry.kpiCount} KPI${entry.kpiCount === 1 ? '' : 's'}`);
