@@ -798,6 +798,10 @@ body:has(.jm-command-center) .entry-content {
   display: none;
 }
 
+.cc-node.is-compact .cc-node-kpis {
+  grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
+}
+
 .cc-node.is-compact .cc-kpi {
   display: flex;
   flex-direction: column;
