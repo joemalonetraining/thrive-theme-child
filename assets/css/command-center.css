@@ -90,7 +90,7 @@ body:has(.jm-command-center) .entry-content {
   width: 100vw;
   height: 100vh;
   min-height: 0;
-  overflow: hidden;
+  overflow: auto;
 }
 
 /* Status color hooks. Anything with data-status inherits the palette. */
@@ -327,9 +327,9 @@ body:has(.jm-command-center) .entry-content {
   z-index: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: var(--cc-row-gap);
-  height: 100%;
+  min-height: 100%;
 }
 
 .cc-tier {
@@ -358,6 +358,7 @@ body:has(.jm-command-center) .entry-content {
   grid-auto-flow: column;
   grid-auto-columns: minmax(0, 1fr);
   gap: clamp(16px, 1.6vw, 40px);
+  align-items: start;
   min-width: 0;
 }
 
@@ -374,7 +375,6 @@ body:has(.jm-command-center) .entry-content {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  padding: clamp(10px, 0.8vw, 18px);
   overflow: hidden;
   border: 1px solid var(--cc-line);
   border-top: 0.45em solid var(--cc-status);
@@ -382,32 +382,46 @@ body:has(.jm-command-center) .entry-content {
   background: var(--cc-card);
   box-shadow: 0 10px 28px rgba(27, 29, 30, 0.08);
   color: var(--cc-ink);
+  transition: box-shadow 140ms ease;
+}
+
+.cc-node[data-open="true"] {
+  box-shadow: 0 16px 34px rgba(27, 29, 30, 0.12);
+}
+
+.cc-node-toggle,
+.cc-dept-toggle {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8em;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
   font: inherit;
   text-align: left;
   cursor: pointer;
-  transition: transform 140ms ease, box-shadow 140ms ease;
 }
 
-.cc-node:hover,
-.cc-node:focus-visible {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 34px rgba(27, 29, 30, 0.14);
+.cc-node-toggle {
+  padding: clamp(10px, 0.8vw, 18px);
+}
+
+.cc-node-toggle:hover,
+.cc-node-toggle:focus-visible,
+.cc-dept-toggle:hover,
+.cc-dept-toggle:focus-visible {
+  background: var(--cc-gold-soft);
   outline: none;
 }
 
-.cc-node-header {
+.cc-node-text,
+.cc-dept-text {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.6em;
-  margin-bottom: 0.55em;
-}
-
-.cc-node-status {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-  flex: none;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .cc-node-title {
@@ -424,6 +438,14 @@ body:has(.jm-command-center) .entry-content {
   letter-spacing: 0.03em;
 }
 
+.cc-node-status,
+.cc-dept-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  flex: none;
+}
+
 .cc-node-badge {
   flex: none;
   padding: 0.3em 0.7em;
@@ -437,7 +459,7 @@ body:has(.jm-command-center) .entry-content {
   white-space: nowrap;
 }
 
-.cc-node[data-status="red"] .cc-node-badge {
+.cc-node[data-status="red"] > .cc-node-toggle .cc-node-badge {
   animation: cc-pulse 1.6s ease-in-out infinite;
 }
 
@@ -477,13 +499,124 @@ body:has(.jm-command-center) .entry-content {
   background: var(--cc-status);
 }
 
-/* KPIs run left to right inside each block. */
+.cc-node-hint,
+.cc-dept-hint {
+  color: var(--cc-muted);
+  font-size: 0.72em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.cc-chevron {
+  display: inline-flex;
+  flex: none;
+  width: 1.5em;
+  height: 1.5em;
+  border: 1px solid var(--cc-line);
+  border-radius: 50%;
+  color: var(--cc-ink);
+  transition: transform 160ms ease;
+}
+
+.cc-chevron svg {
+  width: 100%;
+  height: 100%;
+  padding: 0.25em;
+}
+
+[data-open="true"] > .cc-node-toggle .cc-chevron,
+[data-open="true"] > .cc-dept-toggle .cc-chevron {
+  transform: rotate(180deg);
+  background: var(--cc-ink);
+  color: var(--cc-bone);
+}
+
+.cc-node-body {
+  padding: 0 clamp(10px, 0.8vw, 18px) clamp(10px, 0.8vw, 18px);
+}
+
+/* Departments stack inside an open block. */
+.cc-depts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45em;
+}
+
+.cc-dept {
+  overflow: hidden;
+  border: 1px solid var(--cc-line-soft);
+  border-left: 0.4em solid var(--cc-status);
+  border-radius: 0.6em;
+  background: var(--cc-card-soft);
+}
+
+.cc-dept[data-open="true"] {
+  background: var(--cc-card);
+  border-color: var(--cc-line);
+  border-left-color: var(--cc-status);
+}
+
+.cc-dept-toggle {
+  padding: 0.55em 0.75em;
+}
+
+.cc-dept-title {
+  font-size: 1.02em;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.cc-dept-subtitle {
+  margin-top: 0.1em;
+  color: var(--cc-muted);
+  font-size: 0.72em;
+}
+
+.cc-dept-body {
+  padding: 0 0.75em 0.7em;
+}
+
+.cc-kpi-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  margin-top: 0.5em;
+}
+
+.cc-link-button {
+  appearance: none;
+  padding: 0.3em 0.7em;
+  border: 1px solid var(--cc-line);
+  border-radius: 0.5em;
+  background: var(--cc-card);
+  color: var(--cc-ink);
+  font: inherit;
+  font-size: 0.74em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.cc-link-button:hover,
+.cc-link-button:focus-visible {
+  border-color: var(--cc-gold);
+  background: var(--cc-gold-soft);
+  outline: none;
+}
+
+.cc-kpi-saved {
+  color: var(--cc-green);
+  font-size: 0.74em;
+  font-weight: 700;
+}
+
+/* KPIs run left to right inside each group. */
 .cc-node-kpis {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(6.4em, 1fr));
   gap: 0.45em;
-  flex: 1;
-  min-height: 0;
   align-content: stretch;
 }
 
@@ -493,11 +626,11 @@ body:has(.jm-command-center) .entry-content {
   align-items: center;
   gap: 0.2em 0.6em;
   padding: 0.5em 0.7em;
+  overflow: hidden;
   border: 1px solid var(--cc-line-soft);
   border-left: 0.4em solid var(--cc-status);
   border-radius: 0.55em;
   background: var(--cc-status-soft);
-  overflow: hidden;
 }
 
 .cc-kpi-label {
@@ -565,6 +698,10 @@ body:has(.jm-command-center) .entry-content {
 /* Compact blocks (rows with several blocks): quieter tiles, status as accent. */
 .cc-node.is-compact .cc-node-title {
   font-size: 1.25em;
+}
+
+.cc-node.is-compact .cc-node-hint {
+  display: none;
 }
 
 .cc-node.is-compact .cc-kpi {
@@ -993,12 +1130,13 @@ body:has(.jm-command-center) .entry-content {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cc-node[data-status="red"] .cc-node-badge {
+  .cc-node[data-status="red"] > .cc-node-toggle .cc-node-badge {
     animation: none;
   }
 
   .cc-node,
-  .cc-button {
+  .cc-button,
+  .cc-chevron {
     transition: none;
   }
 }

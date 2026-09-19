@@ -19,7 +19,7 @@
 		{
 			autoTourSeconds: 12,
 			refreshSeconds: 60,
-			tierLabels: ['Start', 'Company', 'Locations', 'Departments'],
+			tierLabels: ['Start', 'Company', 'Locations'],
 		},
 		config.settings || {}
 	);
@@ -28,6 +28,7 @@
 
 	const STATUS_RANK = { red: 0, orange: 1, green: 2 };
 	const STATUS_WORD = { red: 'Needs attention', orange: 'Slipping', green: 'On target' };
+	const STATUS_BADGE = { red: 'Attention', orange: 'Slipping', green: 'On target' };
 
 	const el = {
 		tiers: root.querySelector('[data-cc-tiers]'),
@@ -105,6 +106,8 @@
 		return Boolean(value);
 	};
 
+	const isBlank = (value) => value === '' || value === null || value === undefined;
+
 	const scoreKpi = (kpi, value) => {
 		const type = kpi.type || 'higher';
 
@@ -114,23 +117,21 @@
 
 		if (type === 'time') {
 			const minutes = timeToMinutes(value);
-			const green = timeToMinutes(kpi.green);
-			const orange = timeToMinutes(kpi.orange);
 
 			if (Number.isNaN(minutes)) {
 				return 'orange';
 			}
 
-			if (minutes <= green) {
+			if (minutes <= timeToMinutes(kpi.green)) {
 				return 'green';
 			}
 
-			return minutes <= orange ? 'orange' : 'red';
+			return minutes <= timeToMinutes(kpi.orange) ? 'orange' : 'red';
 		}
 
 		const number = Number(value);
 
-		if (value === '' || value === null || value === undefined || Number.isNaN(number)) {
+		if (isBlank(value) || Number.isNaN(number)) {
 			return 'orange';
 		}
 
@@ -168,7 +169,7 @@
 	const formatNumber = (value) => {
 		const number = Number(value);
 
-		if (value === '' || value === null || value === undefined || Number.isNaN(number)) {
+		if (isBlank(value) || Number.isNaN(number)) {
 			return '--';
 		}
 
@@ -192,50 +193,132 @@
 			return '';
 		}
 
-		const number = Number(value);
-
-		if (Number.isNaN(number) || value === '' || value === null || value === undefined) {
+		if (isBlank(value) || Number.isNaN(Number(value))) {
 			return 'No data';
 		}
 
 		return kpi.unit || '';
 	};
 
-	const evaluate = () => {
-		const overrides = readOverrides();
-		const evaluated = nodes.map((node) => {
-			const nodeOverrides = overrides[node.id] || {};
-			const kpis = (node.kpis || []).map((kpi) => {
-				const hasOverride = Object.prototype.hasOwnProperty.call(nodeOverrides, kpi.id);
-				const value = hasOverride ? nodeOverrides[kpi.id] : kpi.value;
-				const status = scoreKpi(kpi, value);
+	const worstOf = (statuses) => {
+		if (statuses.includes('red')) {
+			return 'red';
+		}
 
-				return {
-					kpi,
-					value,
-					status,
-					display: formatValue(kpi, value),
-					unit: unitFor(kpi, value),
-					overridden: hasOverride,
-				};
+		return statuses.includes('orange') ? 'orange' : 'green';
+	};
+
+	const countStatuses = (items) => {
+		const counts = { red: 0, orange: 0, green: 0 };
+		items.forEach((item) => {
+			counts[item.status] += 1;
+		});
+		return counts;
+	};
+
+	/* A "group" is one expandable set of KPIs: either a block's own KPIs or
+	   one of its departments. Its key doubles as the storage key. */
+	const groupsOf = (node) => {
+		const groups = [];
+
+		if (Array.isArray(node.kpis) && node.kpis.length > 0) {
+			groups.push({
+				key: node.id,
+				id: node.id,
+				title: node.kpisLabel || node.title,
+				subtitle: node.kpisLabel ? '' : node.subtitle || '',
+				kpis: node.kpis,
+				own: true,
 			});
+		}
 
-			const counts = { red: 0, orange: 0, green: 0 };
-			kpis.forEach((item) => {
-				counts[item.status] += 1;
+		(node.departments || []).forEach((department) => {
+			groups.push({
+				key: `${node.id}/${department.id}`,
+				id: department.id,
+				title: department.title,
+				subtitle: department.subtitle || '',
+				kpis: department.kpis || [],
+				own: false,
 			});
-
-			let status = 'green';
-			if (counts.red > 0) {
-				status = 'red';
-			} else if (counts.orange > 0) {
-				status = 'orange';
-			}
-
-			return { node, kpis, counts, status, overridden: kpis.some((item) => item.overridden) };
 		});
 
-		return new Map(evaluated.map((entry) => [entry.node.id, entry]));
+		return groups;
+	};
+
+	const evaluate = () => {
+		const overrides = readOverrides();
+		const groupIndex = new Map();
+
+		const entries = nodes.map((node) => {
+			const groups = groupsOf(node).map((group) => {
+				const saved = overrides[group.key] || {};
+				const kpis = group.kpis.map((kpi) => {
+					const hasOverride = Object.prototype.hasOwnProperty.call(saved, kpi.id);
+					const value = hasOverride ? saved[kpi.id] : kpi.value;
+					const status = scoreKpi(kpi, value);
+
+					return {
+						kpi,
+						value,
+						status,
+						display: formatValue(kpi, value),
+						unit: unitFor(kpi, value),
+						overridden: hasOverride,
+					};
+				});
+
+				const evaluatedGroup = {
+					group,
+					nodeId: node.id,
+					kpis,
+					counts: countStatuses(kpis),
+					status: worstOf(kpis.map((item) => item.status)),
+					overridden: kpis.some((item) => item.overridden),
+				};
+
+				groupIndex.set(group.key, evaluatedGroup);
+				return evaluatedGroup;
+			});
+
+			const allKpis = groups.flatMap((group) => group.kpis);
+
+			return {
+				node,
+				groups,
+				kpiCount: allKpis.length,
+				counts: countStatuses(allKpis),
+				status: worstOf(allKpis.map((item) => item.status)),
+			};
+		});
+
+		return { nodes: new Map(entries.map((entry) => [entry.node.id, entry])), groups: groupIndex };
+	};
+
+	/* ------------------------------------------------------------ Open / closed state */
+
+	const openSet = new Set();
+
+	nodes.forEach((node) => {
+		if (node.open) {
+			openSet.add(node.id);
+
+			const groups = groupsOf(node);
+
+			if (groups.length === 1) {
+				openSet.add(groups[0].key);
+			}
+		}
+	});
+
+	const isOpen = (key) => openSet.has(key);
+
+	const setOpen = (key, open) => {
+		if (open) {
+			openSet.add(key);
+		} else {
+			openSet.delete(key);
+		}
 	};
 
 	/* ------------------------------------------------------------ Rendering */
@@ -252,6 +335,33 @@
 		}
 
 		return element;
+	};
+
+	const chevron = () => {
+		const icon = create('span', 'cc-chevron');
+		icon.setAttribute('aria-hidden', 'true');
+		icon.innerHTML =
+			'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+		return icon;
+	};
+
+	const renderCounts = (counts) => {
+		const row = create('span', 'cc-node-counts');
+
+		['red', 'orange', 'green'].forEach((key) => {
+			if (counts[key] === 0) {
+				return;
+			}
+
+			const pill = create('span', 'cc-node-count');
+			pill.dataset.status = key;
+			pill.setAttribute('title', `${counts[key]} ${key}`);
+			pill.appendChild(create('i'));
+			pill.appendChild(document.createTextNode(String(counts[key])));
+			row.appendChild(pill);
+		});
+
+		return row;
 	};
 
 	const renderKpi = (item) => {
@@ -276,56 +386,127 @@
 		return kpiEl;
 	};
 
-	const renderNode = (entry) => {
-		const { node, kpis, counts, status } = entry;
-		const button = create('button', 'cc-node');
-		button.type = 'button';
-		button.dataset.status = status;
-		button.dataset.node = node.id;
-		button.setAttribute('aria-label', `${node.title}: ${STATUS_WORD[status]}. Open details.`);
-
-		if (node.start) {
-			button.classList.add('is-start');
-		}
-
-		const header = create('div', 'cc-node-header');
-		const titles = create('div');
-		titles.appendChild(create('h2', 'cc-node-title', node.title));
-
-		if (node.subtitle) {
-			titles.appendChild(create('p', 'cc-node-subtitle', node.subtitle));
-		}
-
-		header.appendChild(titles);
-
-		const statusColumn = create('div', 'cc-node-status');
-		statusColumn.appendChild(create('span', 'cc-node-badge', status === 'green' ? 'On target' : status === 'orange' ? 'Slipping' : 'Attention'));
-
-		const countRow = create('div', 'cc-node-counts');
-		['red', 'orange', 'green'].forEach((key) => {
-			if (counts[key] === 0) {
-				return;
-			}
-
-			const pill = create('span', 'cc-node-count');
-			pill.dataset.status = key;
-			pill.setAttribute('title', `${counts[key]} ${key}`);
-			pill.appendChild(create('i'));
-			pill.appendChild(document.createTextNode(String(counts[key])));
-			countRow.appendChild(pill);
-		});
-		statusColumn.appendChild(countRow);
-		header.appendChild(statusColumn);
-		button.appendChild(header);
-
+	const renderKpiGrid = (evaluatedGroup) => {
+		const wrap = create('div', 'cc-kpi-panel');
 		const grid = create('div', 'cc-node-kpis');
-		kpis.forEach((item) => grid.appendChild(renderKpi(item)));
-		button.appendChild(grid);
+		evaluatedGroup.kpis.forEach((item) => grid.appendChild(renderKpi(item)));
+		wrap.appendChild(grid);
 
-		return button;
+		const actions = create('div', 'cc-kpi-actions');
+		const log = create('button', 'cc-link-button', "Log today's numbers");
+		log.type = 'button';
+		log.dataset.ccLog = evaluatedGroup.group.key;
+		actions.appendChild(log);
+
+		if (evaluatedGroup.overridden) {
+			actions.appendChild(create('span', 'cc-kpi-saved', 'Saved on this screen'));
+		}
+
+		wrap.appendChild(actions);
+		return wrap;
 	};
 
-	const renderTiers = (evaluated) => {
+	const renderDepartment = (evaluatedGroup) => {
+		const open = isOpen(evaluatedGroup.group.key);
+		const dept = create('div', 'cc-dept');
+		dept.dataset.status = evaluatedGroup.status;
+		dept.dataset.group = evaluatedGroup.group.key;
+		dept.dataset.open = String(open);
+
+		const toggle = create('button', 'cc-dept-toggle');
+		toggle.type = 'button';
+		toggle.dataset.ccToggleGroup = evaluatedGroup.group.key;
+		toggle.setAttribute('aria-expanded', String(open));
+
+		const text = create('span', 'cc-dept-text');
+		text.appendChild(create('span', 'cc-dept-title', evaluatedGroup.group.title));
+
+		if (evaluatedGroup.group.subtitle) {
+			text.appendChild(create('span', 'cc-dept-subtitle', evaluatedGroup.group.subtitle));
+		}
+
+		toggle.appendChild(text);
+
+		const status = create('span', 'cc-dept-status');
+		status.appendChild(create('span', 'cc-node-badge', STATUS_BADGE[evaluatedGroup.status]));
+		status.appendChild(renderCounts(evaluatedGroup.counts));
+		status.appendChild(create('span', 'cc-dept-hint', `${evaluatedGroup.kpis.length} KPI${evaluatedGroup.kpis.length === 1 ? '' : 's'}`));
+		status.appendChild(chevron());
+		toggle.appendChild(status);
+		dept.appendChild(toggle);
+
+		if (open) {
+			const body = create('div', 'cc-dept-body');
+			body.appendChild(renderKpiGrid(evaluatedGroup));
+			dept.appendChild(body);
+		}
+
+		return dept;
+	};
+
+	const renderNode = (entry) => {
+		const { node, groups, counts, status } = entry;
+		const open = isOpen(node.id);
+		const direct = groups.length === 1 && groups[0].group.own;
+
+		const block = create('article', 'cc-node');
+		block.dataset.status = status;
+		block.dataset.node = node.id;
+		block.dataset.open = String(open);
+
+		if (node.start) {
+			block.classList.add('is-start');
+		}
+
+		const toggle = create('button', 'cc-node-toggle');
+		toggle.type = 'button';
+		toggle.dataset.ccToggleNode = node.id;
+		toggle.setAttribute('aria-expanded', String(open));
+
+		const titles = create('span', 'cc-node-text');
+		titles.appendChild(create('span', 'cc-node-title', node.title));
+
+		if (node.subtitle) {
+			titles.appendChild(create('span', 'cc-node-subtitle', node.subtitle));
+		}
+
+		toggle.appendChild(titles);
+
+		const statusColumn = create('span', 'cc-node-status');
+		statusColumn.appendChild(create('span', 'cc-node-badge', STATUS_BADGE[status]));
+		statusColumn.appendChild(renderCounts(counts));
+
+		const departmentCount = groups.filter((group) => !group.group.own).length;
+		const hintParts = [];
+
+		if (departmentCount > 0) {
+			hintParts.push(`${departmentCount} department${departmentCount === 1 ? '' : 's'}`);
+		}
+
+		hintParts.push(`${entry.kpiCount} KPI${entry.kpiCount === 1 ? '' : 's'}`);
+		statusColumn.appendChild(create('span', 'cc-node-hint', hintParts.join(' · ')));
+		statusColumn.appendChild(chevron());
+		toggle.appendChild(statusColumn);
+		block.appendChild(toggle);
+
+		if (open) {
+			const body = create('div', 'cc-node-body');
+
+			if (direct) {
+				body.appendChild(renderKpiGrid(groups[0]));
+			} else {
+				const list = create('div', 'cc-depts');
+				groups.forEach((group) => list.appendChild(renderDepartment(group)));
+				body.appendChild(list);
+			}
+
+			block.appendChild(body);
+		}
+
+		return block;
+	};
+
+	const renderTiers = (state) => {
 		el.tiers.replaceChildren();
 
 		const tiers = new Map();
@@ -342,26 +523,26 @@
 		[...tiers.keys()]
 			.sort((a, b) => a - b)
 			.forEach((tier) => {
-				const column = create('section', 'cc-tier');
-				column.dataset.tier = String(tier);
+				const row = create('section', 'cc-tier');
+				row.dataset.tier = String(tier);
 
 				const members = tiers.get(tier);
 
 				if (members.length === 1) {
-					column.classList.add('is-single');
+					row.classList.add('is-single');
 				}
 
 				if (el.tiers.childElementCount === 0) {
-					column.classList.add('is-first');
+					row.classList.add('is-first');
 				}
 
 				const label = settings.tierLabels[tier] || `Tier ${tier + 1}`;
-				column.setAttribute('aria-label', label);
-				column.appendChild(create('p', 'cc-tier-label', label));
+				row.setAttribute('aria-label', label);
+				row.appendChild(create('p', 'cc-tier-label', label));
 
 				const list = create('div', 'cc-tier-nodes');
 				members.forEach((node) => {
-					const nodeEl = renderNode(evaluated.get(node.id));
+					const nodeEl = renderNode(state.nodes.get(node.id));
 
 					if (members.length > 1) {
 						nodeEl.classList.add('is-compact');
@@ -369,16 +550,16 @@
 
 					list.appendChild(nodeEl);
 				});
-				column.appendChild(list);
+				row.appendChild(list);
 
-				el.tiers.appendChild(column);
+				el.tiers.appendChild(row);
 			});
 	};
 
 	/* Wires descend: from a parent's bottom edge down to a rail between the
 	   rows, along the rail, then down into the child's top edge. The rail is
 	   neutral; the final drop takes the child's status color. */
-	const renderConnectors = (evaluated) => {
+	const renderConnectors = (state) => {
 		const svg = el.connectors;
 		svg.replaceChildren();
 
@@ -406,7 +587,7 @@
 
 			const childX = round(to.left + to.width / 2 - bounds.left);
 			const childTop = round(to.top - bounds.top);
-			const status = evaluated.get(node.id).status;
+			const status = state.nodes.get(node.id).status;
 			let connected = false;
 
 			(node.parents || []).forEach((parentId) => {
@@ -442,14 +623,14 @@
 		});
 	};
 
-	const renderAttention = (evaluated) => {
+	const renderAttention = (state) => {
 		el.attentionList.replaceChildren();
 
 		const items = [];
-		evaluated.forEach((entry) => {
-			entry.kpis.forEach((item) => {
+		state.groups.forEach((evaluatedGroup) => {
+			evaluatedGroup.kpis.forEach((item) => {
 				if (item.status !== 'green') {
-					items.push({ entry, item });
+					items.push({ evaluatedGroup, item });
 				}
 			});
 		});
@@ -457,7 +638,7 @@
 		items.sort((a, b) => STATUS_RANK[a.item.status] - STATUS_RANK[b.item.status]);
 
 		const totals = { red: 0, orange: 0, green: 0 };
-		evaluated.forEach((entry) => {
+		state.nodes.forEach((entry) => {
 			totals.red += entry.counts.red;
 			totals.orange += entry.counts.orange;
 			totals.green += entry.counts.green;
@@ -470,12 +651,13 @@
 		el.attention.classList.toggle('is-clear', items.length === 0);
 		el.attentionEmpty.hidden = items.length > 0;
 
-		items.forEach(({ entry, item }) => {
+		items.forEach(({ evaluatedGroup, item }) => {
+			const nodeEntry = state.nodes.get(evaluatedGroup.nodeId);
 			const li = create('li');
 			const button = create('button', 'cc-attention-item');
 			button.type = 'button';
 			button.dataset.status = item.status;
-			button.dataset.node = entry.node.id;
+			button.dataset.ccJump = evaluatedGroup.group.key;
 
 			const value = create('span', 'cc-attention-value', item.display);
 
@@ -489,7 +671,10 @@
 			text.appendChild(create('span', 'cc-attention-label', item.kpi.label));
 
 			const meta = create('span', 'cc-attention-meta');
-			meta.appendChild(create('b', null, entry.node.title));
+			const where = evaluatedGroup.group.own
+				? nodeEntry.node.title
+				: `${nodeEntry.node.title} · ${evaluatedGroup.group.title}`;
+			meta.appendChild(create('b', null, where));
 			meta.appendChild(document.createTextNode(item.kpi.target ? ` · ${item.kpi.target}` : ''));
 			text.appendChild(meta);
 			button.appendChild(text);
@@ -534,38 +719,112 @@
 		}, 40);
 	};
 
-	let evaluatedState = evaluate();
+	let state = evaluate();
+	let nodeObserver = null;
 
-	const renderAll = () => {
-		evaluatedState = evaluate();
-		renderTiers(evaluatedState);
-		renderAttention(evaluatedState);
-		window.requestAnimationFrame(() => {
-			renderConnectors(evaluatedState);
-			startMarquee();
-		});
+	const observeNodes = () => {
+		if (typeof ResizeObserver !== 'function') {
+			return;
+		}
+
+		if (nodeObserver) {
+			nodeObserver.disconnect();
+		}
+
+		nodeObserver = new ResizeObserver(() => scheduleConnectors());
+		nodeObserver.observe(el.tiers);
+		el.tiers.querySelectorAll('.cc-node').forEach((nodeEl) => nodeObserver.observe(nodeEl));
 	};
 
-	/* ------------------------------------------------------------ Focus dialog */
+	let connectorFrame = null;
 
-	let focusedNodeId = null;
-	let editing = false;
+	function scheduleConnectors() {
+		if (connectorFrame) {
+			window.cancelAnimationFrame(connectorFrame);
+		}
 
-	const renderFocus = () => {
-		const entry = evaluatedState.get(focusedNodeId);
+		connectorFrame = window.requestAnimationFrame(() => {
+			connectorFrame = null;
+			renderConnectors(state);
+		});
+	}
+
+	const renderBoard = () => {
+		renderTiers(state);
+		observeNodes();
+		scheduleConnectors();
+	};
+
+	const renderAll = () => {
+		state = evaluate();
+		renderBoard();
+		renderAttention(state);
+		window.requestAnimationFrame(startMarquee);
+	};
+
+	/* ------------------------------------------------------------ Expand / collapse */
+
+	const toggleNode = (nodeId) => {
+		const entry = state.nodes.get(nodeId);
 
 		if (!entry) {
 			return;
 		}
 
-		el.focus.querySelector('.cc-focus-panel').dataset.status = entry.status;
-		el.focusTitle.textContent = entry.node.title;
-		el.focusSubtitle.textContent = `${entry.node.subtitle || ''} · ${STATUS_WORD[entry.status]}`;
-		el.focusSaved.hidden = !entry.overridden;
+		const open = !isOpen(nodeId);
+		setOpen(nodeId, open);
+
+		if (open && entry.groups.length === 1) {
+			setOpen(entry.groups[0].group.key, true);
+		}
+
+		renderBoard();
+	};
+
+	const toggleGroup = (groupKey) => {
+		setOpen(groupKey, !isOpen(groupKey));
+		renderBoard();
+	};
+
+	const revealGroup = (groupKey) => {
+		const evaluatedGroup = state.groups.get(groupKey);
+
+		if (!evaluatedGroup) {
+			return;
+		}
+
+		setOpen(evaluatedGroup.nodeId, true);
+		setOpen(groupKey, true);
+		renderBoard();
+
+		const target = el.tiers.querySelector(`[data-group="${groupKey}"]`) || el.tiers.querySelector(`[data-node="${evaluatedGroup.nodeId}"]`);
+
+		if (target && typeof target.scrollIntoView === 'function') {
+			target.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+		}
+	};
+
+	/* ------------------------------------------------------------ Focus dialog (logging) */
+
+	let focusedGroupKey = null;
+	let editing = false;
+
+	const renderFocus = () => {
+		const evaluatedGroup = state.groups.get(focusedGroupKey);
+
+		if (!evaluatedGroup) {
+			return;
+		}
+
+		const nodeEntry = state.nodes.get(evaluatedGroup.nodeId);
+		el.focus.querySelector('.cc-focus-panel').dataset.status = evaluatedGroup.status;
+		el.focusTitle.textContent = evaluatedGroup.group.title;
+		el.focusSubtitle.textContent = `${evaluatedGroup.group.own ? evaluatedGroup.group.subtitle : nodeEntry.node.title} · ${STATUS_WORD[evaluatedGroup.status]}`;
+		el.focusSaved.hidden = !evaluatedGroup.overridden;
 		el.focusEdit.textContent = editing ? 'Save' : "Log Today's Numbers";
 		el.focusKpis.replaceChildren();
 
-		entry.kpis.forEach((item) => {
+		evaluatedGroup.kpis.forEach((item) => {
 			const card = create('div', 'cc-focus-kpi');
 			card.dataset.status = item.status;
 			card.dataset.kpi = item.kpi.id;
@@ -590,7 +849,7 @@
 					input.type = item.kpi.type === 'time' ? 'time' : 'number';
 					input.dataset.input = item.kpi.type === 'time' ? 'time' : 'number';
 					input.step = 'any';
-					input.value = item.value === null || item.value === undefined ? '' : String(item.value);
+					input.value = isBlank(item.value) ? '' : String(item.value);
 					input.setAttribute('aria-label', `${item.kpi.label} value`);
 					card.appendChild(input);
 				}
@@ -610,36 +869,37 @@
 		});
 	};
 
-	const openFocus = (nodeId) => {
-		if (!evaluatedState.has(nodeId)) {
+	const openFocus = (groupKey, startEditing) => {
+		if (!state.groups.has(groupKey)) {
 			return;
 		}
 
-		focusedNodeId = nodeId;
-		editing = false;
+		focusedGroupKey = groupKey;
+		editing = Boolean(startEditing);
 		renderFocus();
 		el.focus.hidden = false;
-		el.focusClose.focus();
+
+		const first = editing ? el.focusKpis.querySelector('[data-input]') : null;
+		(first || el.focusClose).focus();
 	};
 
 	const closeFocus = () => {
 		el.focus.hidden = true;
-		focusedNodeId = null;
+		focusedGroupKey = null;
 		editing = false;
 	};
 
 	const saveFocus = () => {
-		const entry = evaluatedState.get(focusedNodeId);
+		const evaluatedGroup = state.groups.get(focusedGroupKey);
 
-		if (!entry) {
+		if (!evaluatedGroup) {
 			return;
 		}
 
 		const overrides = readOverrides();
-		const nodeOverrides = Object.assign({}, overrides[entry.node.id] || {});
+		const saved = Object.assign({}, overrides[focusedGroupKey] || {});
 
 		el.focusKpis.querySelectorAll('[data-kpi]').forEach((card) => {
-			const kpiId = card.dataset.kpi;
 			const control = card.querySelector('[data-input]');
 
 			if (!control) {
@@ -647,15 +907,15 @@
 			}
 
 			if (control.dataset.input === 'check') {
-				nodeOverrides[kpiId] = control.getAttribute('aria-pressed') === 'true';
+				saved[card.dataset.kpi] = control.getAttribute('aria-pressed') === 'true';
 			} else if (control.dataset.input === 'time') {
-				nodeOverrides[kpiId] = control.value;
+				saved[card.dataset.kpi] = control.value;
 			} else {
-				nodeOverrides[kpiId] = control.value === '' ? '' : Number(control.value);
+				saved[card.dataset.kpi] = control.value === '' ? '' : Number(control.value);
 			}
 		});
 
-		overrides[entry.node.id] = nodeOverrides;
+		overrides[focusedGroupKey] = saved;
 		writeOverrides(overrides);
 		editing = false;
 		renderAll();
@@ -678,12 +938,12 @@
 	});
 
 	el.focusReset.addEventListener('click', () => {
-		if (!focusedNodeId) {
+		if (!focusedGroupKey) {
 			return;
 		}
 
 		const overrides = readOverrides();
-		delete overrides[focusedNodeId];
+		delete overrides[focusedGroupKey];
 		writeOverrides(overrides);
 		editing = false;
 		renderAll();
@@ -704,35 +964,63 @@
 		}
 	});
 
-	root.addEventListener('click', (event) => {
-		const trigger = event.target.closest('[data-node]');
+	/* ------------------------------------------------------------ Board clicks */
 
-		if (!trigger || el.focus.contains(trigger)) {
+	root.addEventListener('click', (event) => {
+		if (el.focus.contains(event.target)) {
 			return;
 		}
 
-		stopTour();
-		openFocus(trigger.dataset.node);
+		const nodeToggle = event.target.closest('[data-cc-toggle-node]');
+
+		if (nodeToggle) {
+			stopTour();
+			toggleNode(nodeToggle.dataset.ccToggleNode);
+			return;
+		}
+
+		const groupToggle = event.target.closest('[data-cc-toggle-group]');
+
+		if (groupToggle) {
+			stopTour();
+			toggleGroup(groupToggle.dataset.ccToggleGroup);
+			return;
+		}
+
+		const log = event.target.closest('[data-cc-log]');
+
+		if (log) {
+			stopTour();
+			openFocus(log.dataset.ccLog, true);
+			return;
+		}
+
+		const jump = event.target.closest('[data-cc-jump]');
+
+		if (jump) {
+			stopTour();
+			revealGroup(jump.dataset.ccJump);
+		}
 	});
 
 	/* ------------------------------------------------------------ Auto tour */
 
 	let tourTimer = null;
 	let tourIndex = -1;
+	let savedOpen = null;
 
 	const tourStep = () => {
 		if (nodes.length === 0) {
 			return;
 		}
 
-		tourIndex = (tourIndex + 1) % (nodes.length + 1);
+		tourIndex = (tourIndex + 1) % nodes.length;
+		openSet.clear();
 
-		if (tourIndex === nodes.length) {
-			closeFocus();
-			return;
-		}
-
-		openFocus(nodes[tourIndex].id);
+		const node = nodes[tourIndex];
+		setOpen(node.id, true);
+		groupsOf(node).forEach((group) => setOpen(group.key, true));
+		renderBoard();
 	};
 
 	const startTour = () => {
@@ -740,6 +1028,7 @@
 			return;
 		}
 
+		savedOpen = new Set(openSet);
 		el.tourButton.setAttribute('aria-pressed', 'true');
 		tourIndex = -1;
 		tourStep();
@@ -754,12 +1043,18 @@
 		window.clearInterval(tourTimer);
 		tourTimer = null;
 		el.tourButton.setAttribute('aria-pressed', 'false');
+
+		if (savedOpen) {
+			openSet.clear();
+			savedOpen.forEach((key) => openSet.add(key));
+			savedOpen = null;
+		}
 	}
 
 	el.tourButton.addEventListener('click', () => {
 		if (tourTimer) {
 			stopTour();
-			closeFocus();
+			renderBoard();
 		} else {
 			startTour();
 		}
@@ -780,7 +1075,7 @@
 
 	document.addEventListener('fullscreenchange', () => {
 		el.fullscreenButton.textContent = document.fullscreenElement ? 'Exit TV Mode' : 'TV Mode';
-		window.requestAnimationFrame(() => renderConnectors(evaluatedState));
+		scheduleConnectors();
 	});
 
 	/* ------------------------------------------------------------ Clock */
@@ -802,23 +1097,10 @@
 
 	renderAll();
 
-	let resizeFrame = null;
-	const handleResize = () => {
-		if (resizeFrame) {
-			window.cancelAnimationFrame(resizeFrame);
-		}
-
-		resizeFrame = window.requestAnimationFrame(() => renderConnectors(evaluatedState));
-	};
-
-	window.addEventListener('resize', handleResize);
-
-	if (typeof ResizeObserver === 'function') {
-		new ResizeObserver(handleResize).observe(el.tiers);
-	}
+	window.addEventListener('resize', scheduleConnectors);
 
 	if (document.fonts && document.fonts.ready) {
-		document.fonts.ready.then(handleResize);
+		document.fonts.ready.then(scheduleConnectors);
 	}
 
 	let lastDay = todayKey();

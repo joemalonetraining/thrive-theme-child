@@ -4,21 +4,31 @@
  * Template Post Type: page
  *
  * Lobby TV command center. Renders a flow diagram of "locations" (Personal,
- * company, physical locations, departments). Every block owns KPIs, every KPI
- * is scored green / orange / red against its thresholds, and the worst KPI
- * status rolls up to color the block so the team can see at a glance where
- * attention is needed.
+ * company, physical locations). Each block collapses its departments, and
+ * each department collapses its KPIs. Every KPI is scored green / orange /
+ * red against its thresholds, and the worst status rolls up through the
+ * department to the block so the team sees at a glance where to look.
  *
  * Data model (edit $jm_command_center below):
- *   nodes[]            One block on the flow diagram.
- *     id               Unique slug. Used for connectors and saved values.
+ *   nodes[]            One block on the flow diagram (a "location").
+ *     id               Unique slug. Used for wires and saved values.
  *     title            Big label on the block.
  *     subtitle         Small label under the title.
  *     tier             Row on the diagram, top down: 0 = start, 1, 2, ...
  *     start            true marks the first block in the flow.
+ *     open             true keeps the block expanded when the board loads.
  *     parents[]        ids this block flows from (draws the wires). Keep
  *                      parents on the row directly above so wires never cross.
- *     kpis[]           KPIs owned by the block.
+ *     kpis[]           KPIs owned directly by the block (optional).
+ *     kpisLabel        Heading for those direct KPIs when the block also has
+ *                      departments (they show as the first expandable group).
+ *     departments[]    Expandable groups inside the block (optional).
+ *       id, title, subtitle, kpis[]  Same shape as a block, without tiers.
+ *
+ *   Tap a block to open its departments; tap a department to open its KPIs.
+ *   A block with KPIs and no departments opens straight to its KPIs.
+ *
+ *   KPI fields:
  *       id, label      Unique slug and display label.
  *       type           'higher'  numeric, higher is better
  *                      'lower'   numeric, lower is better
@@ -62,7 +72,7 @@ $jm_command_center = [
 	'settings' => [
 		'autoTourSeconds' => 12,
 		'refreshSeconds' => 60,
-		'tierLabels' => ['Start', 'Company', 'Locations', 'Departments'],
+		'tierLabels' => ['Start', 'Company', 'Locations'],
 	],
 	'nodes' => [
 		[
@@ -71,6 +81,7 @@ $jm_command_center = [
 			'subtitle' => 'Daily foundation',
 			'tier' => 0,
 			'start' => true,
+			'open' => true,
 			'parents' => [],
 			'kpis' => [
 				[
@@ -151,6 +162,7 @@ $jm_command_center = [
 			'subtitle' => 'Company scoreboard',
 			'tier' => 1,
 			'parents' => ['personal'],
+			'kpisLabel' => 'Company Scoreboard',
 			'kpis' => [
 				[
 					'id' => 'revenue-mtd',
@@ -193,6 +205,82 @@ $jm_command_center = [
 					'target' => '4.8+ stars',
 				],
 			],
+			'departments' => [
+				[
+					'id' => 'sales',
+					'title' => 'Sales',
+					'subtitle' => 'Pipeline & close',
+					'kpis' => [
+						[
+							'id' => 'new-leads',
+							'label' => 'New Leads',
+							'type' => 'higher',
+							'unit' => 'this week',
+							'green' => 40,
+							'orange' => 20,
+							'value' => 31,
+							'target' => '40+ per week',
+						],
+						[
+							'id' => 'close-rate',
+							'label' => 'Close Rate',
+							'type' => 'higher',
+							'unit' => '%',
+							'green' => 30,
+							'orange' => 20,
+							'value' => 26,
+							'target' => '30%+',
+						],
+						[
+							'id' => 'follow-ups-due',
+							'label' => 'Follow-Ups Overdue',
+							'type' => 'lower',
+							'unit' => 'contacts',
+							'green' => 0,
+							'orange' => 5,
+							'value' => 9,
+							'target' => 'Zero overdue',
+						],
+					],
+				],
+				[
+					'id' => 'marketing',
+					'title' => 'Marketing',
+					'subtitle' => 'Content & reach',
+					'kpis' => [
+						[
+							'id' => 'youtube-posts',
+							'label' => 'YouTube Posts',
+							'type' => 'higher',
+							'unit' => 'this week',
+							'green' => 2,
+							'orange' => 1,
+							'value' => 1,
+							'target' => '2+ videos per week',
+						],
+						[
+							'id' => 'social-posts',
+							'label' => 'Social Posts',
+							'type' => 'higher',
+							'unit' => 'this week',
+							'green' => 5,
+							'orange' => 3,
+							'value' => 6,
+							'target' => '5+ posts per week',
+						],
+						[
+							'id' => 'email-sent',
+							'label' => 'Email Campaign',
+							'type' => 'check',
+							'unit' => '',
+							'green' => 1,
+							'orange' => 1,
+							'value' => false,
+							'target' => 'Weekly email sent',
+						],
+					],
+				],
+			],
 		],
 		[
 			'id' => 'bourbonnais',
@@ -200,46 +288,90 @@ $jm_command_center = [
 			'subtitle' => 'Range & classroom',
 			'tier' => 2,
 			'parents' => ['company'],
-			'kpis' => [
+			'departments' => [
 				[
-					'id' => 'range-utilization',
-					'label' => 'Range Use',
-					'type' => 'higher',
-					'unit' => '% booked',
-					'green' => 75,
-					'orange' => 50,
-					'value' => 68,
-					'target' => '75%+ lanes booked',
+					'id' => 'range-operations',
+					'title' => 'Range Operations',
+					'subtitle' => 'Lanes, classes, safety',
+					'kpis' => [
+						[
+							'id' => 'range-utilization',
+							'label' => 'Range Use',
+							'type' => 'higher',
+							'unit' => '% booked',
+							'green' => 75,
+							'orange' => 50,
+							'value' => 68,
+							'target' => '75%+ lanes booked',
+						],
+						[
+							'id' => 'class-fill',
+							'label' => 'Class Fill',
+							'type' => 'higher',
+							'unit' => '% seats',
+							'green' => 80,
+							'orange' => 60,
+							'value' => 84,
+							'target' => '80%+ seats sold',
+						],
+						[
+							'id' => 'safety-incidents',
+							'label' => 'Safety Incidents',
+							'type' => 'lower',
+							'unit' => 'this month',
+							'green' => 0,
+							'orange' => 1,
+							'value' => 0,
+							'target' => 'Zero incidents',
+						],
+						[
+							'id' => 'open-tickets',
+							'label' => 'Facility Tickets',
+							'type' => 'lower',
+							'unit' => 'open',
+							'green' => 2,
+							'orange' => 5,
+							'value' => 3,
+							'target' => '2 or fewer open',
+						],
+					],
 				],
 				[
-					'id' => 'class-fill',
-					'label' => 'Class Fill',
-					'type' => 'higher',
-					'unit' => '% seats',
-					'green' => 80,
-					'orange' => 60,
-					'value' => 84,
-					'target' => '80%+ seats sold',
-				],
-				[
-					'id' => 'safety-incidents',
-					'label' => 'Safety Incidents',
-					'type' => 'lower',
-					'unit' => 'this month',
-					'green' => 0,
-					'orange' => 1,
-					'value' => 0,
-					'target' => 'Zero incidents',
-				],
-				[
-					'id' => 'open-tickets',
-					'label' => 'Facility Tickets',
-					'type' => 'lower',
-					'unit' => 'open',
-					'green' => 2,
-					'orange' => 5,
-					'value' => 3,
-					'target' => '2 or fewer open',
+					'id' => 'memberships',
+					'title' => 'Memberships',
+					'subtitle' => 'DSU, Pro, Starter',
+					'kpis' => [
+						[
+							'id' => 'new-members',
+							'label' => 'New Members',
+							'type' => 'higher',
+							'unit' => 'this month',
+							'green' => 20,
+							'orange' => 10,
+							'value' => 14,
+							'target' => '20+ per month',
+						],
+						[
+							'id' => 'churn',
+							'label' => 'Cancellations',
+							'type' => 'lower',
+							'unit' => 'this month',
+							'green' => 3,
+							'orange' => 6,
+							'value' => 2,
+							'target' => '3 or fewer',
+						],
+						[
+							'id' => 'past-due',
+							'label' => 'Past-Due Accounts',
+							'type' => 'lower',
+							'unit' => 'accounts',
+							'green' => 2,
+							'orange' => 6,
+							'value' => 7,
+							'target' => '2 or fewer',
+						],
+					],
 				],
 			],
 		],
@@ -249,36 +381,43 @@ $jm_command_center = [
 			'subtitle' => 'CCL classroom',
 			'tier' => 2,
 			'parents' => ['company'],
-			'kpis' => [
+			'departments' => [
 				[
-					'id' => 'ccl-seats',
-					'label' => '16-Hr CCL Seats',
-					'type' => 'higher',
-					'unit' => '% sold',
-					'green' => 80,
-					'orange' => 60,
-					'value' => 55,
-					'target' => '80%+ seats sold',
-				],
-				[
-					'id' => 'renewal-seats',
-					'label' => 'Renewal Seats',
-					'type' => 'higher',
-					'unit' => '% sold',
-					'green' => 80,
-					'orange' => 60,
-					'value' => 70,
-					'target' => '80%+ seats sold',
-				],
-				[
-					'id' => 'lead-response',
-					'label' => 'Lead Response',
-					'type' => 'lower',
-					'unit' => 'min',
-					'green' => 15,
-					'orange' => 60,
-					'value' => 12,
-					'target' => 'Under 15 minutes',
+					'id' => 'ccl-classes',
+					'title' => 'CCL Classes',
+					'subtitle' => '16-hour & renewal',
+					'kpis' => [
+						[
+							'id' => 'ccl-seats',
+							'label' => '16-Hr CCL Seats',
+							'type' => 'higher',
+							'unit' => '% sold',
+							'green' => 80,
+							'orange' => 60,
+							'value' => 55,
+							'target' => '80%+ seats sold',
+						],
+						[
+							'id' => 'renewal-seats',
+							'label' => 'Renewal Seats',
+							'type' => 'higher',
+							'unit' => '% sold',
+							'green' => 80,
+							'orange' => 60,
+							'value' => 70,
+							'target' => '80%+ seats sold',
+						],
+						[
+							'id' => 'lead-response',
+							'label' => 'Lead Response',
+							'type' => 'lower',
+							'unit' => 'min',
+							'green' => 15,
+							'orange' => 60,
+							'value' => 12,
+							'target' => 'Under 15 minutes',
+						],
+					],
 				],
 			],
 		],
@@ -288,153 +427,43 @@ $jm_command_center = [
 			'subtitle' => 'Outdoor range',
 			'tier' => 2,
 			'parents' => ['company'],
-			'kpis' => [
+			'departments' => [
 				[
-					'id' => 'events-booked',
-					'label' => 'Events Booked',
-					'type' => 'higher',
-					'unit' => 'next 30 days',
-					'green' => 6,
-					'orange' => 3,
-					'value' => 4,
-					'target' => '6+ events',
-				],
-				[
-					'id' => 'private-sessions',
-					'label' => 'Private Sessions',
-					'type' => 'higher',
-					'unit' => 'this month',
-					'green' => 8,
-					'orange' => 4,
-					'value' => 3,
-					'target' => '8+ sessions',
-				],
-				[
-					'id' => 'range-ready',
-					'label' => 'Range Ready',
-					'type' => 'check',
-					'unit' => '',
-					'green' => 1,
-					'orange' => 1,
-					'value' => true,
-					'target' => 'Berms, targets, gear checked',
-				],
-			],
-		],
-		[
-			'id' => 'memberships',
-			'title' => 'Memberships',
-			'subtitle' => 'DSU, Pro, Starter',
-			'tier' => 3,
-			'parents' => ['bourbonnais'],
-			'kpis' => [
-				[
-					'id' => 'new-members',
-					'label' => 'New Members',
-					'type' => 'higher',
-					'unit' => 'this month',
-					'green' => 20,
-					'orange' => 10,
-					'value' => 14,
-					'target' => '20+ per month',
-				],
-				[
-					'id' => 'churn',
-					'label' => 'Cancellations',
-					'type' => 'lower',
-					'unit' => 'this month',
-					'green' => 3,
-					'orange' => 6,
-					'value' => 2,
-					'target' => '3 or fewer',
-				],
-				[
-					'id' => 'past-due',
-					'label' => 'Past-Due Accounts',
-					'type' => 'lower',
-					'unit' => 'accounts',
-					'green' => 2,
-					'orange' => 6,
-					'value' => 7,
-					'target' => '2 or fewer',
-				],
-			],
-		],
-		[
-			'id' => 'sales',
-			'title' => 'Sales',
-			'subtitle' => 'Pipeline & close',
-			'tier' => 3,
-			'parents' => ['bourbonnais', 'alsip', 'frankfort'],
-			'kpis' => [
-				[
-					'id' => 'new-leads',
-					'label' => 'New Leads',
-					'type' => 'higher',
-					'unit' => 'this week',
-					'green' => 40,
-					'orange' => 20,
-					'value' => 31,
-					'target' => '40+ per week',
-				],
-				[
-					'id' => 'close-rate',
-					'label' => 'Close Rate',
-					'type' => 'higher',
-					'unit' => '%',
-					'green' => 30,
-					'orange' => 20,
-					'value' => 26,
-					'target' => '30%+',
-				],
-				[
-					'id' => 'follow-ups-due',
-					'label' => 'Follow-Ups Overdue',
-					'type' => 'lower',
-					'unit' => 'contacts',
-					'green' => 0,
-					'orange' => 5,
-					'value' => 9,
-					'target' => 'Zero overdue',
-				],
-			],
-		],
-		[
-			'id' => 'marketing',
-			'title' => 'Marketing',
-			'subtitle' => 'Content & reach',
-			'tier' => 3,
-			'parents' => ['bourbonnais', 'alsip', 'frankfort'],
-			'kpis' => [
-				[
-					'id' => 'youtube-posts',
-					'label' => 'YouTube Posts',
-					'type' => 'higher',
-					'unit' => 'this week',
-					'green' => 2,
-					'orange' => 1,
-					'value' => 1,
-					'target' => '2+ videos per week',
-				],
-				[
-					'id' => 'social-posts',
-					'label' => 'Social Posts',
-					'type' => 'higher',
-					'unit' => 'this week',
-					'green' => 5,
-					'orange' => 3,
-					'value' => 6,
-					'target' => '5+ posts per week',
-				],
-				[
-					'id' => 'email-sent',
-					'label' => 'Email Campaign',
-					'type' => 'check',
-					'unit' => '',
-					'green' => 1,
-					'orange' => 1,
-					'value' => false,
-					'target' => 'Weekly email sent',
+					'id' => 'outdoor-range',
+					'title' => 'Outdoor Range',
+					'subtitle' => 'Events & private sessions',
+					'kpis' => [
+						[
+							'id' => 'events-booked',
+							'label' => 'Events Booked',
+							'type' => 'higher',
+							'unit' => 'next 30 days',
+							'green' => 6,
+							'orange' => 3,
+							'value' => 4,
+							'target' => '6+ events',
+						],
+						[
+							'id' => 'private-sessions',
+							'label' => 'Private Sessions',
+							'type' => 'higher',
+							'unit' => 'this month',
+							'green' => 8,
+							'orange' => 4,
+							'value' => 3,
+							'target' => '8+ sessions',
+						],
+						[
+							'id' => 'range-ready',
+							'label' => 'Range Ready',
+							'type' => 'check',
+							'unit' => '',
+							'green' => 1,
+							'orange' => 1,
+							'value' => true,
+							'target' => 'Berms, targets, gear checked',
+						],
+					],
 				],
 			],
 		],
@@ -488,7 +517,7 @@ get_header();
 		<span class="cc-legend-item is-green"><i></i> Green: on target</span>
 		<span class="cc-legend-item is-orange"><i></i> Orange: slipping, fix today</span>
 		<span class="cc-legend-item is-red"><i></i> Red: needs attention now</span>
-		<span class="cc-legend-note">Tap any block to log today's numbers.</span>
+		<span class="cc-legend-note">Tap a block to open its departments, then a department to open its KPIs.</span>
 	</footer>
 
 	<div class="cc-focus" data-cc-focus hidden role="dialog" aria-modal="true" aria-labelledby="cc-focus-title">
