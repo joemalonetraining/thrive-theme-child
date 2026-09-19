@@ -343,8 +343,14 @@
 			return '--';
 		}
 
-		return Number.isInteger(number) ? String(number) : number.toFixed(1);
+		return Number.isInteger(number)
+			? number.toLocaleString('en-US')
+			: number.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 	};
+
+	/* A unit that starts with "$" moves the dollar sign onto the number:
+	   "$ / day" shows as "$1,650" with "/ day" beneath. */
+	const isMoney = (kpi) => typeof kpi.unit === 'string' && kpi.unit.trim().startsWith('$');
 
 	const formatValue = (kpi, value, goal) => {
 		if (kpi.type === 'check') {
@@ -357,6 +363,10 @@
 
 		if (kpi.type === 'time') {
 			return formatTime(value);
+		}
+
+		if (isMoney(kpi) && !isBlank(value) && !Number.isNaN(Number(value))) {
+			return `$${formatNumber(value)}`;
 		}
 
 		return formatNumber(value);
@@ -373,6 +383,10 @@
 
 		if (isBlank(value) || Number.isNaN(Number(value))) {
 			return 'No data';
+		}
+
+		if (isMoney(kpi)) {
+			return kpi.unit.trim().slice(1).trim();
 		}
 
 		return kpi.unit || '';
