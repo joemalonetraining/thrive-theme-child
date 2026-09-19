@@ -275,6 +275,16 @@ $jm_command_center = [
 						'value' => false,
 						'target' => 'Weekly sales email sent',
 					],
+					[
+						'id' => 'social-posts',
+						'label' => 'Social Media Posts',
+						'type' => 'higher',
+						'unit' => '/ day',
+						'green' => 1,
+						'orange' => 0,
+						'value' => 1,
+						'target' => '1 post a day',
+					],
 					],
 				],
 				[
