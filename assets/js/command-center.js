@@ -26,9 +26,29 @@
 
 	const nodes = Array.isArray(config.nodes) ? config.nodes : [];
 
-	const STATUS_RANK = { red: 0, orange: 1, green: 2 };
-	const STATUS_WORD = { red: 'Needs attention', orange: 'Slipping', green: 'On target' };
-	const STATUS_BADGE = { red: 'Attention', orange: 'Slipping', green: 'On target' };
+	/* Six grades, worst to best. Every KPI lands on one of these and the
+	   worst grade inside a department or block colors the whole thing. */
+	const LEVELS = ['red-deep', 'red', 'orange', 'yellow', 'green', 'green-bright'];
+	const STATUS_RANK = { 'red-deep': 0, red: 1, orange: 2, yellow: 3, green: 4, 'green-bright': 5 };
+	const STATUS_WORD = {
+		'red-deep': 'Far off target',
+		red: 'Needs attention',
+		orange: 'Slipping',
+		yellow: 'Almost there',
+		green: 'On target',
+		'green-bright': 'Exceeding',
+	};
+	const STATUS_BADGE = {
+		'red-deep': 'Attention',
+		red: 'Attention',
+		orange: 'Slipping',
+		yellow: 'Close',
+		green: 'On target',
+		'green-bright': 'Exceeding',
+	};
+	const isGood = (level) => STATUS_RANK[level] >= STATUS_RANK.green;
+	/* Summary pills keep three buckets: red, orange (incl. yellow), green. */
+	const bucketOf = (level) => (isGood(level) ? 'green' : STATUS_RANK[level] <= STATUS_RANK.red ? 'red' : 'orange');
 
 	const el = {
 		tiers: root.querySelector('[data-cc-tiers]'),
@@ -130,6 +150,40 @@
 
 	const isBlank = (value) => value === '' || value === null || value === undefined;
 
+	/* Score: 1 means the target is met, 0 means the KPI sits at its "clearly
+	   off" threshold, below 0 is worse than that, above 1 is beating it. */
+	const levelFromScore = (score) => {
+		if (Number.isNaN(score)) {
+			return 'red';
+		}
+
+		if (score >= 1.2) {
+			return 'green-bright';
+		}
+
+		if (score >= 1) {
+			return 'green';
+		}
+
+		if (score >= 0.66) {
+			return 'yellow';
+		}
+
+		if (score >= 0.33) {
+			return 'orange';
+		}
+
+		return score >= 0 ? 'red' : 'red-deep';
+	};
+
+	const rangeScore = (value, target, off, higherIsBetter) => {
+		if (target === off) {
+			return (higherIsBetter ? value >= target : value <= target) ? 1 : -1;
+		}
+
+		return higherIsBetter ? (value - off) / (target - off) : (off - value) / (off - target);
+	};
+
 	const scoreKpi = (kpi, value, goal) => {
 		const type = kpi.type || 'higher';
 
@@ -141,11 +195,26 @@
 			const grams = Number(value);
 			const target = Number(goal);
 
-			if (isBlank(value) || Number.isNaN(grams) || Number.isNaN(target)) {
+			if (isBlank(value) || Number.isNaN(grams) || Number.isNaN(target) || target <= 0) {
 				return 'red';
 			}
 
-			return grams >= target ? 'green' : 'red';
+			if (kpi.direction === 'under') {
+				/* Stay under the limit: green below it, comfortably under is
+				   bright, and the further over the darker the red. */
+				if (grams <= target * 0.9) {
+					return 'green-bright';
+				}
+
+				if (grams <= target) {
+					return 'green';
+				}
+
+				return levelFromScore(rangeScore(grams, target, target * 1.5, false));
+			}
+
+			/* Match or beat the goal: grade from half the goal up to it. */
+			return levelFromScore(rangeScore(grams, target, target * 0.5, true));
 		}
 
 		if (type === 'time') {
@@ -155,11 +224,7 @@
 				return 'orange';
 			}
 
-			if (minutes <= timeToMinutes(kpi.green)) {
-				return 'green';
-			}
-
-			return minutes <= timeToMinutes(kpi.orange) ? 'orange' : 'red';
+			return levelFromScore(rangeScore(minutes, timeToMinutes(kpi.green), timeToMinutes(kpi.orange), false));
 		}
 
 		const number = Number(value);
@@ -168,22 +233,7 @@
 			return 'orange';
 		}
 
-		const green = Number(kpi.green);
-		const orange = Number(kpi.orange);
-
-		if (type === 'lower') {
-			if (number <= green) {
-				return 'green';
-			}
-
-			return number <= orange ? 'orange' : 'red';
-		}
-
-		if (number >= green) {
-			return 'green';
-		}
-
-		return number >= orange ? 'orange' : 'red';
+		return levelFromScore(rangeScore(number, Number(kpi.green), Number(kpi.orange), type !== 'lower'));
 	};
 
 	const formatTime = (value) => {
@@ -215,7 +265,7 @@
 		}
 
 		if (kpi.type === 'macro') {
-			return scoreKpi(kpi, value, goal) === 'green' ? 'Yes' : 'No';
+			return isGood(scoreKpi(kpi, value, goal)) ? 'Yes' : 'No';
 		}
 
 		if (kpi.type === 'time') {
@@ -242,17 +292,17 @@
 	};
 
 	const worstOf = (statuses) => {
-		if (statuses.includes('red')) {
-			return 'red';
+		if (statuses.length === 0) {
+			return 'green';
 		}
 
-		return statuses.includes('orange') ? 'orange' : 'green';
+		return statuses.reduce((worst, level) => (STATUS_RANK[level] < STATUS_RANK[worst] ? level : worst), statuses[0]);
 	};
 
 	const countStatuses = (items) => {
 		const counts = { red: 0, orange: 0, green: 0 };
 		items.forEach((item) => {
-			counts[item.status] += 1;
+			counts[bucketOf(item.status)] += 1;
 		});
 		return counts;
 	};
@@ -721,7 +771,7 @@
 		const items = [];
 		state.groups.forEach((evaluatedGroup) => {
 			evaluatedGroup.kpis.forEach((item) => {
-				if (item.status !== 'green') {
+				if (!isGood(item.status)) {
 					items.push({ evaluatedGroup, item });
 				}
 			});
@@ -941,7 +991,7 @@
 					const fields = create('div', 'cc-focus-macro');
 
 					const goalField = create('label', 'cc-focus-field');
-					goalField.appendChild(create('span', null, `Goal (${item.kpi.unit || 'g'})`));
+					goalField.appendChild(create('span', null, `${item.kpi.direction === 'under' ? 'Limit' : 'Goal'} (${item.kpi.unit || 'g'})`));
 					const goalInput = create('input');
 					goalInput.type = 'number';
 					goalInput.min = '0';
@@ -984,7 +1034,7 @@
 			}
 
 			const targetText = item.kpi.type === 'macro'
-				? `Goal: ${formatNumber(item.goal)} ${item.kpi.unit || 'g'} · Today: ${formatNumber(item.value)} ${item.kpi.unit || 'g'}`
+				? `${item.kpi.direction === 'under' ? 'Stay under' : 'Match or beat'} ${formatNumber(item.goal)} ${item.kpi.unit || 'g'} · Today: ${formatNumber(item.value)} ${item.kpi.unit || 'g'}`
 				: item.kpi.target ? `Target: ${item.kpi.target}` : '';
 			card.appendChild(create('span', 'cc-focus-kpi-target', targetText));
 			el.focusKpis.appendChild(card);

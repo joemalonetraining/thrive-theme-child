@@ -38,11 +38,22 @@
  *       unit           Display unit, e.g. 'hrs', 'oz', 'min'.
  *       goal           'macro' only: the gram goal. Editable on screen and
  *                      remembered across days; the daily grams reset each day.
- *       green, orange  Thresholds. For 'higher': value >= green is green,
- *                      value >= orange is orange, below is red. For 'lower'
- *                      and 'time' the comparison flips (<=). 'check' ignores
- *                      thresholds: yes = green, no = red. 'macro' is green
- *                      when grams so far >= goal, otherwise red.
+ *       direction      'macro' only: 'over' = match or beat the goal (protein),
+ *                      'under' = stay under the limit (carbs, fats).
+ *       green, orange  Thresholds. 'green' is the target; 'orange' is the
+ *                      point where the KPI is clearly off. Every KPI grades on
+ *                      a six-step scale between and beyond them:
+ *                        dark red   worse than the orange threshold
+ *                        red        first third of the way to target
+ *                        orange     middle third
+ *                        yellow     last third, almost there
+ *                        green      target met
+ *                        bright     20%+ past target, exceeding in a good way
+ *                      For 'higher' bigger is better; for 'lower' and 'time'
+ *                      smaller / earlier is better. 'check' is yes = green,
+ *                      no = red. 'macro' uses the goal with direction: 'over'
+ *                      grades from half the goal up to it, 'under' is green
+ *                      below the limit and darkens the further over it goes.
  *       value          Today's starting value. The team can overwrite values
  *                      from the screen; overrides are saved in the browser
  *                      that displays the board, keyed by date.
@@ -199,28 +210,31 @@ $jm_command_center = [
 							'id' => 'protein',
 							'label' => 'Protein',
 							'type' => 'macro',
+							'direction' => 'over',
 							'unit' => 'g',
 							'goal' => 180,
 							'value' => 142,
-							'target' => 'Macro goal',
+							'target' => 'Match or beat the goal',
 						],
 						[
 							'id' => 'carbs',
 							'label' => 'Carbs',
 							'type' => 'macro',
+							'direction' => 'under',
 							'unit' => 'g',
 							'goal' => 250,
 							'value' => 262,
-							'target' => 'Macro goal',
+							'target' => 'Stay under the limit',
 						],
 						[
 							'id' => 'fats',
 							'label' => 'Fats',
 							'type' => 'macro',
+							'direction' => 'under',
 							'unit' => 'g',
 							'goal' => 70,
 							'value' => 48,
-							'target' => 'Macro goal',
+							'target' => 'Stay under the limit',
 						],
 					],
 				],
@@ -584,9 +598,19 @@ get_header();
 	</main>
 
 	<footer class="cc-legend" aria-label="Status color legend">
-		<span class="cc-legend-item is-green"><i></i> Green: on target</span>
-		<span class="cc-legend-item is-orange"><i></i> Orange: slipping, fix today</span>
-		<span class="cc-legend-item is-red"><i></i> Red: needs attention now</span>
+		<span class="cc-legend-scale" aria-label="Status color scale, worst to best">
+			<i data-status="red-deep" title="Far off"></i>
+			<i data-status="red" title="Needs attention"></i>
+			<i data-status="orange" title="Slipping"></i>
+			<i data-status="yellow" title="Almost there"></i>
+			<i data-status="green" title="On target"></i>
+			<i data-status="green-bright" title="Exceeding"></i>
+		</span>
+		<span class="cc-legend-item">Far off</span>
+		<span class="cc-legend-item cc-legend-arrow" aria-hidden="true">&rarr;</span>
+		<span class="cc-legend-item">On target</span>
+		<span class="cc-legend-item cc-legend-arrow" aria-hidden="true">&rarr;</span>
+		<span class="cc-legend-item">Exceeding</span>
 		<span class="cc-legend-note">Tap a block to open its departments, then a department to open its KPIs.</span>
 	</footer>
 

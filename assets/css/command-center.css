@@ -37,10 +37,16 @@ body:has(.jm-command-center) .entry-content {
 
   --cc-green: #1f9d55;
   --cc-green-soft: rgba(31, 157, 85, 0.1);
+  --cc-green-bright: #0fb84f;
+  --cc-green-bright-soft: rgba(15, 184, 79, 0.16);
+  --cc-yellow: #c99a00;
+  --cc-yellow-soft: rgba(201, 154, 0, 0.14);
   --cc-orange: #e07f00;
   --cc-orange-soft: rgba(224, 127, 0, 0.12);
   --cc-red: #d63a3a;
   --cc-red-soft: rgba(214, 58, 58, 0.1);
+  --cc-red-deep: #8e1414;
+  --cc-red-deep-soft: rgba(142, 20, 20, 0.16);
 
   --cc-status: var(--cc-quiet);
   --cc-status-soft: rgba(154, 149, 139, 0.12);
@@ -93,10 +99,27 @@ body:has(.jm-command-center) .entry-content {
   overflow: auto;
 }
 
-/* Status color hooks. Anything with data-status inherits the palette. */
+/* Status color hooks. Anything with data-status inherits the palette.
+   Six grades, worst to best: red-deep, red, orange, yellow, green,
+   green-bright. */
 .jm-command-center [data-status="green"] {
   --cc-status: var(--cc-green);
   --cc-status-soft: var(--cc-green-soft);
+}
+
+.jm-command-center [data-status="green-bright"] {
+  --cc-status: var(--cc-green-bright);
+  --cc-status-soft: var(--cc-green-bright-soft);
+}
+
+.jm-command-center [data-status="yellow"] {
+  --cc-status: var(--cc-yellow);
+  --cc-status-soft: var(--cc-yellow-soft);
+}
+
+.jm-command-center [data-status="red-deep"] {
+  --cc-status: var(--cc-red-deep);
+  --cc-status-soft: var(--cc-red-deep-soft);
 }
 
 .jm-command-center [data-status="orange"] {
@@ -290,16 +313,14 @@ body:has(.jm-command-center) .entry-content {
   stroke-linejoin: round;
 }
 
-.cc-connectors path[data-status="green"] {
-  stroke: var(--cc-green);
+/* Wires and dots take their color from the same status hooks as blocks. */
+.cc-connectors path[data-status],
+.cc-connectors circle[data-status] {
+  stroke: var(--cc-status);
 }
 
-.cc-connectors path[data-status="orange"] {
-  stroke: var(--cc-orange);
-}
-
-.cc-connectors path[data-status="red"] {
-  stroke: var(--cc-red);
+.cc-connectors path[data-status="red"],
+.cc-connectors path[data-status="red-deep"] {
   stroke-width: 4;
 }
 
@@ -307,18 +328,6 @@ body:has(.jm-command-center) .entry-content {
   fill: var(--cc-card);
   stroke: rgba(27, 29, 30, 0.3);
   stroke-width: 3;
-}
-
-.cc-connectors circle[data-status="green"] {
-  stroke: var(--cc-green);
-}
-
-.cc-connectors circle[data-status="orange"] {
-  stroke: var(--cc-orange);
-}
-
-.cc-connectors circle[data-status="red"] {
-  stroke: var(--cc-red);
 }
 
 /* Rows descend: Start, Company, Locations, Departments. */
@@ -459,7 +468,8 @@ body:has(.jm-command-center) .entry-content {
   white-space: nowrap;
 }
 
-.cc-node[data-status="red"] > .cc-node-toggle .cc-node-badge {
+.cc-node[data-status="red"] > .cc-node-toggle .cc-node-badge,
+.cc-node[data-status="red-deep"] > .cc-node-toggle .cc-node-badge {
   animation: cc-pulse 1.6s ease-in-out infinite;
 }
 
@@ -960,22 +970,21 @@ body:has(.jm-command-center) .entry-content {
   gap: 0.5em;
 }
 
-.cc-legend-item i {
-  width: 0.9em;
+.cc-legend-scale {
+  display: inline-flex;
+  gap: 0.25em;
+}
+
+.cc-legend-scale i {
+  display: block;
+  width: 1.6em;
   height: 0.9em;
-  border-radius: 50%;
+  border-radius: 0.25em;
+  background: var(--cc-status);
 }
 
-.cc-legend-item.is-green i {
-  background: var(--cc-green);
-}
-
-.cc-legend-item.is-orange i {
-  background: var(--cc-orange);
-}
-
-.cc-legend-item.is-red i {
-  background: var(--cc-red);
+.cc-legend-arrow {
+  color: var(--cc-quiet);
 }
 
 .cc-legend-note {
@@ -1239,7 +1248,8 @@ body:has(.jm-command-center) .entry-content {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cc-node[data-status="red"] > .cc-node-toggle .cc-node-badge {
+  .cc-node[data-status="red"] > .cc-node-toggle .cc-node-badge,
+  .cc-node[data-status="red-deep"] > .cc-node-toggle .cc-node-badge {
     animation: none;
   }
 
