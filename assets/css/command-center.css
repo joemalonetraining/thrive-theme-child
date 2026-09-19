@@ -373,7 +373,7 @@ body:has(.jm-command-center) .entry-content {
 
 /* A single block below the start row sits centered so the wires fan out. */
 .cc-tier.is-single:not(.is-first) .cc-tier-nodes {
-  width: min(100%, 64%);
+  width: min(100%, 86%);
   margin: 0 auto;
 }
 
