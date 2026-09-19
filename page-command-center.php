@@ -33,12 +33,16 @@
  *       type           'higher'  numeric, higher is better
  *                      'lower'   numeric, lower is better
  *                      'time'    clock time "HH:MM" (24h), earlier is better
- *                      'check'   done / not done
+ *                      'check'   yes / no
+ *                      'macro'   grams so far today against a gram goal
  *       unit           Display unit, e.g. 'hrs', 'oz', 'min'.
+ *       goal           'macro' only: the gram goal. Editable on screen and
+ *                      remembered across days; the daily grams reset each day.
  *       green, orange  Thresholds. For 'higher': value >= green is green,
  *                      value >= orange is orange, below is red. For 'lower'
  *                      and 'time' the comparison flips (<=). 'check' ignores
- *                      thresholds: done = green, not done = red.
+ *                      thresholds: yes = green, no = red. 'macro' is green
+ *                      when grams so far >= goal, otherwise red.
  *       value          Today's starting value. The team can overwrite values
  *                      from the screen; overrides are saved in the browser
  *                      that displays the board, keyed by date.
@@ -97,32 +101,32 @@ $jm_command_center = [
 				[
 					'id' => 'wake-up',
 					'label' => 'Wake Up',
-					'type' => 'time',
+					'type' => 'check',
 					'unit' => '',
-					'green' => '05:30',
-					'orange' => '06:30',
-					'value' => '05:15',
-					'target' => 'Up by 5:30 AM',
+					'green' => 1,
+					'orange' => 1,
+					'value' => true,
+					'target' => 'No snooze',
 				],
 				[
 					'id' => 'hydrate',
 					'label' => 'Hydrate',
-					'type' => 'higher',
-					'unit' => 'oz',
-					'green' => 100,
-					'orange' => 64,
-					'value' => 72,
-					'target' => '100+ oz',
+					'type' => 'check',
+					'unit' => '',
+					'green' => 1,
+					'orange' => 1,
+					'value' => true,
+					'target' => 'Water goal hit',
 				],
 				[
 					'id' => 'read',
 					'label' => 'Read',
-					'type' => 'higher',
-					'unit' => 'min',
-					'green' => 20,
-					'orange' => 10,
-					'value' => 20,
-					'target' => '20+ minutes',
+					'type' => 'check',
+					'unit' => '',
+					'green' => 1,
+					'orange' => 1,
+					'value' => true,
+					'target' => 'Read today',
 				],
 				[
 					'id' => 'pray',
@@ -132,27 +136,44 @@ $jm_command_center = [
 					'green' => 1,
 					'orange' => 1,
 					'value' => true,
-					'target' => 'Done today',
+					'target' => 'Prayed today',
 				],
 				[
 					'id' => 'exercise',
 					'label' => 'Exercise',
-					'type' => 'higher',
-					'unit' => 'min',
-					'green' => 45,
-					'orange' => 20,
-					'value' => 15,
-					'target' => '45+ minutes',
+					'type' => 'check',
+					'unit' => '',
+					'green' => 1,
+					'orange' => 1,
+					'value' => false,
+					'target' => 'Trained today',
 				],
 				[
-					'id' => 'nutrition',
-					'label' => 'Nutrition',
-					'type' => 'higher',
-					'unit' => 'meals',
-					'green' => 3,
-					'orange' => 2,
-					'value' => 3,
-					'target' => '3 clean meals',
+					'id' => 'protein',
+					'label' => 'Protein',
+					'type' => 'macro',
+					'unit' => 'g',
+					'goal' => 180,
+					'value' => 142,
+					'target' => 'Macro goal',
+				],
+				[
+					'id' => 'carbs',
+					'label' => 'Carbs',
+					'type' => 'macro',
+					'unit' => 'g',
+					'goal' => 250,
+					'value' => 262,
+					'target' => 'Macro goal',
+				],
+				[
+					'id' => 'fats',
+					'label' => 'Fats',
+					'type' => 'macro',
+					'unit' => 'g',
+					'goal' => 70,
+					'value' => 48,
+					'target' => 'Macro goal',
 				],
 			],
 		],

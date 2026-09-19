@@ -82,6 +82,28 @@
 		}
 	};
 
+	/* Macro gram goals are settings, not daily values: they persist across
+	   days in their own key while the daily grams reset with the date. */
+	const goalsKey = 'jm-command-center:goals';
+
+	const readGoals = () => {
+		try {
+			const raw = window.localStorage.getItem(goalsKey);
+			return raw ? JSON.parse(raw) : {};
+		} catch (error) {
+			return {};
+		}
+	};
+
+	const writeGoals = (goals) => {
+		try {
+			window.localStorage.setItem(goalsKey, JSON.stringify(goals));
+			return true;
+		} catch (error) {
+			return false;
+		}
+	};
+
 	/* ------------------------------------------------------------ Scoring */
 
 	const timeToMinutes = (value) => {
@@ -108,11 +130,22 @@
 
 	const isBlank = (value) => value === '' || value === null || value === undefined;
 
-	const scoreKpi = (kpi, value) => {
+	const scoreKpi = (kpi, value, goal) => {
 		const type = kpi.type || 'higher';
 
 		if (type === 'check') {
 			return toBoolean(value) ? 'green' : 'red';
+		}
+
+		if (type === 'macro') {
+			const grams = Number(value);
+			const target = Number(goal);
+
+			if (isBlank(value) || Number.isNaN(grams) || Number.isNaN(target)) {
+				return 'red';
+			}
+
+			return grams >= target ? 'green' : 'red';
 		}
 
 		if (type === 'time') {
@@ -176,9 +209,13 @@
 		return Number.isInteger(number) ? String(number) : number.toFixed(1);
 	};
 
-	const formatValue = (kpi, value) => {
+	const formatValue = (kpi, value, goal) => {
 		if (kpi.type === 'check') {
-			return toBoolean(value) ? 'Done' : 'Missed';
+			return toBoolean(value) ? 'Yes' : 'No';
+		}
+
+		if (kpi.type === 'macro') {
+			return scoreKpi(kpi, value, goal) === 'green' ? 'Yes' : 'No';
 		}
 
 		if (kpi.type === 'time') {
@@ -188,9 +225,13 @@
 		return formatNumber(value);
 	};
 
-	const unitFor = (kpi, value) => {
+	const unitFor = (kpi, value, goal) => {
 		if (kpi.type === 'check' || kpi.type === 'time') {
 			return '';
+		}
+
+		if (kpi.type === 'macro') {
+			return `${formatNumber(value)} / ${formatNumber(goal)} ${kpi.unit || 'g'}`;
 		}
 
 		if (isBlank(value) || Number.isNaN(Number(value))) {
@@ -248,23 +289,28 @@
 
 	const evaluate = () => {
 		const overrides = readOverrides();
+		const goals = readGoals();
 		const groupIndex = new Map();
 
 		const entries = nodes.map((node) => {
 			const groups = groupsOf(node).map((group) => {
 				const saved = overrides[group.key] || {};
+				const savedGoals = goals[group.key] || {};
 				const kpis = group.kpis.map((kpi) => {
 					const hasOverride = Object.prototype.hasOwnProperty.call(saved, kpi.id);
+					const hasGoal = Object.prototype.hasOwnProperty.call(savedGoals, kpi.id);
 					const value = hasOverride ? saved[kpi.id] : kpi.value;
-					const status = scoreKpi(kpi, value);
+					const goal = kpi.type === 'macro' ? (hasGoal ? savedGoals[kpi.id] : kpi.goal) : undefined;
+					const status = scoreKpi(kpi, value, goal);
 
 					return {
 						kpi,
 						value,
+						goal,
 						status,
-						display: formatValue(kpi, value),
-						unit: unitFor(kpi, value),
-						overridden: hasOverride,
+						display: formatValue(kpi, value, goal),
+						unit: unitFor(kpi, value, goal),
+						overridden: hasOverride || hasGoal,
 					};
 				});
 
@@ -374,7 +420,7 @@
 
 		const value = create('span', 'cc-kpi-value', item.display);
 
-		if (item.kpi.type === 'check' || item.kpi.type === 'time') {
+		if (item.kpi.type === 'check' || item.kpi.type === 'time' || item.kpi.type === 'macro') {
 			value.classList.add('is-text');
 		}
 
@@ -661,7 +707,7 @@
 
 			const value = create('span', 'cc-attention-value', item.display);
 
-			if (item.kpi.type === 'check') {
+			if (item.kpi.type === 'check' || item.kpi.type === 'macro') {
 				value.classList.add('is-text');
 			}
 
@@ -675,7 +721,8 @@
 				? nodeEntry.node.title
 				: `${nodeEntry.node.title} · ${evaluatedGroup.group.title}`;
 			meta.appendChild(create('b', null, where));
-			meta.appendChild(document.createTextNode(item.kpi.target ? ` · ${item.kpi.target}` : ''));
+			const detail = item.kpi.type === 'macro' ? item.unit : item.kpi.target;
+			meta.appendChild(document.createTextNode(detail ? ` · ${detail}` : ''));
 			text.appendChild(meta);
 			button.appendChild(text);
 
@@ -837,13 +884,39 @@
 					toggle.dataset.input = 'check';
 					const done = toBoolean(item.value);
 					toggle.setAttribute('aria-pressed', String(done));
-					toggle.textContent = done ? 'Done' : 'Not yet';
+					toggle.textContent = done ? 'Yes' : 'No';
 					toggle.addEventListener('click', () => {
 						const next = toggle.getAttribute('aria-pressed') !== 'true';
 						toggle.setAttribute('aria-pressed', String(next));
-						toggle.textContent = next ? 'Done' : 'Not yet';
+						toggle.textContent = next ? 'Yes' : 'No';
 					});
 					card.appendChild(toggle);
+				} else if (item.kpi.type === 'macro') {
+					const fields = create('div', 'cc-focus-macro');
+
+					const goalField = create('label', 'cc-focus-field');
+					goalField.appendChild(create('span', null, `Goal (${item.kpi.unit || 'g'})`));
+					const goalInput = create('input');
+					goalInput.type = 'number';
+					goalInput.min = '0';
+					goalInput.step = 'any';
+					goalInput.dataset.input = 'macro-goal';
+					goalInput.value = isBlank(item.goal) ? '' : String(item.goal);
+					goalField.appendChild(goalInput);
+
+					const todayField = create('label', 'cc-focus-field');
+					todayField.appendChild(create('span', null, `Today so far (${item.kpi.unit || 'g'})`));
+					const todayInput = create('input');
+					todayInput.type = 'number';
+					todayInput.min = '0';
+					todayInput.step = 'any';
+					todayInput.dataset.input = 'macro-value';
+					todayInput.value = isBlank(item.value) ? '' : String(item.value);
+					todayField.appendChild(todayInput);
+
+					fields.appendChild(goalField);
+					fields.appendChild(todayField);
+					card.appendChild(fields);
 				} else {
 					const input = create('input');
 					input.type = item.kpi.type === 'time' ? 'time' : 'number';
@@ -864,7 +937,10 @@
 				card.appendChild(create('span', 'cc-focus-kpi-status', STATUS_WORD[item.status]));
 			}
 
-			card.appendChild(create('span', 'cc-focus-kpi-target', item.kpi.target ? `Target: ${item.kpi.target}` : ''));
+			const targetText = item.kpi.type === 'macro'
+				? `Goal: ${formatNumber(item.goal)} ${item.kpi.unit || 'g'} · Today: ${formatNumber(item.value)} ${item.kpi.unit || 'g'}`
+				: item.kpi.target ? `Target: ${item.kpi.target}` : '';
+			card.appendChild(create('span', 'cc-focus-kpi-target', targetText));
 			el.focusKpis.appendChild(card);
 		});
 	};
@@ -897,9 +973,20 @@
 		}
 
 		const overrides = readOverrides();
+		const goals = readGoals();
 		const saved = Object.assign({}, overrides[focusedGroupKey] || {});
+		const savedGoals = Object.assign({}, goals[focusedGroupKey] || {});
 
 		el.focusKpis.querySelectorAll('[data-kpi]').forEach((card) => {
+			const goalControl = card.querySelector('[data-input="macro-goal"]');
+			const todayControl = card.querySelector('[data-input="macro-value"]');
+
+			if (goalControl && todayControl) {
+				savedGoals[card.dataset.kpi] = goalControl.value === '' ? '' : Number(goalControl.value);
+				saved[card.dataset.kpi] = todayControl.value === '' ? '' : Number(todayControl.value);
+				return;
+			}
+
 			const control = card.querySelector('[data-input]');
 
 			if (!control) {
@@ -916,7 +1003,9 @@
 		});
 
 		overrides[focusedGroupKey] = saved;
+		goals[focusedGroupKey] = savedGoals;
 		writeOverrides(overrides);
+		writeGoals(goals);
 		editing = false;
 		renderAll();
 		renderFocus();
@@ -943,8 +1032,11 @@
 		}
 
 		const overrides = readOverrides();
+		const goals = readGoals();
 		delete overrides[focusedGroupKey];
+		delete goals[focusedGroupKey];
 		writeOverrides(overrides);
+		writeGoals(goals);
 		editing = false;
 		renderAll();
 		renderFocus();
