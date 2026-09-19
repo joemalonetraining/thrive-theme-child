@@ -491,16 +491,6 @@ $jm_command_center = [
 				'target' => 'Site is live and visible to the public',
 			],
 			[
-				'id' => 'seo-top-5',
-				'label' => 'Google SEO Top 5',
-				'type' => 'check',
-				'unit' => '',
-				'green' => 1,
-				'orange' => 1,
-				'value' => false,
-				'target' => 'Top 5 on the Google search page for firearms training',
-			],
-			[
 				'id' => 'online-sales-500',
 				'label' => '$500 Gross Sales',
 				'type' => 'check',
