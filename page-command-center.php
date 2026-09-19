@@ -540,6 +540,7 @@ get_header();
 		</div>
 
 		<div class="cc-controls">
+			<button type="button" class="cc-button cc-button-gold" data-cc-calendar>Calendar</button>
 			<button type="button" class="cc-button" data-cc-tour aria-pressed="false">Auto Tour</button>
 			<button type="button" class="cc-button" data-cc-fullscreen>TV Mode</button>
 		</div>
@@ -592,6 +593,41 @@ get_header();
 			</footer>
 		</div>
 	</div>
+	<section class="cc-screen" data-cc-calendar-screen hidden role="dialog" aria-modal="true" aria-labelledby="cc-cal-title">
+		<header class="cc-screen-header">
+			<div>
+				<p class="cc-focus-eyebrow">Daily tracking</p>
+				<h2 id="cc-cal-title" data-cc-cal-title>Calendar</h2>
+			</div>
+			<div class="cc-screen-actions">
+				<button type="button" class="cc-button cc-button-quiet" data-cc-cal-prev aria-label="Previous month">&lsaquo; Prev</button>
+				<button type="button" class="cc-button cc-button-quiet" data-cc-cal-today>This Month</button>
+				<button type="button" class="cc-button cc-button-quiet" data-cc-cal-next aria-label="Next month">Next &rsaquo;</button>
+				<button type="button" class="cc-button cc-button-gold" data-cc-cal-submit>Submit Today's KPIs</button>
+				<button type="button" class="cc-button" data-cc-cal-close>Back to Board</button>
+			</div>
+		</header>
+		<div class="cc-cal-legend" aria-label="Day color scale">
+			<span class="cc-legend-scale"><i data-status="red-deep"></i><i data-status="red"></i><i data-status="orange"></i><i data-status="yellow"></i><i data-status="green"></i><i data-status="green-bright"></i></span>
+			<span>25% or less red · 50% orange · 75% yellow · over 90% green · all met bright green. Tap a day to submit or edit its numbers.</span>
+		</div>
+		<div class="cc-cal-grid" data-cc-cal-grid></div>
+	</section>
+
+	<section class="cc-screen cc-day" data-cc-day-screen hidden role="dialog" aria-modal="true" aria-labelledby="cc-day-title">
+		<header class="cc-screen-header">
+			<div>
+				<p class="cc-focus-eyebrow" data-cc-day-summary></p>
+				<h2 id="cc-day-title" data-cc-day-title>Day</h2>
+			</div>
+			<div class="cc-screen-actions">
+				<button type="button" class="cc-button cc-button-quiet" data-cc-day-back>&lsaquo; Calendar</button>
+				<button type="button" class="cc-button cc-button-quiet" data-cc-day-clear>Clear This Day</button>
+				<button type="button" class="cc-button cc-button-gold" data-cc-day-save>Submit</button>
+			</div>
+		</header>
+		<div class="cc-day-body" data-cc-day-body></div>
+	</section>
 </div>
 
 <script id="jm-command-center-config" type="application/json"><?php echo wp_json_encode($jm_command_center); ?></script>

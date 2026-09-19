@@ -163,25 +163,35 @@
 		return `${now.getFullYear()}-${month}-${day}`;
 	};
 
-	const storageKey = () => `jm-command-center:${todayKey()}`;
+	const storageKeyFor = (dateKey) => `jm-command-center:${dateKey}`;
 
-	const readOverrides = () => {
+	const readJson = (key) => {
 		try {
-			const raw = window.localStorage.getItem(storageKey());
+			const raw = window.localStorage.getItem(key);
 			return raw ? JSON.parse(raw) : {};
 		} catch (error) {
 			return {};
 		}
 	};
 
-	const writeOverrides = (overrides) => {
+	const writeJson = (key, value) => {
 		try {
-			window.localStorage.setItem(storageKey(), JSON.stringify(overrides));
+			window.localStorage.setItem(key, JSON.stringify(value));
 			return true;
 		} catch (error) {
 			return false;
 		}
 	};
+
+	const readOverridesFor = (dateKey) => readJson(storageKeyFor(dateKey));
+	const writeOverridesFor = (dateKey, overrides) => writeJson(storageKeyFor(dateKey), overrides);
+	const readOverrides = () => readOverridesFor(todayKey());
+	const writeOverrides = (overrides) => writeOverridesFor(todayKey(), overrides);
+
+	/* Days that were submitted from the calendar, keyed by date. */
+	const daysKey = 'jm-command-center:days';
+	const readDays = () => readJson(daysKey);
+	const writeDays = (days) => writeJson(daysKey, days);
 
 	/* Macro gram goals are settings, not daily values: they persist across
 	   days in their own key while the daily grams reset with the date. */
@@ -449,8 +459,11 @@
 		return groups;
 	};
 
-	const evaluate = () => {
-		const overrides = readOverrides();
+	/* Evaluate the board for a date. strict = true is used for past days:
+	   a KPI with nothing logged counts as not met instead of falling back
+	   to the sample value in the config. */
+	const evaluate = (dateKey = todayKey(), strict = false) => {
+		const overrides = readOverridesFor(dateKey);
 		const goals = readGoals();
 		const groupIndex = new Map();
 
@@ -461,9 +474,9 @@
 				const kpis = group.kpis.map((kpi) => {
 					const hasOverride = Object.prototype.hasOwnProperty.call(saved, kpi.id);
 					const hasGoal = Object.prototype.hasOwnProperty.call(savedGoals, kpi.id);
-					const value = hasOverride ? saved[kpi.id] : kpi.value;
+					const value = hasOverride ? saved[kpi.id] : strict ? '' : kpi.value;
 					const goal = kpi.type === 'macro' ? (hasGoal ? savedGoals[kpi.id] : kpi.goal) : undefined;
-					const score = clampScore(kpiScore(kpi, value, goal));
+					const score = strict && isBlank(value) ? 0 : clampScore(kpiScore(kpi, value, goal));
 					const status = levelFromScore(score);
 
 					return {
@@ -537,7 +550,9 @@
 			});
 		});
 
-		return { nodes: byId, groups: groupIndex };
+		const everyKpi = entries.flatMap((entry) => entry.ownKpis);
+
+		return { nodes: byId, groups: groupIndex, dateKey, summary: rollup(everyKpi) };
 	};
 
 	/* ------------------------------------------------------------ Open / closed state */
@@ -1377,6 +1392,429 @@
 			revealGroup(jump.dataset.ccJump);
 		}
 	});
+
+	/* ------------------------------------------------------------ Calendar screen */
+
+	/* Day color: share of every KPI met that day. 25% or less red, 50%
+	   orange, 75% yellow, over 90% green, all met bright green. */
+	const CAL_STOPS = [
+		[0, 'red-deep'],
+		[0.25, 'red'],
+		[0.5, 'orange'],
+		[0.75, 'yellow'],
+		[0.9, 'green'],
+		[1, 'green-bright'],
+	];
+
+	const cal = {
+		screen: root.querySelector('[data-cc-calendar-screen]'),
+		title: root.querySelector('[data-cc-cal-title]'),
+		grid: root.querySelector('[data-cc-cal-grid]'),
+		prev: root.querySelector('[data-cc-cal-prev]'),
+		next: root.querySelector('[data-cc-cal-next]'),
+		today: root.querySelector('[data-cc-cal-today]'),
+		submit: root.querySelector('[data-cc-cal-submit]'),
+		close: root.querySelector('[data-cc-cal-close]'),
+		open: root.querySelector('[data-cc-calendar]'),
+		dayScreen: root.querySelector('[data-cc-day-screen]'),
+		dayTitle: root.querySelector('[data-cc-day-title]'),
+		daySummary: root.querySelector('[data-cc-day-summary]'),
+		dayBody: root.querySelector('[data-cc-day-body]'),
+		daySave: root.querySelector('[data-cc-day-save]'),
+		dayBack: root.querySelector('[data-cc-day-back]'),
+		dayClear: root.querySelector('[data-cc-day-clear]'),
+	};
+
+	const calendarReady = Boolean(cal.screen && cal.grid && cal.dayScreen);
+
+	const now = new Date();
+	let calYear = now.getFullYear();
+	let calMonth = now.getMonth();
+	let editingDate = null;
+
+	const keyOf = (year, month, day) => `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+	const longDate = (dateKey) => {
+		const [y, m, d] = dateKey.split('-').map(Number);
+		return new Date(y, m - 1, d).toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+	};
+
+	/* Live numbers for today, the submitted record for any other day. */
+	const dayState = (dateKey) => {
+		if (dateKey === todayKey()) {
+			return { state: evaluate(dateKey, false), live: true };
+		}
+
+		const days = readDays();
+
+		if (!days[dateKey]) {
+			return null;
+		}
+
+		return { state: evaluate(dateKey, true), live: false };
+	};
+
+	const renderCalendar = () => {
+		if (!calendarReady) {
+			return;
+		}
+
+		const first = new Date(calYear, calMonth, 1);
+		cal.title.textContent = first.toLocaleDateString([], { month: 'long', year: 'numeric' });
+		cal.grid.replaceChildren();
+
+		['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach((name) => {
+			cal.grid.appendChild(create('div', 'cc-cal-weekday', name));
+		});
+
+		for (let i = 0; i < first.getDay(); i += 1) {
+			cal.grid.appendChild(create('div', 'cc-cal-blank'));
+		}
+
+		const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+		const today = todayKey();
+		const days = readDays();
+
+		for (let day = 1; day <= daysInMonth; day += 1) {
+			const dateKey = keyOf(calYear, calMonth, day);
+			const isFuture = dateKey > today;
+			const cell = create(isFuture ? 'div' : 'button', 'cc-cal-day');
+
+			if (!isFuture) {
+				cell.type = 'button';
+				cell.dataset.ccDay = dateKey;
+			}
+
+			if (dateKey === today) {
+				cell.classList.add('is-today');
+			}
+
+			if (isFuture) {
+				cell.classList.add('is-future');
+			}
+
+			cell.appendChild(create('span', 'cc-cal-num', String(day)));
+
+			const result = isFuture ? null : dayState(dateKey);
+
+			if (result) {
+				const { summary } = result.state;
+				cell.dataset.status = levelFromRatio(summary.ratio, summary.status === 'green-bright');
+				applyPaint(cell, paintOf(CAL_STOPS, summary.ratio >= 1 ? 1 : summary.ratio));
+				cell.classList.add('has-data');
+				cell.appendChild(create('span', 'cc-cal-pct', `${Math.round(summary.ratio * 100)}%`));
+				cell.appendChild(create('span', 'cc-cal-met', `${summary.met}/${summary.total} met`));
+				cell.appendChild(create('span', 'cc-cal-flag', result.live && !days[dateKey] ? 'Today · not submitted' : result.live ? 'Today · submitted' : 'Submitted'));
+			} else if (!isFuture) {
+				cell.appendChild(create('span', 'cc-cal-empty', 'No entry'));
+			}
+
+			cal.grid.appendChild(cell);
+		}
+	};
+
+	const openCalendar = () => {
+		if (!calendarReady) {
+			return;
+		}
+
+		stopTour();
+		closeFocus();
+		const current = new Date();
+		calYear = current.getFullYear();
+		calMonth = current.getMonth();
+		renderCalendar();
+		cal.dayScreen.hidden = true;
+		cal.screen.hidden = false;
+		cal.close.focus();
+	};
+
+	const closeCalendar = () => {
+		if (!calendarReady) {
+			return;
+		}
+
+		cal.screen.hidden = true;
+		cal.dayScreen.hidden = true;
+		editingDate = null;
+	};
+
+	/* ------------------------------------------------------------ Day editor */
+
+	const buildControl = (item) => {
+		const wrap = create('div', 'cc-day-control');
+
+		if (item.kpi.type === 'check') {
+			const toggle = create('button', 'cc-focus-toggle');
+			toggle.type = 'button';
+			toggle.dataset.input = 'check';
+			const done = toBoolean(item.value);
+			toggle.setAttribute('aria-pressed', String(done));
+			toggle.textContent = done ? 'Yes' : 'No';
+			toggle.addEventListener('click', () => {
+				const next = toggle.getAttribute('aria-pressed') !== 'true';
+				toggle.setAttribute('aria-pressed', String(next));
+				toggle.textContent = next ? 'Yes' : 'No';
+			});
+			wrap.appendChild(toggle);
+			return wrap;
+		}
+
+		if (item.kpi.type === 'macro') {
+			const fields = create('div', 'cc-focus-macro');
+			const unit = item.kpi.unit || 'g';
+
+			const goalField = create('label', 'cc-focus-field');
+			goalField.appendChild(create('span', null, `${item.kpi.direction === 'under' ? 'Limit' : 'Goal'} (${unit})`));
+			const goalInput = create('input');
+			goalInput.type = 'number';
+			goalInput.min = '0';
+			goalInput.step = 'any';
+			goalInput.dataset.input = 'macro-goal';
+			goalInput.value = isBlank(item.goal) ? '' : String(item.goal);
+			goalField.appendChild(goalInput);
+
+			const todayField = create('label', 'cc-focus-field');
+			todayField.appendChild(create('span', null, `Logged (${unit})`));
+			const todayInput = create('input');
+			todayInput.type = 'number';
+			todayInput.min = '0';
+			todayInput.step = 'any';
+			todayInput.dataset.input = 'macro-value';
+			todayInput.value = isBlank(item.value) ? '' : String(item.value);
+			todayField.appendChild(todayInput);
+
+			fields.appendChild(goalField);
+			fields.appendChild(todayField);
+			wrap.appendChild(fields);
+			return wrap;
+		}
+
+		const input = create('input');
+		input.type = item.kpi.type === 'time' ? 'time' : 'number';
+		input.dataset.input = item.kpi.type === 'time' ? 'time' : 'number';
+		input.step = 'any';
+		input.value = isBlank(item.value) ? '' : String(item.value);
+		input.setAttribute('aria-label', `${item.kpi.label} value`);
+		wrap.appendChild(input);
+		return wrap;
+	};
+
+	const renderDay = (dateKey) => {
+		const isToday = dateKey === todayKey();
+		const submitted = Boolean(readDays()[dateKey]);
+		const dayEval = evaluate(dateKey, !isToday && !submitted ? true : !isToday);
+		editingDate = dateKey;
+
+		cal.dayTitle.textContent = longDate(dateKey);
+		cal.daySummary.textContent = `${dayEval.summary.met}/${dayEval.summary.total} met · ${Math.round(dayEval.summary.ratio * 100)}%${submitted ? ' · Submitted' : isToday ? ' · Live from the board' : ' · Not submitted yet'}`;
+		cal.daySave.textContent = submitted ? 'Save Changes' : isToday ? "Submit Today's KPIs" : 'Submit This Day';
+		cal.dayBody.replaceChildren();
+
+		dayEval.nodes.forEach((entry) => {
+			const section = create('section', 'cc-day-node');
+			section.dataset.status = entry.status;
+			applyPaint(section, entry.paint);
+			section.appendChild(create('h3', 'cc-day-node-title', entry.node.title));
+
+			const kpiRow = (group, item) => {
+				const row = create('div', 'cc-day-kpi');
+				row.dataset.status = item.status;
+				row.dataset.group = group.group.key;
+				row.dataset.kpi = item.kpi.id;
+				applyPaint(row, item.paint);
+
+				const text = create('div', 'cc-day-kpi-text');
+				text.appendChild(create('span', 'cc-day-kpi-label', item.kpi.label));
+				text.appendChild(create('span', 'cc-day-kpi-target', item.kpi.target || ''));
+				row.appendChild(text);
+				row.appendChild(buildControl(item));
+				return row;
+			};
+
+			/* Departments with one KPI share a compact grid; departments with
+			   several get their own labeled block. */
+			const singles = entry.groups.filter((group) => group.kpis.length === 1);
+
+			if (singles.length > 0) {
+				const list = create('div', 'cc-day-kpis');
+				singles.forEach((group) => list.appendChild(kpiRow(group, group.kpis[0])));
+				section.appendChild(list);
+			}
+
+			entry.groups
+				.filter((group) => group.kpis.length !== 1)
+				.forEach((group) => {
+					const block = create('div', 'cc-day-group');
+					block.dataset.status = group.status;
+					applyPaint(block, group.paint);
+					block.appendChild(create('h4', 'cc-day-group-title', group.group.title));
+
+					const list = create('div', 'cc-day-kpis');
+					group.kpis.forEach((item) => list.appendChild(kpiRow(group, item)));
+					block.appendChild(list);
+					section.appendChild(block);
+				});
+
+			cal.dayBody.appendChild(section);
+		});
+	};
+
+	const openDay = (dateKey) => {
+		if (!calendarReady) {
+			return;
+		}
+
+		renderDay(dateKey);
+		cal.screen.hidden = true;
+		cal.dayScreen.hidden = false;
+		cal.dayScreen.scrollTop = 0;
+		cal.dayBack.focus();
+	};
+
+	const saveDay = () => {
+		if (!editingDate) {
+			return;
+		}
+
+		const overrides = {};
+		const goals = readGoals();
+
+		cal.dayBody.querySelectorAll('[data-kpi]').forEach((row) => {
+			const groupKey = row.dataset.group;
+			const kpiId = row.dataset.kpi;
+			overrides[groupKey] = overrides[groupKey] || {};
+
+			const goalControl = row.querySelector('[data-input="macro-goal"]');
+			const loggedControl = row.querySelector('[data-input="macro-value"]');
+
+			if (goalControl && loggedControl) {
+				goals[groupKey] = goals[groupKey] || {};
+				goals[groupKey][kpiId] = goalControl.value === '' ? '' : Number(goalControl.value);
+				overrides[groupKey][kpiId] = loggedControl.value === '' ? '' : Number(loggedControl.value);
+				return;
+			}
+
+			const control = row.querySelector('[data-input]');
+
+			if (!control) {
+				return;
+			}
+
+			if (control.dataset.input === 'check') {
+				overrides[groupKey][kpiId] = control.getAttribute('aria-pressed') === 'true';
+			} else if (control.dataset.input === 'time') {
+				overrides[groupKey][kpiId] = control.value;
+			} else {
+				overrides[groupKey][kpiId] = control.value === '' ? '' : Number(control.value);
+			}
+		});
+
+		writeOverridesFor(editingDate, overrides);
+		writeGoals(goals);
+
+		const days = readDays();
+		days[editingDate] = new Date().toISOString();
+		writeDays(days);
+
+		if (editingDate === todayKey()) {
+			renderAll();
+		}
+
+		const [y, m] = editingDate.split('-').map(Number);
+		calYear = y;
+		calMonth = m - 1;
+		renderCalendar();
+		cal.dayScreen.hidden = true;
+		cal.screen.hidden = false;
+		editingDate = null;
+	};
+
+	const clearDay = () => {
+		if (!editingDate) {
+			return;
+		}
+
+		try {
+			window.localStorage.removeItem(storageKeyFor(editingDate));
+		} catch (error) {
+			/* Nothing to clear. */
+		}
+
+		const days = readDays();
+		delete days[editingDate];
+		writeDays(days);
+
+		if (editingDate === todayKey()) {
+			renderAll();
+		}
+
+		renderCalendar();
+		cal.dayScreen.hidden = true;
+		cal.screen.hidden = false;
+		editingDate = null;
+	};
+
+	if (calendarReady) {
+		cal.open.addEventListener('click', openCalendar);
+		cal.close.addEventListener('click', closeCalendar);
+		cal.prev.addEventListener('click', () => {
+			calMonth -= 1;
+
+			if (calMonth < 0) {
+				calMonth = 11;
+				calYear -= 1;
+			}
+
+			renderCalendar();
+		});
+		cal.next.addEventListener('click', () => {
+			calMonth += 1;
+
+			if (calMonth > 11) {
+				calMonth = 0;
+				calYear += 1;
+			}
+
+			renderCalendar();
+		});
+		cal.today.addEventListener('click', () => {
+			const current = new Date();
+			calYear = current.getFullYear();
+			calMonth = current.getMonth();
+			renderCalendar();
+		});
+		cal.submit.addEventListener('click', () => openDay(todayKey()));
+		cal.grid.addEventListener('click', (event) => {
+			const day = event.target.closest('[data-cc-day]');
+
+			if (day) {
+				openDay(day.dataset.ccDay);
+			}
+		});
+		cal.daySave.addEventListener('click', saveDay);
+		cal.dayBack.addEventListener('click', () => {
+			editingDate = null;
+			cal.dayScreen.hidden = true;
+			cal.screen.hidden = false;
+			renderCalendar();
+		});
+		cal.dayClear.addEventListener('click', clearDay);
+		document.addEventListener('keydown', (event) => {
+			if (event.key !== 'Escape') {
+				return;
+			}
+
+			if (!cal.dayScreen.hidden) {
+				editingDate = null;
+				cal.dayScreen.hidden = true;
+				cal.screen.hidden = false;
+				renderCalendar();
+			} else if (!cal.screen.hidden) {
+				closeCalendar();
+			}
+		});
+	}
 
 	/* ------------------------------------------------------------ Auto tour */
 
